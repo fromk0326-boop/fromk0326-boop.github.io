@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TSUMUGU 経費ベンチマーク分析</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #f5f7fa; --card: #fff; --text: #1a1a2e; --muted: #6b7280;
+    --green: #10b981; --red: #ef4444; --yellow: #f59e0b;
+    --blue: #3b82f6; --purple: #8b5cf6; --orange: #f97316;
+    --border: #e5e7eb; --shadow: 0 1px 3px rgba(0,0,0,.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Meiryo UI', 'Hiragino Sans', sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin-bottom: 4px; }
+  .subtitle { color: var(--muted); font-size: .85rem; margin-bottom: 20px; }
+  .period-selector { display: flex; gap: 8px; margin-bottom: 20px; }
+  .period-btn { padding: 6px 16px; border: 1px solid var(--border); border-radius: 6px; background: var(--card); cursor: pointer; font-size: .85rem; }
+  .period-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+  /* Summary Cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .card { background: var(--card); border-radius: 10px; padding: 20px; box-shadow: var(--shadow); border-left: 4px solid var(--blue); }
+  .card.ok { border-left-color: var(--green); }
+  .card.over { border-left-color: var(--red); }
+  .card-label { font-size: .8rem; color: var(--muted); margin-bottom: 4px; }
+  .card-value { font-size: 1.6rem; font-weight: 700; }
+  .card-sub { font-size: .8rem; margin-top: 6px; display: flex; align-items: center; gap: 4px; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: .75rem; font-weight: 600; }
+  .badge-ok { background: #d1fae5; color: #065f46; }
+  .badge-over { background: #fee2e2; color: #991b1b; }
+
+  /* Charts */
+  .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .chart-box { background: var(--card); border-radius: 10px; padding: 20px; box-shadow: var(--shadow); }
+  .chart-box h3 { font-size: .95rem; margin-bottom: 12px; }
+
+  /* Table */
+  .table-box { background: var(--card); border-radius: 10px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 24px; overflow-x: auto; }
+  .table-box h3 { font-size: .95rem; margin-bottom: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+  th { background: #f1f5f9; padding: 8px 10px; text-align: right; white-space: nowrap; border-bottom: 2px solid var(--border); }
+  th:first-child { text-align: left; }
+  td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  td:first-child { text-align: left; font-weight: 600; }
+  .over-cell { color: var(--red); font-weight: 600; }
+  .ok-cell { color: var(--green); }
+
+  /* Description */
+  .desc-box { background: var(--card); border-radius: 10px; padding: 20px 24px; box-shadow: var(--shadow); margin-bottom: 20px; border-left: 4px solid var(--blue); }
+  .desc-box h3 { font-size: .95rem; margin-bottom: 8px; color: var(--blue); }
+  .desc-box p { font-size: .85rem; line-height: 1.6; color: #374151; margin-bottom: 10px; }
+  .desc-table { width: 100%; border-collapse: collapse; font-size: .82rem; margin: 12px 0; }
+  .desc-table th { background: #eff6ff; padding: 8px 12px; text-align: left; border-bottom: 2px solid #bfdbfe; color: #1e40af; }
+  .desc-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  .desc-table td:first-child { font-weight: 600; }
+  .desc-note { font-size: .78rem; color: var(--muted); margin-top: 8px; margin-bottom: 0; }
+
+  /* Annual Summary */
+  .summary-box { background: var(--card); border-radius: 10px; padding: 16px 20px; box-shadow: var(--shadow); margin-bottom: 24px; font-size: .85rem; line-height: 1.7; }
+  .summary-box h3 { font-size: .95rem; margin-bottom: 8px; }
+  .summary-box .highlight-ok { color: #059669; font-weight: 700; }
+  .summary-box .highlight-over { color: #dc2626; font-weight: 700; }
+
+  .footer { text-align: center; color: var(--muted); font-size: .75rem; padding: 16px 0; }
+
+  @media (max-width: 768px) {
+    .chart-row { grid-template-columns: 1fr; }
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>株式会社TSUMUGU 経費ベンチマーク分析</h1>
+  <p class="subtitle">粗利対比の経費コントロール状況 | 最終更新: <span id="lastUpdate"></span></p>
+
+  <!-- 説明セクション -->
+  <div class="desc-box">
+    <h3>このダッシュボードについて</h3>
+    <p>売上総利益（粗利）に対する主要経費3科目の比率を、設定したベンチマーク（目標値）と比較し、経費コントロールの状況を可視化するものです。</p>
+    <table class="desc-table">
+      <tr><th>科目</th><th>ベンチマーク</th><th>考え方</th></tr>
+      <tr><td>接待交際費</td><td>粗利の <strong>15%</strong></td><td>営業活動・関係構築への投資上限。超過は費用対効果を要検証</td></tr>
+      <tr><td>会議費</td><td>粗利の <strong>1%</strong></td><td>打合せ・軽飲食の適正水準。超過は交際費との区分見直しも要確認</td></tr>
+      <tr><td>旅費交通費</td><td>粗利の <strong>3.5%</strong></td><td>移動コストの適正水準。超過は出張頻度・手段の見直しを検討</td></tr>
+    </table>
+    <p class="desc-note">※ 売上が偏月（特定月に集中）のため、月次ベースでは粗利がマイナスの月が発生します。その月は比率が算出不能（「-」表示）となりますが、年間累計で判断してください。</p>
+  </div>
+
+  <div class="period-selector">
+    <button class="period-btn active" onclick="switchPeriod('4ki')">4期 (2025/4-2026/3)</button>
+    <button class="period-btn" onclick="switchPeriod('3ki')">3期 (2024/4-2025/3)</button>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="cards" id="summaryCards"></div>
+
+  <!-- 年間サマリー -->
+  <div class="summary-box" id="annualSummary"></div>
+
+  <!-- Charts -->
+  <div class="chart-row">
+    <div class="chart-box">
+      <h3>月次 粗利推移 & 経費率</h3>
+      <canvas id="chartGP"></canvas>
+    </div>
+    <div class="chart-box">
+      <h3>経費の粗利対比（実績 vs ベンチマーク）</h3>
+      <canvas id="chartBenchmark"></canvas>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-box">
+      <h3>月次 経費金額推移</h3>
+      <canvas id="chartExpenses"></canvas>
+    </div>
+    <div class="chart-box">
+      <h3>年間構成比</h3>
+      <canvas id="chartPie"></canvas>
+    </div>
+  </div>
+
+  <!-- Monthly Table -->
+  <div class="table-box">
+    <h3>月次明細</h3>
+    <table id="monthlyTable"></table>
+  </div>
+
+  <p class="footer">データソース: freee会計 | 作成: 畠山謙人税理士事務所</p>
+</div>
+
+<script>
+// ========== DATA SECTION (更新時はここだけ書き換え) ==========
+const DATA = {
+  "4ki": {
+    label: "4期 (2025/4〜2026/3)",
+    annual: { sales: 52928264, cogs: 20601007, gp: 32327257, entertainment: 4085874, meeting: 1287243, travel: 2173119 },
+    months: [
+      { m: "4月",  gp: 1561499,   ent: 319494,  meet: 122200, trav: 241654 },
+      { m: "5月",  gp: -2156800,  ent: 322077,  meet: 138123, trav: 29352 },
+      { m: "6月",  gp: 13219668,  ent: 328040,  meet: 109261, trav: 69439 },
+      { m: "7月",  gp: -2186736,  ent: 323468,  meet: 142362, trav: 202031 },
+      { m: "8月",  gp: 416589,    ent: 439501,  meet: 95639,  trav: 96135 },
+      { m: "9月",  gp: 9549751,   ent: 503058,  meet: 107942, trav: 292379 },
+      { m: "10月", gp: 18467,     ent: 211979,  meet: 93388,  trav: 43031 },
+      { m: "11月", gp: -780939,   ent: 350937,  meet: 116619, trav: 230338 },
+      { m: "12月", gp: 7837321,   ent: 510913,  meet: 154380, trav: 380107 },
+      { m: "1月",  gp: -12227,    ent: 364508,  meet: 77873,  trav: 420610 },
+      { m: "2月",  gp: 94339,     ent: 218115,  meet: 47818,  trav: 90183 },
+      { m: "3月",  gp: 4766325,   ent: 193784,  meet: 81638,  trav: 77860 },
+    ]
+  },
+  "3ki": {
+    label: "3期 (2024/4〜2025/3)",
+    annual: { sales: 16544872, cogs: 0, gp: 16544872, entertainment: 1981838, meeting: 624974, travel: 950892 },
+    months: [] // 月次データ未取得
+  }
+};
+
+const BENCHMARKS = { entertainment: 0.15, meeting: 0.01, travel: 0.035 };
+
+// ========== UTILITIES ==========
+const fmt = n => n < 0 ? `▲${Math.abs(n).toLocaleString()}` : n.toLocaleString();
+const fmtYen = n => `¥${fmt(n)}`;
+const pct = (v, base) => base === 0 ? "N/A" : (v / base * 100).toFixed(2) + "%";
+
+let currentPeriod = "4ki";
+let charts = {};
+
+function switchPeriod(key) {
+  currentPeriod = key;
+  document.querySelectorAll(".period-btn").forEach(b => b.classList.remove("active"));
+  event.target.classList.add("active");
+  render();
+}
+
+function render() {
+  const d = DATA[currentPeriod];
+  const a = d.annual;
+  renderCards(a);
+  renderAnnualSummary(a);
+  renderTable(d);
+  renderCharts(d);
+}
+
+function renderAnnualSummary(a) {
+  const gp = a.gp;
+  const entPct = (a.entertainment / gp * 100).toFixed(1);
+  const meetPct = (a.meeting / gp * 100).toFixed(1);
+  const travPct = (a.travel / gp * 100).toFixed(1);
+  const entOk = a.entertainment / gp <= 0.15;
+  const meetOk = a.meeting / gp <= 0.01;
+  const travOk = a.travel / gp <= 0.035;
+
+  const judge = (ok, pctVal, target) => {
+    if (ok) return `<span class="highlight-ok">${pctVal}%（目標${target}%以内 ✓）</span>`;
+    return `<span class="highlight-over">${pctVal}%（目標${target}%を超過 ⚠）</span>`;
+  };
+
+  document.getElementById("annualSummary").innerHTML = `
+    <h3>📊 年間総括</h3>
+    <p>
+      売上高 <strong>${fmtYen(a.sales)}</strong>、売上原価 ${fmtYen(a.cogs)} を差し引いた<strong>売上総利益（粗利）は ${fmtYen(gp)}</strong>です。
+    </p>
+    <ul style="margin:8px 0 8px 20px;">
+      <li><strong>接待交際費</strong> ${fmtYen(a.entertainment)} … ${judge(entOk, entPct, "15")}</li>
+      <li><strong>会議費</strong> ${fmtYen(a.meeting)} … ${judge(meetOk, meetPct, "1")}</li>
+      <li><strong>旅費交通費</strong> ${fmtYen(a.travel)} … ${judge(travOk, travPct, "3.5")}</li>
+    </ul>
+    <p>${!meetOk || !travOk ? '会議費・旅費交通費がベンチマークを超過しています。内訳の精査と今後の予算管理をご検討ください。' : '全科目がベンチマーク内に収まっています。'}</p>
+  `;
+}
+
+function renderCards(a) {
+  const gp = a.gp;
+  const items = [
+    { label: "売上総利益（粗利）", value: fmtYen(gp), sub: `売上高 ${fmtYen(a.sales)}`, status: "neutral" },
+    { label: "接待交際費", value: fmtYen(a.entertainment),
+      sub: `実績 ${pct(a.entertainment, gp)} / 目標 15%`,
+      status: gp > 0 && a.entertainment / gp <= 0.15 ? "ok" : "over" },
+    { label: "会議費", value: fmtYen(a.meeting),
+      sub: `実績 ${pct(a.meeting, gp)} / 目標 1%`,
+      status: gp > 0 && a.meeting / gp <= 0.01 ? "ok" : "over" },
+    { label: "旅費交通費", value: fmtYen(a.travel),
+      sub: `実績 ${pct(a.travel, gp)} / 目標 3.5%`,
+      status: gp > 0 && a.travel / gp <= 0.035 ? "ok" : "over" },
+  ];
+
+  document.getElementById("summaryCards").innerHTML = items.map(i => `
+    <div class="card ${i.status === 'neutral' ? '' : i.status}">
+      <div class="card-label">${i.label}</div>
+      <div class="card-value">${i.value}</div>
+      <div class="card-sub">
+        ${i.sub}
+        ${i.status !== "neutral" ? `<span class="badge ${i.status === 'ok' ? 'badge-ok' : 'badge-over'}">${i.status === 'ok' ? 'OK' : 'OVER'}</span>` : ''}
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderTable(d) {
+  if (!d.months.length) {
+    document.getElementById("monthlyTable").innerHTML = "<tr><td>月次データなし</td></tr>";
+    return;
+  }
+  const gp = d.annual.gp;
+  let html = `<thead><tr>
+    <th>月</th><th>粗利</th>
+    <th>交際費</th><th>交際費率</th><th>目標(15%)</th>
+    <th>会議費</th><th>会議費率</th><th>目標(1%)</th>
+    <th>交通費</th><th>交通費率</th><th>目標(3.5%)</th>
+  </tr></thead><tbody>`;
+
+  d.months.forEach(r => {
+    const gpVal = r.gp;
+    const entR = gpVal > 0 ? r.ent / gpVal * 100 : null;
+    const meetR = gpVal > 0 ? r.meet / gpVal * 100 : null;
+    const travR = gpVal > 0 ? r.trav / gpVal * 100 : null;
+    const entBM = gpVal > 0 ? gpVal * 0.15 : 0;
+    const meetBM = gpVal > 0 ? gpVal * 0.01 : 0;
+    const travBM = gpVal > 0 ? gpVal * 0.035 : 0;
+
+    const cls = (actual, target) => {
+      if (gpVal <= 0) return "";
+      return actual > target ? "over-cell" : "ok-cell";
+    };
+
+    html += `<tr>
+      <td>${r.m}</td>
+      <td>${fmtYen(gpVal)}</td>
+      <td>${fmtYen(r.ent)}</td>
+      <td class="${cls(entR, 15)}">${entR !== null ? entR.toFixed(1) + '%' : '-'}</td>
+      <td>${gpVal > 0 ? fmtYen(Math.round(entBM)) : '-'}</td>
+      <td>${fmtYen(r.meet)}</td>
+      <td class="${cls(meetR, 1)}">${meetR !== null ? meetR.toFixed(1) + '%' : '-'}</td>
+      <td>${gpVal > 0 ? fmtYen(Math.round(meetBM)) : '-'}</td>
+      <td>${fmtYen(r.trav)}</td>
+      <td class="${cls(travR, 3.5)}">${travR !== null ? travR.toFixed(1) + '%' : '-'}</td>
+      <td>${gpVal > 0 ? fmtYen(Math.round(travBM)) : '-'}</td>
+    </tr>`;
+  });
+
+  // Annual total row
+  const a = d.annual;
+  html += `<tr style="font-weight:700;background:#f8fafc">
+    <td>年間合計</td>
+    <td>${fmtYen(a.gp)}</td>
+    <td>${fmtYen(a.entertainment)}</td>
+    <td class="${a.entertainment/a.gp > 0.15 ? 'over-cell' : 'ok-cell'}">${(a.entertainment/a.gp*100).toFixed(1)}%</td>
+    <td>${fmtYen(Math.round(a.gp * 0.15))}</td>
+    <td>${fmtYen(a.meeting)}</td>
+    <td class="${a.meeting/a.gp > 0.01 ? 'over-cell' : 'ok-cell'}">${(a.meeting/a.gp*100).toFixed(1)}%</td>
+    <td>${fmtYen(Math.round(a.gp * 0.01))}</td>
+    <td>${fmtYen(a.travel)}</td>
+    <td class="${a.travel/a.gp > 0.035 ? 'over-cell' : 'ok-cell'}">${(a.travel/a.gp*100).toFixed(1)}%</td>
+    <td>${fmtYen(Math.round(a.gp * 0.035))}</td>
+  </tr>`;
+
+  html += "</tbody>";
+  document.getElementById("monthlyTable").innerHTML = html;
+}
+
+function renderCharts(d) {
+  Object.values(charts).forEach(c => c.destroy());
+  charts = {};
+
+  if (!d.months.length) return;
+
+  const labels = d.months.map(r => r.m);
+  const gpData = d.months.map(r => r.gp);
+
+  // Chart 1: GP bar + cumulative line
+  const cumGP = [];
+  gpData.reduce((sum, v, i) => { cumGP[i] = sum + v; return cumGP[i]; }, 0);
+
+  charts.gp = new Chart(document.getElementById("chartGP"), {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [
+        { label: "月次粗利", data: gpData, backgroundColor: gpData.map(v => v >= 0 ? "rgba(59,130,246,.6)" : "rgba(239,68,68,.6)"), order: 2 },
+        { label: "累計粗利", data: cumGP, type: "line", borderColor: "#8b5cf6", backgroundColor: "transparent", borderWidth: 2, pointRadius: 3, order: 1 }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: "bottom" } },
+      scales: { y: { ticks: { callback: v => (v/1e6).toFixed(0) + "M" } } }
+    }
+  });
+
+  // Chart 2: Benchmark comparison (annual bar)
+  const a = d.annual;
+  charts.benchmark = new Chart(document.getElementById("chartBenchmark"), {
+    type: "bar",
+    data: {
+      labels: ["交際費", "会議費", "旅費交通費"],
+      datasets: [
+        { label: "実績", data: [a.entertainment, a.meeting, a.travel], backgroundColor: ["rgba(249,115,22,.7)", "rgba(139,92,246,.7)", "rgba(16,185,129,.7)"] },
+        { label: "ベンチマーク", data: [a.gp*0.15, a.gp*0.01, a.gp*0.035], backgroundColor: ["rgba(249,115,22,.25)", "rgba(139,92,246,.25)", "rgba(16,185,129,.25)"], borderColor: ["#f97316","#8b5cf6","#10b981"], borderWidth: 2 }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: "bottom" } },
+      scales: { y: { ticks: { callback: v => (v/1e6).toFixed(1) + "M" } } }
+    }
+  });
+
+  // Chart 3: Monthly expenses stacked
+  charts.expenses = new Chart(document.getElementById("chartExpenses"), {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [
+        { label: "交際費", data: d.months.map(r => r.ent), backgroundColor: "rgba(249,115,22,.7)" },
+        { label: "会議費", data: d.months.map(r => r.meet), backgroundColor: "rgba(139,92,246,.7)" },
+        { label: "交通費", data: d.months.map(r => r.trav), backgroundColor: "rgba(16,185,129,.7)" },
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: "bottom" } },
+      scales: { x: { stacked: true }, y: { stacked: true, ticks: { callback: v => (v/1e3).toFixed(0) + "K" } } }
+    }
+  });
+
+  // Chart 4: Pie
+  charts.pie = new Chart(document.getElementById("chartPie"), {
+    type: "doughnut",
+    data: {
+      labels: ["交際費", "会議費", "交通費", "その他販管費"],
+      datasets: [{
+        data: [a.entertainment, a.meeting, a.travel, a.gp - a.entertainment - a.meeting - a.travel],
+        backgroundColor: ["#f97316", "#8b5cf6", "#10b981", "#e5e7eb"]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: "bottom" } }
+    }
+  });
+}
+
+// Init
+document.getElementById("lastUpdate").textContent = new Date().toLocaleDateString("ja-JP");
+render();
+</script>
+</body>
+</html>
