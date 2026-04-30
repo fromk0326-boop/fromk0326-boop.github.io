@@ -114,22 +114,23 @@
   <!-- Header -->
   <div class="header">
     <h1>StartPass × Claude Code — 24業務 1.5ヶ月完了計画</h1>
-    <p class="subtitle">畠山謙人税理士事務所 | MTG資料 | 2026年4月17日 &nbsp;｜&nbsp; 開始: 今日（4/17） → 完了目標: <strong>6月1日</strong></p>
+    <p class="subtitle">畠山謙人税理士事務所 | 進捗ダッシュボード | 2026年4月30日現在 &nbsp;｜&nbsp; 開始: 4/17 → 完了目標: <strong>6月1日</strong></p>
     <div class="agenda">
-      <span class="agenda-item">① 全体計画のご報告</span>
-      <span class="agenda-item">② 実装済みのデモ（No.8 外注費推移）</span>
-      <span class="agenda-item">③ 次のアクション確認</span>
+      <span class="agenda-item">✓ No.8 外注費推移</span>
+      <span class="agenda-item">✓ No.13 月末支払リスト</span>
+      <span class="agenda-item">✓ No.16 経費精算リマインド</span>
+      <span class="agenda-item">▶ 次: No.14 家賃リマインド</span>
     </div>
   </div>
 
   <!-- Progress Bar -->
   <div style="background:var(--card);border-radius:10px;padding:16px 24px;box-shadow:var(--shadow);margin-bottom:20px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-      <span style="font-size:.85rem;font-weight:700;">全体進捗 &nbsp;<span style="color:var(--green);">1</span> / 15 業務 完了（自動化対象のみ）</span>
-      <span style="font-size:.8rem;color:var(--muted);">完了目標: 2026年6月1日（残り45日）</span>
+      <span style="font-size:.85rem;font-weight:700;">全体進捗 &nbsp;<span style="color:var(--green);">3</span> / 15 業務 完了（自動化対象のみ）</span>
+      <span style="font-size:.8rem;color:var(--muted);">完了目標: 2026年6月1日（残り32日）</span>
     </div>
     <div style="background:#e5e7eb;border-radius:999px;height:10px;overflow:hidden;">
-      <div style="width:4.2%;background:var(--green);height:100%;border-radius:999px;transition:width .3s;"></div>
+      <div style="width:20%;background:var(--green);height:100%;border-radius:999px;transition:width .3s;"></div>
     </div>
     <div style="display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted);margin-top:6px;">
       <span>4/17 スタート</span>
@@ -144,13 +145,13 @@
   <div class="cards">
     <div class="card green">
       <div class="card-label">現在の進捗（自動化対象）</div>
-      <div class="card-value">1 / 15</div>
-      <div class="card-sub">No.8 外注費推移（テスト完了）</div>
+      <div class="card-value">3 / 15</div>
+      <div class="card-sub">No.8・13・16 完了</div>
     </div>
     <div class="card">
       <div class="card-label">完了目標日</div>
       <div class="card-value">6月1日</div>
-      <div class="card-sub">今日から1.5ヶ月（45日）後</div>
+      <div class="card-sub">残り32日</div>
     </div>
     <div class="card orange">
       <div class="card-label">完了後 月削減効果</div>
@@ -158,9 +159,9 @@
       <div class="card-sub">月あたり ≒ 13時間</div>
     </div>
     <div class="card purple">
-      <div class="card-label">直近〆切</div>
-      <div class="card-value">4/25</div>
-      <div class="card-sub">No.13 月末支払リスト（来週）</div>
+      <div class="card-label">次のマイルストーン</div>
+      <div class="card-value">5/9</div>
+      <div class="card-sub">Phase 1 完了・勉強会直前</div>
     </div>
   </div>
 
@@ -174,8 +175,8 @@
         <p class="period">〜 2026年5月末</p>
         <ul>
           <li>No.8 外注費推移 <span style="color:var(--green);font-weight:700;">✓完了</span></li>
-          <li>No.13 月末支払リスト差分検出</li>
-          <li>No.16 経費精算リマインド</li>
+          <li>No.13 月末支払リスト <span style="color:var(--green);font-weight:700;">✓完了</span></li>
+          <li>No.16 経費精算リマインド <span style="color:var(--green);font-weight:700;">✓完了</span></li>
         </ul>
         <div class="effect">月削減: +120分</div>
       </div>
@@ -227,15 +228,15 @@
         </tr>
         <tr>
           <td class="no-col">13</td>
-          <td>月末支払リスト共有 <span style="font-size:.75rem;color:var(--orange);font-weight:700;">← 来週4/25〆</span></td>
-          <td><span class="badge badge-auto">自動化可</span></td>
+          <td><strong>月末支払リスト共有</strong> <span style="font-size:.75rem;color:var(--muted);">Slack通知: Webhook URL待ち</span></td>
+          <td><span class="badge badge-done">✓ 完了</span></td>
           <td>Phase 1</td>
           <td class="effect-col">60分/月</td>
         </tr>
         <tr>
           <td class="no-col">16</td>
-          <td>経費精算・勤怠リマインド</td>
-          <td><span class="badge badge-auto">自動化可</span></td>
+          <td><strong>経費精算・勤怠リマインド</strong> <span style="font-size:.75rem;color:var(--muted);">Slack通知: Webhook URL待ち</span></td>
+          <td><span class="badge badge-done">✓ 完了</span></td>
           <td>Phase 1</td>
           <td class="effect-col">30分/月</td>
         </tr>
@@ -403,21 +404,21 @@
         </div>
         <div class="tl-item">
           <div class="tl-dot done"></div>
-          <div class="tl-date">2026/4/17（本日）← 今ここ</div>
+          <div class="tl-date">2026/4/17（完了）</div>
           <div class="tl-title">進捗MTG・No.8 外注費推移デモ</div>
           <div class="tl-desc">計画報告 / freee API動作確認済み / 外注費19,496,080円・25取引先を自動集計</div>
         </div>
         <div class="tl-item">
-          <div class="tl-dot next"></div>
-          <div class="tl-date">2026/4/25（来週）🔴</div>
-          <div class="tl-title">No.13 月末支払リスト — 初回実行</div>
-          <div class="tl-desc">freee支払管理レポート取得→前月差分検出→Slack通知（今週中に実装完了予定）</div>
+          <div class="tl-dot done"></div>
+          <div class="tl-date">2026/4/30（本日）← 今ここ</div>
+          <div class="tl-title">定例MTG・No.13/16 実装完了</div>
+          <div class="tl-desc">月末支払リスト（40社・¥9,623,317）Spreadsheet反映完了 / 経費精算リマインダー実装済 / Slack Webhook URL取得待ち</div>
         </div>
         <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-date">2026/5/9（3週間後）</div>
+          <div class="tl-dot next"></div>
+          <div class="tl-date">2026/5/9（10日後）🟠</div>
           <div class="tl-title">Phase 1 完了</div>
-          <div class="tl-desc">No.8/13/16/14/6 完了 / 月120分削減達成 / 勉強会（20名）直前</div>
+          <div class="tl-desc">No.8/13/16 完了済 → No.14 家賃リマインド実装 / 月120分削減達成 / 勉強会（20名）直前</div>
         </div>
         <div class="tl-item">
           <div class="tl-dot"></div>
@@ -473,23 +474,22 @@
         <div></div><div></div><div></div><div></div><div></div>
       </div>
 
-      <!-- No.13 W1 -->
+      <!-- No.13 done -->
       <div style="display:grid;grid-template-columns:180px repeat(6,1fr);gap:2px;align-items:center;">
-        <div style="font-weight:600;padding:6px 8px;background:#fff;border-radius:4px;border-left:3px solid var(--orange);">
+        <div style="font-weight:600;padding:6px 8px;background:#f0fdf4;border-radius:4px;border-left:3px solid var(--green);">
           No.13 月末支払リスト
         </div>
-        <div style="background:#fed7aa;color:#9a3412;border-radius:4px;padding:4px 6px;text-align:center;font-size:.7rem;font-weight:700;">実装 🔴4/25〆</div>
+        <div style="background:#d1fae5;color:#065f46;border-radius:4px;padding:4px 6px;text-align:center;font-weight:700;font-size:.7rem;">✓ 完了</div>
         <div></div><div></div><div></div><div></div><div></div>
       </div>
 
-      <!-- No.16 W2 -->
+      <!-- No.16 done -->
       <div style="display:grid;grid-template-columns:180px repeat(6,1fr);gap:2px;align-items:center;">
-        <div style="font-weight:600;padding:6px 8px;background:#fff;border-radius:4px;border-left:3px solid var(--blue);">
+        <div style="font-weight:600;padding:6px 8px;background:#f0fdf4;border-radius:4px;border-left:3px solid var(--green);">
           No.16 経費精算リマインド
         </div>
-        <div></div>
-        <div style="background:#dbeafe;color:#1d4ed8;border-radius:4px;padding:4px 6px;text-align:center;font-size:.7rem;">実装</div>
-        <div></div><div></div><div></div><div></div>
+        <div style="background:#d1fae5;color:#065f46;border-radius:4px;padding:4px 6px;text-align:center;font-weight:700;font-size:.7rem;">✓ 完了</div>
+        <div></div><div></div><div></div><div></div><div></div>
       </div>
 
       <!-- No.14 W2 -->
@@ -602,7 +602,7 @@
   </div>
 
   <div class="footer">
-    StartPass × 畠山謙人税理士事務所 | Claude Code 導入計画 | 2026-04-17
+    StartPass × 畠山謙人税理士事務所 | Claude Code 導入計画 | 最終更新: 2026-04-30
   </div>
 </div>
 </body>
