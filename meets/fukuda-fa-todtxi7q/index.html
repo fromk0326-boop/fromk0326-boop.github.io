@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>面談議事録 — 2026年5月11日 福田FA accounting</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Meiryo UI", "メイリオ", sans-serif;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #1a1a1a;
+      background: #f5f5f5;
+      padding: 32px 16px;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.08);
+      padding: 48px 56px;
+    }
+
+    /* ヘッダー */
+    .doc-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a2e;
+      border-bottom: 3px solid #2d6cdf;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 4px 16px;
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 40px;
+    }
+    .meta dt { font-weight: 600; color: #333; white-space: nowrap; }
+
+    /* セクション */
+    h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      background: #2d6cdf;
+      padding: 7px 14px;
+      border-radius: 4px;
+      margin: 36px 0 14px;
+    }
+
+    h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #2d6cdf;
+      border-left: 4px solid #2d6cdf;
+      padding-left: 10px;
+      margin: 28px 0 10px;
+    }
+
+    p { margin-bottom: 10px; }
+
+    ul {
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+    ul li { margin-bottom: 4px; }
+
+    /* テーブル */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+    thead tr { background: #eef3fb; }
+    th {
+      padding: 8px 10px;
+      text-align: left;
+      font-weight: 700;
+      border: 1px solid #d0d8e8;
+      color: #2d6cdf;
+      white-space: nowrap;
+    }
+    td {
+      padding: 7px 10px;
+      border: 1px solid #e0e0e0;
+      vertical-align: top;
+    }
+    tbody tr:nth-child(even) { background: #f9fafc; }
+
+    /* ステータスバッジ */
+    .ok    { color: #1a7f37; font-weight: 700; }
+    .part  { color: #bf8700; font-weight: 700; }
+    .none  { color: #cf222e; font-weight: 700; }
+    .wait  { color: #6e7781; font-weight: 700; }
+
+    /* アクションテーブル */
+    .action-table th { background: #f0f0f0; color: #333; }
+
+    /* 回答案ブロック */
+    .answer-block {
+      background: #f8faff;
+      border: 1px solid #d0d8e8;
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+    }
+    .answer-block h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #2d6cdf;
+      margin-bottom: 10px;
+    }
+    .answer-block ul { margin-bottom: 8px; }
+    .answer-block p  { margin-bottom: 8px; }
+
+    code {
+      font-family: "Consolas", monospace;
+      font-size: 12px;
+      background: #f0f4f8;
+      border: 1px solid #d0d8e8;
+      border-radius: 3px;
+      padding: 1px 5px;
+    }
+    pre {
+      background: #1a1a2e;
+      color: #c9d1d9;
+      font-family: "Consolas", monospace;
+      font-size: 12px;
+      padding: 14px 16px;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 10px 0 12px;
+      line-height: 1.6;
+    }
+
+    /* 判断軸テーブル内 */
+    .judge-table th { background: #1a1a2e; color: #fff; }
+    .judge-table td:first-child { color: #1a7f37; font-weight: 600; }
+    .judge-table td:last-child  { color: #cf222e; }
+
+    .note {
+      font-size: 12px;
+      color: #666;
+      background: #fffbe6;
+      border-left: 3px solid #f0c000;
+      padding: 8px 12px;
+      border-radius: 3px;
+      margin-top: 8px;
+    }
+
+    /* フッター */
+    footer {
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 1px solid #e0e0e0;
+      font-size: 11px;
+      color: #aaa;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <h1 class="doc-title">面談議事録</h1>
+
+  <dl class="meta">
+    <dt>日時</dt><dd>2026年5月11日（月）13:00–13:30</dd>
+    <dt>参加者</dt><dd>畠山謙人（畠山謙人税理士事務所）、福田さん（FA accounting）</dd>
+    <dt>形式</dt><dd>オンライン</dd>
+    <dt>目的</dt><dd>初回キックオフ。業務設計・AI活用・集客戦略のヒアリング</dd>
+  </dl>
+
+  <!-- ===== 1 ===== -->
+  <h2>1. マネーフォワード（MF）の現状共有</h2>
+  <ul>
+    <li>現状はデータ引き取りのみ。登録機能はなく効率化が進んでいない</li>
+    <li>MF MCPは出たが「使い物にならない」（福田さんの見解）</li>
+    <li><strong>6月にAPI公開予定</strong>。freeeと同等の自動登録機能が出てくる見込み</li>
+    <li><strong>7月にMF独自AIリリース予定</strong>。どこまで使えるかが今後の評価ポイント</li>
+    <li>freeeはリーダーアカウントで傘下事業所を一括管理できるが、MFは事業所ごとに個別APIキー付与が必要</li>
+    <li>福田さんは現状2社のみAPI連携。残り8社はオーナーへのオンボーディングが難航中</li>
+    <li>freeeエージェントもMCPを廃止しない方針。会計データの集計・レポーティング用途でMCPは残る（直前のfreee担当者との打ち合わせ情報）</li>
+  </ul>
+
+  <!-- ===== 2 ===== -->
+  <h2>2. 一人運営60社の実態</h2>
+  <ul>
+    <li><strong>スタッフなし、業務委託なし。</strong>完全に一人で運営</li>
+    <li>面談は定例でなく「アジェンダがある時のみ」。税金・資金繰り・相談ごとが生じたタイミングで30分程度</li>
+    <li><strong>月次仮締め報告は行っていない。</strong>顧客から求められていないため</li>
+    <li>「1社契約しても固定時間が増えない設計」が一人運営の核心</li>
+    <li>顧客層：東京渋谷のIT系スタートアップ、25歳前後、VC調達直後（SEED期）が中心。赤字が多く消費税も1〜2期目でないケースがほとんど</li>
+    <li>個人顧客は10人程度。残りは全員法人</li>
+  </ul>
+
+  <!-- ===== 3 ===== -->
+  <h2>3. AI自動仕訳の運用実態</h2>
+  <ul>
+    <li><strong>自動仕訳の目標値：7〜8割。</strong>残り3割は手動介入が必要</li>
+    <li>手動が残る主なケース：給与・源泉仕訳、複合仕訳、コンビニ等の課税区分混在（課税10%・8%・非課税が同一取引先で混在）</li>
+    <li>クレカ明細は課税区分が判断できないので<strong>割り切り運用</strong>（コンビニは課税でまとめる等）</li>
+    <li>資料が揃わない顧客が多いため、<strong>1万円以下の少額は簡易特例で割り切り。</strong>インボイス番号も割り切り</li>
+    <li>「仕入れ税額控除をいくら取れなかったか報告してない。言ったところで向こうも出せないから」</li>
+    <li>将来構想：領収書が揃った場合に仕訳帳と照合してズレをAIでピックアップする仕組みを検討中（未実装）</li>
+  </ul>
+
+  <!-- ===== 4 ===== -->
+  <h2>4. AI連携のセキュリティ・リスク整理</h2>
+  <ul>
+    <li><strong>畠山先生の現状連携：</strong>Google関係・Slack・Notionは接続済み</li>
+    <li><strong>福田さんの現状連携：</strong>カレンダーのみ。メール・Slack・Google Driveは未接続（セキュリティが心配）</li>
+    <li><strong>プロンプトインジェクション</strong>の存在は認識済み。メール経由で見えない文字に攻撃コマンドを埋め込み、AIが実行してしまう攻撃</li>
+    <li>「接続しているだけ」では流出リスクは限定的。AIがコンテンツを処理すると外部サーバーに渡るため、ハッキング時は流出リスクあり</li>
+    <li>具体的な対策方針は未整理。セキュリティ専門家（勉強会の知り合い）に確認予定</li>
+    <li>「情報が最も詰まっているメールだけは連携しない」という切り分けも一つの判断軸として言及</li>
+  </ul>
+
+  <!-- ===== 5 ===== -->
+  <h2>5. 集客戦略</h2>
+  <ul>
+    <li><strong>X：</strong>毎日・タイムリーに届けられるメディア。税理士のX発信者が少ないニッチ。3000フォロワーから手応えを感じた</li>
+    <li><strong>note：</strong>GoogleのSEOが強い。Google検索で自分の記事が上位表示。AIとの相性も良く、信頼資産として蓄積できる</li>
+    <li><strong>Podcast：</strong>ファン獲得・言語化の訓練に有効。MCと編集者を月10〜13万で1年間外注して継続。現在約400フォロワー（コミット強いファン層）</li>
+    <li><strong>発信の位置づけ：</strong>言語化とリード獲得の両方</li>
+    <li><strong>ターゲット：</strong>東京渋谷・IT系・VC調達・社会人経験なし25歳層</li>
+    <li><strong>継続の仕組み：</strong>自己流のX以外は「外部スタッフを使う・お金を払う」ことで強制力を作った（Podcast MC・note顧問 月5万円・約1年半）</li>
+    <li><strong>転換点：</strong>2022年NFTブームに乗って発信→フォロワー3000人→IT企業家層とのつながりが生まれた</li>
+    <li><strong>独立前から顧客開拓を意識。</strong>前職入社時に「自分の顧客を持ってくること」を条件として交渉していた</li>
+  </ul>
+
+  <!-- ===== 6 ===== -->
+  <h2>6. Taxsys・Comet（後日フォロー予定だったが会話で触れた）</h2>
+  <ul>
+    <li><strong>Taxsys：</strong>OCRエンジン（Gemini使用）。月額制で枚数従量課金でない点がコスト的に優位。精度はAIなので確認は必要</li>
+    <li><strong>Streamd：</strong>人が目視確認するためほぼ100%の精度。インボイス対応。精度重視なら優位</li>
+    <li><strong>Comet（Perplexity提供のブラウザ型AI）：</strong>昨年freee操作に活用していたが、Chrome拡張でClaude等が使えるようになったため現在は不使用</li>
+  </ul>
+
+  <!-- ===== 7 ===== -->
+  <h2>7. 次のアクション</h2>
+  <table class="action-table">
+    <thead>
+      <tr><th>アクション</th><th>担当</th><th>期限</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>動画コンテンツリンクを共有</td><td>畠山先生</td><td>次回チャット時</td></tr>
+      <tr><td>面談前メモの残論点をチャットで回答</td><td>畠山先生</td><td>随時</td></tr>
+      <tr><td>セキュリティ専門家にプロンプトインジェクション対策を確認</td><td>福田さん</td><td>随時</td></tr>
+      <tr><td>今後は基本チャット、足りない部分を面談で補う形式に</td><td>両者</td><td>継続</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ===== 回答状況レポート ===== -->
+  <h2>面談前メモ 回答状況レポート</h2>
+
+  <h3>当日論点</h3>
+  <table>
+    <thead>
+      <tr><th>#</th><th>論点</th><th>質問内容</th><th>状況</th><th>概要</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1-1</td><td>一人運営</td><td>業務委託（記帳代行等）の活用状況</td>
+        <td class="ok">✅ 回答済み</td>
+        <td>スタッフなし・業務委託なし。完全に一人</td>
+      </tr>
+      <tr>
+        <td>1-2</td><td>一人運営</td><td>一人を成立させている本質的工夫</td>
+        <td class="ok">✅ 回答済み</td>
+        <td>固定時間が生まれない顧客設計・面談は必要時のみ・顧客層の選択（初期スタートアップ）</td>
+      </tr>
+      <tr>
+        <td>1-3</td><td>一人運営</td><td>法人/個人/業種の構成比率</td>
+        <td class="part">△ 部分回答</td>
+        <td>個人は10人程度、残りは全員法人。業種はIT系スタートアップ中心（詳細比率は未確認）</td>
+      </tr>
+      <tr>
+        <td>1-4</td><td>一人運営</td><td>面談・報告の頻度と標準設計</td>
+        <td class="ok">✅ 回答済み</td>
+        <td>定例なし。アジェンダがある時のみ。月次仮締め報告も基本行わない</td>
+      </tr>
+      <tr>
+        <td>2-1</td><td>AI自動化</td><td>自動仕訳の実体感（何%通るか）</td>
+        <td class="ok">✅ 回答済み</td>
+        <td>7〜8割自動、残り3割は手動（給与・複合仕訳・課税区分混在等）</td>
+      </tr>
+      <tr>
+        <td>2-2</td><td>AI自動化</td><td>ルール設計の思想（網羅性 vs 80/20）</td>
+        <td class="ok">✅ 回答済み</td>
+        <td>80/20割り切り。クレカ明細・コンビニ課税区分は割り切り運用</td>
+      </tr>
+      <tr>
+        <td>2-3</td><td>AI自動化</td><td>新規取引・例外パターンの検知と取り込みループ</td>
+        <td class="none">❌ 未回答</td>
+        <td>会話の流れで触れられなかった</td>
+      </tr>
+      <tr>
+        <td>3-1</td><td>セキュリティ</td><td>Claude Code連携の「踏み込む線・引く線」</td>
+        <td class="part">△ 部分回答</td>
+        <td>Google/Slack/Notion連携OK。メールはプロンプトインジェクションが怖いと認識。明確な設計基準はまだなし</td>
+      </tr>
+      <tr>
+        <td>3-2</td><td>セキュリティ</td><td>プロンプトインジェクション等のリスク整理・実事例</td>
+        <td class="part">△ 部分回答</td>
+        <td>リスクの存在は認識・共有した。具体的な対策方針は未整理。専門家に確認予定</td>
+      </tr>
+      <tr>
+        <td>3-3</td><td>セキュリティ</td><td>税理士法38条の射程と外部AIへの判断軸</td>
+        <td class="none">❌ 未回答</td>
+        <td>話題に上がらなかった</td>
+      </tr>
+      <tr>
+        <td>4-1</td><td>集客</td><td>X・noteの位置づけ（言語化のため？リード獲得？）</td>
+        <td class="ok">✅ 回答済み</td>
+        <td>両方。言語化・資産蓄積であり、リード獲得にも直結している</td>
+      </tr>
+      <tr>
+        <td>4-2</td><td>集客</td><td>コンテンツの起点とリード転換動線</td>
+        <td class="ok">✅ 回答済み</td>
+        <td>ターゲット層（IT系25歳起業家）向けに発信→NFTブームを機にフォロワー増→紹介へ</td>
+      </tr>
+      <tr>
+        <td>4-3</td><td>集客</td><td>発信頻度の維持メカニズム</td>
+        <td class="ok">✅ 回答済み</td>
+        <td>外部スタッフ・顧問に費用を払い強制力を作る（Podcast MC月10〜13万、note顧問月5万）</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>後日チャットフォロー論点</h3>
+  <table>
+    <thead>
+      <tr><th>#</th><th>論点</th><th>状況</th><th>備考</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>後1</td><td>ルール表の具体的な形式</td><td class="none">❌ 未回答</td><td>後日チャットで確認予定</td></tr>
+      <tr><td>後2</td><td>課税/非課税混在取引先の運用例（コンビニ等）</td><td class="part">△ 部分回答</td><td>「割り切り」の方針は触れた。具体的なキーワード設定等は未確認</td></tr>
+      <tr><td>後3</td><td>顧問契約書のAI活用条項の文面</td><td class="none">❌ 未回答</td><td>後日チャットで共有予定</td></tr>
+      <tr><td>後4</td><td>業務ログ・作業ログ収集の仕組み</td><td class="none">❌ 未回答</td><td>後日チャットで共有予定</td></tr>
+      <tr><td>後5</td><td>Taxsys・Cometの活用方法</td><td class="ok">✅ 回答済み</td><td>会話の流れで触れた（上記6を参照）</td></tr>
+    </tbody>
+  </table>
+
+  <h3>リクエスト</h3>
+  <table>
+    <thead>
+      <tr><th>リクエスト</th><th>状況</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>視聴すべき動画コンテンツの紹介</td><td class="wait">△ 共有する旨を伝えたが未送付。要フォロー</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ===== 回答案 ===== -->
+  <h2>未回答・部分回答項目への回答案</h2>
+
+  <div class="answer-block">
+    <h4>2-3 新規取引・例外パターンの検知と取り込みループ</h4>
+    <p>現状、明示的なループ設計は持っていないが、以下のアプローチで補完している：</p>
+    <ul>
+      <li>月次処理の中で未分類・要確認明細をリストアップし、目視確認後にfreeeのルール登録に反映</li>
+      <li>freeeの自動学習機能で次回以降に自動適用される</li>
+    </ul>
+    <p>さらに自動化するなら：</p>
+    <ul>
+      <li>摘要キーワードと科目・税区分のルール表をgit管理し、新規パターンが出た際に「Claude提案→承認→ルール表更新」フローを組む</li>
+      <li>Claude Haiku APIに1件ずつ投げて判定根拠と共に候補を返させ、最終確認は畠山先生が行う設計</li>
+    </ul>
+  </div>
+
+  <div class="answer-block">
+    <h4>3-2（補足） プロンプトインジェクションへの具体的対策</h4>
+    <ol style="padding-left:18px; margin-bottom:8px;">
+      <li style="margin-bottom:6px"><strong>メールは接続しない：</strong>外部からの不審なコンテンツが直接AIに渡る最も危険な経路。Google Drive・Slack等より優先的に除外を検討</li>
+      <li style="margin-bottom:6px"><strong>MCPの権限はread-onlyを基本に：</strong>AIが自律的に書き込み・送信できる権限は最小化する。write操作は人間の承認を必須にする</li>
+      <li style="margin-bottom:6px"><strong>外部コンテンツを渡す際は最小化：</strong>「このメールの件名と差出人だけ教えて」のように情報を絞る。本文を丸ごと渡さない</li>
+      <li><strong>連携先の定期棚卸し：</strong>使っていないMCP接続は定期的に切断する</li>
+    </ol>
+  </div>
+
+  <div class="answer-block">
+    <h4>3-3 税理士法38条の射程と外部AIへの渡せる/渡せない判断軸</h4>
+    <p>税理士法38条は「業務上知り得た秘密の漏示禁止」。外部AIサーバーへの送信は形式上「漏示」に該当しうるが、以下の整理で実務対応が可能。</p>
+    <p><strong>Anthropicのリスク評価：</strong>APIの入出力データはモデル学習に使用しないことを利用規約に明記。通信はTLS暗号化、SOC2 Type II取得済み。</p>
+    <p><strong>弊所が採用している判断軸：</strong></p>
+    <table class="judge-table" style="margin-bottom:12px;">
+      <thead>
+        <tr><th>渡してよいもの</th><th>渡さないもの</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>摘要キーワード（パターン分類用）</td>
+          <td>具体的な取引先名・金額・口座番号</td>
+        </tr>
+        <tr>
+          <td>「この種類の取引は何費か」という判断ロジックの問い合わせ</td>
+          <td>生データの仕訳帳・試算表全体</td>
+        </tr>
+        <tr>
+          <td>一般的な税務知識の確認</td>
+          <td>顧客名が特定できる情報</td>
+        </tr>
+      </tbody>
+    </table>
+    <p><strong>契約書での手当て：</strong>顧問契約書に以下のAI活用条項を追記することを推奨。</p>
+    <div class="note">「業務遂行にあたりAIツールを使用する場合がある。外部AIサービスへのデータ送信は必要最小限とし、利用するサービスはAnthropicの利用規約に基づきデータが学習利用されない体制を採用している」</div>
+    <p style="margin-top:10px;">弊所の現行条項を後日チャットで共有する。</p>
+  </div>
+
+  <div class="answer-block">
+    <h4>後1 ルール表の具体的な形式</h4>
+    <p>弊所のclassify.pyで採用しているアプローチ：</p>
+    <pre>【形式】Markdownテーブル + Python辞書のハイブリッド
+
+【優先順位制御】
+1. 完全一致キーワード（最優先）
+2. 部分一致キーワード
+3. 金額ルール（1万円以下→会議費 等）
+4. LLM判断（Claude Haiku API）
+
+【例】
+摘要キーワード → 科目（税区分）
+"AWS"          → 通信費（税区分コード0：非課税）
+"freee"        → 通信費（税区分コード0）
+"○○食堂 ¥9,800"  → 会議費（課税10%）
+"○○食堂 ¥12,000" → 交際費（課税10%）</pre>
+  </div>
+
+  <div class="answer-block">
+    <h4>後3 顧問契約書のAI活用条項（弊所契約書 第16条の2 全文）</h4>
+    <p>弊所の顧問契約書（税務会計業務委託契約書）に組み込んでいるAI活用条項の全文は以下のとおり。福田さんの現行契約書との比較・追記の参考にどうぞ。</p>
+
+    <div style="background:#fff;border:2px solid #2d6cdf;border-radius:6px;padding:18px 22px;margin-top:12px;font-size:13px;line-height:1.9;">
+      <p style="font-weight:700;font-size:14px;margin-bottom:12px;color:#1a1a2e;">第16条の2（生成AIツールの利用）</p>
+
+      <p style="margin-bottom:10px;">依頼人は、税理士が本税務会計業務の遂行にあたり、生成AI（人工知能）ツール（Anthropic社のClaude、Google社のGemini等のサービスを含むがこれらに限られない。以下「生成AIツール」という。）を利用することについて、予め理解し、承諾する。</p>
+
+      <p style="margin-bottom:6px;font-weight:700;">2. 税理士は、生成AIツールを次の各号に定める業務に利用することができる。</p>
+      <ol style="padding-left:20px;margin-bottom:12px;">
+        <li>記帳代行業務（仕訳の分類、入力及び確認を含む。）</li>
+        <li>税務及び会計に関する調査並びに情報収集</li>
+        <li>依頼人からの質問又は相談に対する回答の作成及び補助</li>
+        <li>その他本税務会計業務の遂行に合理的に必要と認められる業務</li>
+      </ol>
+
+      <p style="margin-bottom:10px;">3. 依頼人は、前項の生成AIツールの利用に伴い、依頼人に関する情報（取引データ、財務情報、仕訳データ、取引先名等を含む。）が、生成AIツールを提供する事業者（以下「AIサービス提供者」という。）のサーバー（<strong>日本国外に所在するものを含む。</strong>）に送信される場合があることを予め理解し、承諾する。</p>
+
+      <p style="margin-bottom:6px;font-weight:700;">4. 税理士は、生成AIツールの利用にあたり、次の各号に定める事項を遵守するものとする。</p>
+      <ol style="padding-left:20px;margin-bottom:12px;">
+        <li><strong>AIサービス提供者との間で、依頼人の情報がAIの学習データとして使用されない設定又は契約条件を確保するよう努めること</strong></li>
+        <li>生成AIツールへの情報の入力を、本税務会計業務の遂行に合理的に必要な範囲に限定すること</li>
+        <li>生成AIツールが出力した結果については、税理士の責任において正確性及び妥当性を確認した上で使用すること</li>
+        <li>前条（秘密情報の取扱い）に定める義務は、生成AIツールの利用においても適用されること</li>
+      </ol>
+
+      <p>5. 生成AIツールの利用に起因し又は関連して依頼人に損害が生じた場合における税理士の責任は、第14条（損害賠償）の規定に従うものとする。</p>
+    </div>
+
+    <div style="background:#fffbe6;border-left:4px solid #d4af37;padding:10px 14px;margin-top:14px;font-size:12px;border-radius:3px;">
+      <strong>ポイント整理（3条の対応）</strong><br>
+      ① 「日本国外サーバーへの送信」について依頼人の事前同意を取得（第3項）<br>
+      ② 「学習データとして使用されない設定を確保するよう努める」義務を税理士側に課す（第4項1号）<br>
+      ③ 秘密情報の守秘義務（第16条）はAI利用においても適用される旨を明示（第4項4号）<br>
+      ④ AI起因の損害賠償は第14条（上限：支払済み報酬の合計額）に準拠
+    </div>
+  </div>
+
+  <div class="answer-block">
+    <h4>後4 業務ログ・作業ログ収集の仕組み</h4>
+    <p>弊所はlog.jsonlにClaude Codeが作業完了ごとに自動追記する形式を採用：</p>
+    <pre>{
+  "date": "2026-05-11",
+  "category": "顧問先対応",
+  "task": "○○社 月次仕訳チェック",
+  "manual_minutes": 30,
+  "auto_minutes": 5,
+  "saved_minutes": 25,
+  "outcome": "未分類3件を確認・登録完了",
+  "x_potential": false
+}</pre>
+    <p>「AI導入でどれだけ時間を削減したか」を定量的に記録でき、顧問先へのAI活用の価値説明や、サービス料金改定の根拠資料としても活用できる。</p>
+  </div>
+
+  <footer>畠山謙人税理士事務所 ・ 作成: 2026-05-11 ・ 機密情報。外部共有は要承認</footer>
+</div>
+</body>
+</html>
