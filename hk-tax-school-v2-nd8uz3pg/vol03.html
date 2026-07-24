@@ -286,7 +286,7 @@
     <span class="course-nav-label">📚 コース全体</span>
     <a class="course-pill" href="index.html">第1回</a>
     <a class="course-pill current" href="vol03.html">第3回</a>
-    <a class="course-pill soon" href="vol05.html">第5回</a>
+    <a class="course-pill" href="vol05.html">第5回</a>
     <a class="course-pill soon" href="vol07.html">第7回</a>
     <a class="course-pill soon" href="vol09.html">第9回</a>
     <a class="course-pill soon" href="update01.html">アプデ①</a>
@@ -556,8 +556,8 @@ https://beta.mcp.developers.biz.moneyforward.com/mcp/ca/v3
       <div class="box howto">
         <div class="box-h">📋 進め方（当日・freee／MF共通）</div>
         <ol>
-          <li>配布キット（GitHubの配布用リポジトリ）に入っている<b>「勘定科目ルール.md」（ルール表のひな形）</b>を、作業用フォルダ（例：ドキュメント内の「AI経理体験」フォルダ）にコピーして置く（キットの受け取り方は<a href="#faq">FAQ</a>参照。第1回でテンプレートを受け取った方は、その <code>haifuyou</code> フォルダの一番上に入っています）</li>
-          <li>Claude Codeでそのフォルダを開く</li>
+          <li>配布キット（GitHubの配布用リポジトリ）に入っている<b>「勘定科目ルール.md」（ルール表のひな形）</b>を用意する（キットの受け取り方は<a href="#faq">FAQ</a>参照。第1回でテンプレートを受け取った方は、その <code>haifuyou</code> フォルダの一番上に入っています）</li>
+          <li>Claude Codeでキットのフォルダを開く。<b>ブラウザ版Claude Code（claude.ai/code）の方は、フォークした配布用リポジトリをセッションで選ぶだけ</b>です（ルール表は最初から入っているので、コピーやダウンロードは不要）</li>
           <li>自分の会計ソフトのコピペ文（下のAまたはM）を送信する</li>
           <li>一覧表を確認して、OKな明細だけ承認 → 計上</li>
           <li>仕上げのコピペ文（R）で、今日の「新顔」をルール表に追加する</li>
@@ -640,6 +640,7 @@ freeeの「自動で経理」に溜まっている
         <summary>📦 配布キット「freeeオート経理（体験版）」で畠山ルートを試す（後日の自主トレ用）</summary>
         <div class="body">
           <p>キット一式は、<b>GitHubの配布用リポジトリ</b>（<a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">畠山式 配布用リポジトリ（haifuyou）</a>）で配布しています。第1回のテンプレート（セットアップフォルダ）と同じ場所です。<b>第1回でフォーク・ダウンロード済みの方は、その <code>haifuyou</code> フォルダがそのままキットです</b>（追加のダウンロード不要）。動かすには<b>Python</b>と<b>Anthropic APIキー</b>が必要です（下の手順に含まれています）。</p>
+          <p style="font-size:13.5px;color:var(--sub)">※ 教材の受け取り・ふだんの作業はブラウザ版Claude Code（claude.ai/code でフォークを選ぶだけ）でもOKですが、<b>このキットの実行（freee認証・スクリプト実行）は、ご自身のPCのClaude Code（デスクトップ）での利用を前提</b>にしています。</p>
           <table class="kit-table">
             <tr><th>ファイル</th><th>役割</th></tr>
             <tr><td><code>README.md</code></td><td>セットアップと実行の手順書（Claude Codeが読んで進めてくれます）</td></tr>
@@ -968,9 +969,8 @@ MCPで会計ソフト（freee／MF会計）に取引として登録してくだ�
         <summary>🛠 インストール手順（最初の1回だけ・約5分）</summary>
         <div class="body">
           <ol>
-            <li><b>ZIPをダウンロードする</b>：Google Driveの会員様配布資料フォルダ（テンプレート &gt; <b>第4回-記帳-追加分</b>）から <code>freee拡張ボタン.zip</code> をダウンロード</li>
-            <li><b>ZIPを展開する</b>：右クリック→「すべて展開」（Macはダブルクリック）。出てきた <code>freee-kamoku-buttons</code> フォルダ（ZIPと名前が違いますが、これで正しいです）を、ドキュメントなど<b>消さない場所</b>に移動する<br><span style="font-size:13px;color:var(--sub)">※ 拡張はこのフォルダを読み込み続けます。後でフォルダを消したり移動したりすると動かなくなります</span></li>
-            <li><b>Chromeで拡張を読み込む</b>：アドレスバーに <code>chrome://extensions</code> と入力して開く → 右上の「<b>デベロッパーモード</b>」をON → 「<b>パッケージ化されていない拡張機能を読み込む</b>」をクリック → 手順2のフォルダを選択</li>
+            <li><b>フォルダを用意する</b>：配布キット（<code>haifuyou</code> フォルダ）の中の <code>追加配布/freee-kamoku-buttons</code> フォルダがこの拡張の本体です。キットごと、ドキュメントなど<b>消さない場所</b>に置いてください<br><span style="font-size:13px;color:var(--sub)">※ 拡張はこのフォルダを読み込み続けます。後でフォルダを消したり移動したりすると動かなくなります。手元のキットに <code>追加配布</code> フォルダが無い方は、配布用リポジトリから最新版を取り直してください（Fork済みなら「Sync fork」→ Download ZIP）</span></li>
+            <li><b>Chromeで拡張を読み込む</b>：アドレスバーに <code>chrome://extensions</code> と入力して開く → 右上の「<b>デベロッパーモード</b>」をON → 「<b>パッケージ化されていない拡張機能を読み込む</b>」をクリック → 手順1のフォルダを選択</li>
             <li>一覧に「freee勘定科目ボタン」が出れば完了。freeeの「自動で経理」画面を開くと、右下にパネルが表示されます<br><span style="font-size:13px;color:var(--sub)">※ すでにfreeeのタブを開いていた場合は、そのタブを再読み込みしてください</span></li>
           </ol>
           <p>ストア審査を通さない「開発者向けの読み込み方式」なので、この手順になっています。</p>
@@ -1015,9 +1015,8 @@ MCPで会計ソフト（freee／MF会計）に取引として登録してくだ�
         <summary>🛠 インストール手順（最初の1回だけ・約5分）</summary>
         <div class="body">
           <ol>
-            <li><b>ZIPをダウンロードする</b>：Google Driveの会員様配布資料フォルダ（テンプレート &gt; <b>第4回-記帳-追加分</b>）から <code>MF拡張ボタン.zip</code> をダウンロード</li>
-            <li><b>ZIPを展開する</b>：右クリック→「すべて展開」（Macはダブルクリック）。出てきた <code>mf-bulk-select-extension</code> フォルダ（ZIPと名前が違いますが、これで正しいです）を、ドキュメントなど<b>消さない場所</b>に移動する</li>
-            <li><b>Chromeで拡張を読み込む</b>：<code>chrome://extensions</code> を開く → 右上の「<b>デベロッパーモード</b>」をON → 「<b>パッケージ化されていない拡張機能を読み込む</b>」→ 手順2のフォルダを選択</li>
+            <li><b>フォルダを用意する</b>：配布キット（<code>haifuyou</code> フォルダ）の中の <code>追加配布/mf-bulk-select-extension</code> フォルダがこの拡張の本体です。キットごと、ドキュメントなど<b>消さない場所</b>に置いてください</li>
+            <li><b>Chromeで拡張を読み込む</b>：<code>chrome://extensions</code> を開く → 右上の「<b>デベロッパーモード</b>」をON → 「<b>パッケージ化されていない拡張機能を読み込む</b>」→ 手順1のフォルダを選択</li>
             <li>MFの「連携サービスから入力」ページを開くと、「一括登録」ボタンの隣に「⚡ ルール一致を全選択」、画面右下に科目ボタンパネルが表示されます<br><span style="font-size:13px;color:var(--sub)">※ すでにMFのタブを開いていた場合は、そのタブを再読み込みしてください</span></li>
           </ol>
         </div>
@@ -1057,7 +1056,7 @@ MCPで会計ソフト（freee／MF会計）に取引として登録してくだ�
 
       <div class="box news">
         <div class="box-h">📦 配布場所</div>
-        2つのZIP（<code>freee拡張ボタン.zip</code>／<code>MF拡張ボタン.zip</code>）は、Google Driveの会員様配布資料フォルダの<b>「テンプレート &gt; 第4回-記帳-追加分」</b>に置いてあります（第3回の配布資料とはフォルダが別です）。ナンピはURLを開くだけなので配布物はありません。<a href="https://nanpi.pages.dev" target="_blank" rel="noopener">nanpi.pages.dev</a> をブックマークしてください。
+        2つの拡張は、<b>配布用リポジトリ（haifuyou）の <code>追加配布/</code> フォルダに同梱</b>しています。第1回・第3回でキットを受け取り済みの方は、キットを最新版にすれば手元に揃います（Fork済みなら「Sync fork」→ Download ZIP または「git pullして」とClaudeに依頼）。ナンピはURLを開くだけなので配布物はありません。<a href="https://nanpi.pages.dev" target="_blank" rel="noopener">nanpi.pages.dev</a> をブックマークしてください。
       </div>
     </section>
 
@@ -1124,7 +1123,7 @@ MCPで会計ソフト（freee／MF会計）に取引として登録してくだ�
       </details>
       <details>
         <summary>配布資料はいつ・どこでもらえますか？</summary>
-        <div class="body">メインの配布資料は<b>GitHubの配布用リポジトリ</b>（<a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">畠山式 配布用リポジトリ（haifuyou）</a>）で公開しています。中身は「勘定科目ルール.md（ルール表ひな形）」「MF会計MCPセットアップガイド」「freeeオート経理（体験版）キット（<code>scripts/</code>一式）」「第1回のセットアップ4点セット（<code>セットアップ/</code>）」です。受け取り方（GitHubアカウント作成→Fork→Download ZIP）は第1回課題ページの🎁セクションにまとめてあります。<b>サンプル請求書</b>と<b>追加配布のChrome拡張2本</b>（freee拡張ボタン.zip／MF拡張ボタン.zip）は、従来どおりGoogle Driveの会員様配布資料フォルダ（テンプレート &gt; 第3回-記帳／第4回-記帳-追加分）にあります（<a href="#extra">追加配布セクション</a>参照）。資料は受講後も手元に残り、フォークして自分の実務用に育てていけます。教材が更新されたら、自分のフォークの「Sync fork」ボタンで最新版を取り込めます。</div>
+        <div class="body">メインの配布資料は<b>GitHubの配布用リポジトリ</b>（<a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">畠山式 配布用リポジトリ（haifuyou）</a>）で公開しています。中身は「勘定科目ルール.md（ルール表ひな形）」「MF会計MCPセットアップガイド」「freeeオート経理（体験版）キット（<code>scripts/</code>一式）」「第1回のセットアップ4点セット（<code>セットアップ/</code>）」です。受け取り方（GitHubアカウント作成→Fork→Download ZIP、ブラウザ版はフォークを選ぶだけ）は第1回課題ページの🎁セクションにまとめてあります。<b>追加配布のChrome拡張2本もリポジトリの <code>追加配布/</code> フォルダに同梱</b>しています（<a href="#extra">追加配布セクション</a>参照）。<b>サンプル請求書（練習用PDF）だけ</b>は、Google Driveの会員様配布資料フォルダ（テンプレート &gt; 第3回-記帳）でのご案内です。資料は受講後も手元に残り、フォークして自分の実務用に育てていけます。教材が更新されたら、自分のフォークの「Sync fork」ボタンで最新版を取り込めます。</div>
       </details>
     </section>
 
