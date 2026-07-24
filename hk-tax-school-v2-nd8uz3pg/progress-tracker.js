@@ -1,5 +1,5 @@
 /* =====================================================================
-   ブートキャンプ進捗トラッカー（全課題ページ共通）
+   ブートキャンプ進捗トラッカー（全課題ページ共通）v2
    -----------------------------------------------------------------
    使い方（新しい課題ページに入れる手順は2行だけ）:
      <script>window.BOOTCAMP_PAGE='vol05';</script>
@@ -8,9 +8,16 @@
    チェックボックスは <input type="checkbox" data-step="N"> 形式であること
    （既存の課題ページはすべてこの形式）。
 
+   v2で増えたこと:
+   - 閲覧ビーコン: ページを開いた記録を1日1回送信（step='view'）。
+     「開いたけど1歩も進まなかった人」が運営側で見えるようになる
+   - 🙋詰まったSOS: 各ステップカードに「詰まったらここ」ボタンを自動挿入。
+     押すと「Claude Codeに相談する／畠山さん・ユニコさんに質問する」の
+     二択を選ぶまで閉じられないモーダルを表示し、選択を記録する
+     （step='sos{ステップ}-claude' / 'sos{ステップ}-human'）
+
    仕組み:
-   - 受講生が完了チェックを付け外しするたび、GAS（Google Apps Script）
-     経由でスプレッドシートに1行記録する
+   - 受講生の操作のたび、GAS（Google Apps Script）経由でスプレッドシートに1行記録する
    - 受講生の識別は「初回チェック時に聞くニックネーム」＋
      「ブラウザごとに自動発行する匿名ID」の組み合わせ
    - PROGRESS_API が空のときは何もしない（記録なしでページは普通に動く）
@@ -23,8 +30,7 @@ window.BOOTCAMP_PROGRESS_API = 'https://script.google.com/macros/s/AKfycbzZ5EyAR
 (function(){
   const API  = window.BOOTCAMP_PROGRESS_API;
   const PAGE = window.BOOTCAMP_PAGE || '';
-  const boxes = document.querySelectorAll('input[data-step]');
-  if(!API || !PAGE || boxes.length === 0) return; // 未設定 or 課題ページ以外では動かない
+  if(!API || !PAGE) return; // 未設定 or 課題ページ以外（ダッシュボード等）では動かない
 
   // ---- 受講生の識別 ----
   function getUid(){
@@ -55,6 +61,147 @@ window.BOOTCAMP_PROGRESS_API = 'https://script.google.com/macros/s/AKfycbzZ5EyAR
       });
     }catch(e){ /* 記録失敗は無視（受講生の操作を止めない） */ }
   }
+
+  /* =====================================================
+     閲覧ビーコン（1日1回だけ送る）
+     ===================================================== */
+  try{
+    const vkey = 'bootcamp_view_' + PAGE;
+    const today = new Date().toISOString().slice(0, 10);
+    if(localStorage.getItem(vkey) !== today){
+      localStorage.setItem(vkey, today);
+      send('view', true);
+    }
+  }catch(e){ /* localStorage不可の環境では黙って何もしない */ }
+
+  /* =====================================================
+     🙋 詰まったSOS
+     ===================================================== */
+  const PAGE_LABELS = {
+    vol01:'第1回', vol03:'第3回', vol05:'第5回', vol07:'第7回', vol09:'第9回',
+    update01:'アプデ①', update02:'アプデ②'
+  };
+  const pageLabel = PAGE_LABELS[PAGE] || PAGE;
+
+  function sosPromptText(stepTitle){
+    return 'いま「畠山式AI税理士ブートキャンプ ' + pageLabel + '」の「' + stepTitle + '」で詰まっています。\n' +
+'ただし、何が分からないのかを自分でもうまく説明できません。\n\n' +
+'あなたに先生役をお願いします。次の進め方で、私を「次の1手」まで連れて行ってください。\n\n' +
+'1. まず、状況を把握するための質問を1つずつして（一度に1問だけ）。\n' +
+'   私が答えやすいように、できるだけ A / B / C の選択式にして。\n' +
+'2. 画面の状態やエラー文を聞くときは「その画面のスクリーンショットを貼ってください」でOKにして。\n' +
+'3. 原因の見当がついたら、「いま起きていること」を専門用語を使わずに1〜2行で説明して。\n' +
+'4. そのうえで、次にやる操作を「1手だけ」教えて。一度に全部の手順を並べないで。\n' +
+'5. 1手ずつ「できた／できない」を確認しながら、解決まで付き合って。\n' +
+'6. 解決したら、「今回の詰まりの原因」と「次に同じことが起きたときの対処」を3行でまとめて。';
+  }
+  function humanTemplateText(stepTitle){
+    return '【質問】' + pageLabel + ' の「' + stepTitle + '」で詰まっています。\n' +
+'・やろうとしたこと：\n' +
+'・実際に起きたこと（出たメッセージ・画面の様子）：\n' +
+'・自分で試したこと：\n' +
+'（スクリーンショットを貼れる場合は一緒に添付してください）';
+  }
+
+  function copyToClipboard(text, btn){
+    navigator.clipboard.writeText(text).then(function(){
+      const o = btn.textContent;
+      btn.textContent = '✓ コピーした！';
+      setTimeout(function(){ btn.textContent = o; }, 1600);
+    });
+  }
+
+  function openSosModal(stepId, stepTitle){
+    const ov = document.createElement('div');
+    ov.style.cssText = 'position:fixed;inset:0;z-index:1000;background:rgba(31,45,61,.5);display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto';
+    const card = document.createElement('div');
+    card.style.cssText = 'background:#fff;border-radius:16px;box-shadow:0 10px 40px rgba(31,45,61,.25);max-width:560px;width:100%;padding:26px 24px;font-family:inherit;max-height:88vh;overflow:auto';
+    ov.appendChild(card);
+
+    function renderChoice(){
+      card.innerHTML =
+        '<div style="font-weight:800;font-size:17px;margin-bottom:8px">🌸 詰まったときの、次の一手</div>' +
+        '<div style="font-size:13.5px;color:#5b6b7e;line-height:1.8;margin-bottom:6px">詰まるのは恥ずかしいことではなく、全員が通る道です。そして<b>「何が分からないのかが分からない」状態のままでOK</b>。それを整理するところからAIに任せられます。</div>' +
+        '<div style="font-size:13.5px;color:#5b6b7e;line-height:1.8;margin-bottom:16px">止まったまま閉じるのが、いちばんもったいない。<b>どちらかを選んでから</b>先へ進んでください👇</div>' +
+        '<button id="sosClaude" style="display:block;width:100%;text-align:left;background:#eaf0ff;border:2px solid #2864f0;border-radius:12px;padding:14px 16px;font-size:14.5px;font-weight:800;color:#1f2d3d;cursor:pointer;font-family:inherit;margin-bottom:10px">🤖 Claude Codeに相談して自己解決する<span style="display:block;font-weight:600;font-size:12.5px;color:#5b6b7e;margin-top:2px">おすすめ。貼るだけの「SOSプロンプト」を用意しています（AIが質問して状況を聞き出してくれます）</span></button>' +
+        '<button id="sosHuman" style="display:block;width:100%;text-align:left;background:#fff6e6;border:2px solid #f5a623;border-radius:12px;padding:14px 16px;font-size:14.5px;font-weight:800;color:#1f2d3d;cursor:pointer;font-family:inherit">💬 畠山さん・ユニコさんに質問する<span style="display:block;font-weight:600;font-size:12.5px;color:#5b6b7e;margin-top:2px">人に聞きたいときはこちら。コピペで使える質問テンプレを用意しています</span></button>' +
+        '<div style="font-size:12px;color:#8a94a6;margin-top:12px">※ どちらを選んだかは運営に記録され、教材の改善に使われます（内容や個人情報は送信されません）</div>';
+      card.querySelector('#sosClaude').onclick = function(){ send('sos' + stepId + '-claude', true); renderClaude(); };
+      card.querySelector('#sosHuman').onclick = function(){ send('sos' + stepId + '-human', true); renderHuman(); };
+    }
+
+    function panelShell(title, bodyHtml){
+      card.innerHTML =
+        '<div style="font-weight:800;font-size:16px;margin-bottom:10px">' + title + '</div>' +
+        bodyHtml +
+        '<div style="display:flex;gap:10px;margin-top:16px;align-items:center">' +
+          '<button id="sosClose" style="background:#2864f0;color:#fff;font-weight:800;font-size:14px;border:none;border-radius:99px;padding:10px 24px;cursor:pointer;font-family:inherit">次の一手へ進む</button>' +
+          '<button id="sosBack" style="background:none;border:none;color:#5b6b7e;font-size:13px;cursor:pointer;font-family:inherit;text-decoration:underline">選び直す</button>' +
+        '</div>';
+      card.querySelector('#sosClose').onclick = function(){ ov.remove(); };
+      card.querySelector('#sosBack').onclick = renderChoice;
+    }
+
+    function preBlock(id, text){
+      return '<pre id="' + id + '" style="background:#0f1b2d;color:#e7eefc;border-radius:12px;padding:14px;font-size:12.5px;line-height:1.7;white-space:pre-wrap;word-break:break-word;font-family:Consolas,Menlo,monospace;max-height:260px;overflow:auto;margin:10px 0"></pre>';
+    }
+
+    function renderClaude(){
+      panelShell('🤖 Claude Codeに相談する（貼るだけ）',
+        '<div style="font-size:13.5px;color:#5b6b7e;line-height:1.8">下のSOSプロンプトをコピーして、<b>Claude Codeのチャットに貼るだけ</b>です（デスクトップ版・ブラウザ版どちらでもOK）。AIが1問ずつ質問して状況を聞き出し、原因を切り分けて「次の1手」だけを教えてくれます。</div>' +
+        preBlock('sosPre', '') +
+        '<button id="sosCopy" style="background:#00a86b;color:#fff;font-weight:800;font-size:13.5px;border:none;border-radius:99px;padding:9px 20px;cursor:pointer;font-family:inherit">📋 SOSプロンプトをコピー</button>' +
+        '<div style="font-size:12.5px;color:#8a94a6;margin-top:10px">それでも解決しなかったら、遠慮なく「選び直す」から人に質問へ切り替えてください。</div>');
+      card.querySelector('#sosPre').textContent = sosPromptText(stepTitle);
+      card.querySelector('#sosCopy').onclick = function(){ copyToClipboard(sosPromptText(stepTitle), card.querySelector('#sosCopy')); };
+    }
+
+    function renderHuman(){
+      panelShell('💬 畠山さん・ユニコさんに質問する',
+        '<div style="font-size:13.5px;color:#5b6b7e;line-height:1.8">下の質問テンプレをコピーして、<b>Discordの質問チャンネル</b>（またはいつもの連絡手段）に貼ってください。空欄は分かる範囲でOK。埋め方に迷ったら、テンプレごとClaude Codeに貼って「この質問文を完成させて」と頼むのもアリです。</div>' +
+        preBlock('sosPre', '') +
+        '<button id="sosCopy" style="background:#f5a623;color:#fff;font-weight:800;font-size:13.5px;border:none;border-radius:99px;padding:9px 20px;cursor:pointer;font-family:inherit">📋 質問テンプレをコピー</button>' +
+        '<div style="font-size:12.5px;color:#8a94a6;margin-top:10px">🔒 APIキー・パスワード・顧問先名が映るスクリーンショットは貼らないでください。</div>');
+      card.querySelector('#sosPre').textContent = humanTemplateText(stepTitle);
+      card.querySelector('#sosCopy').onclick = function(){ copyToClipboard(humanTemplateText(stepTitle), card.querySelector('#sosCopy')); };
+    }
+
+    renderChoice();
+    document.body.appendChild(ov);
+    // 二択を選ぶまでは、背景クリックでもEscでも閉じない（選んだあとのパネルからのみ閉じられる）
+  }
+
+  // ---- 各ステップカードに🙋ボタンを自動挿入 ----
+  function injectSosButtons(){
+    document.querySelectorAll('section.step').forEach(function(sec){
+      const head = sec.querySelector('.step-head');
+      if(!head) return;
+      const cb = sec.querySelector('input[data-step]');
+      const stepId = cb ? cb.dataset.step : (sec.id || 'x');
+      const h2 = sec.querySelector('.step-title h2');
+      const stepTitle = h2 ? h2.textContent.trim() : ('ステップ' + stepId);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'sos-btn';
+      btn.textContent = '🙋 詰まったらここ（次の一手）';
+      btn.style.cssText = 'display:inline-flex;align-items:center;gap:6px;background:none;border:1.5px dashed #c9d2dc;border-radius:99px;padding:6px 14px;font-size:12.5px;font-weight:700;color:#5b6b7e;cursor:pointer;font-family:inherit;margin:2px 0 10px';
+      btn.onmouseover = function(){ btn.style.borderColor = '#2864f0'; btn.style.color = '#2864f0'; };
+      btn.onmouseout = function(){ btn.style.borderColor = '#c9d2dc'; btn.style.color = '#5b6b7e'; };
+      btn.onclick = function(){ openSosModal(stepId, stepTitle); };
+      head.insertAdjacentElement('afterend', btn);
+    });
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', injectSosButtons);
+  }else{
+    injectSosButtons();
+  }
+
+  /* =====================================================
+     完了チェックの記録（v1から変更なし）
+     ===================================================== */
+  const boxes = document.querySelectorAll('input[data-step]');
+  if(boxes.length === 0) return;
 
   // ---- 名前の入力モーダル（初回チェック時に1度だけ表示） ----
   let askedThisVisit = false;
