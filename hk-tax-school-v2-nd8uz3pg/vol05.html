@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI税理士ブートキャンプ｜第5回 記帳自動化を「レビューできる仕組み」に育てる</title>
+<style>
+  :root{
+    --bg:#f5f7fa;
+    --card:#ffffff;
+    --ink:#1f2d3d;
+    --sub:#5b6b7e;
+    --line:#e6ebf1;
+    --brand:#2864f0;
+    --brand-soft:#eaf0ff;
+    --green:#00a86b;
+    --green-soft:#e6f7f0;
+    --amber:#f5a623;
+    --amber-soft:#fff6e6;
+    --red:#e5484d;
+    --red-soft:#fdeced;
+    --radius:16px;
+    --shadow:0 4px 20px rgba(31,45,61,.06);
+    --shadow-lg:0 10px 40px rgba(31,45,61,.10);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic UI","Meiryo",system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.8;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--brand);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* ===== 進捗バー（上部固定） ===== */
+  .progress-bar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:10px 20px;
+    display:flex;align-items:center;gap:14px;
+    flex-wrap:wrap;
+  }
+  .progress-bar .logo{font-weight:800;font-size:15px;letter-spacing:.02em}
+  .progress-bar .logo span{color:var(--brand)}
+  .progress-track{
+    flex:1;min-width:160px;height:10px;border-radius:99px;
+    background:var(--line);overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;width:0%;border-radius:99px;
+    background:linear-gradient(90deg,var(--brand),var(--green));
+    transition:width .5s cubic-bezier(.2,.8,.2,1);
+  }
+  .progress-count{font-weight:800;font-size:14px;white-space:nowrap}
+  .progress-count b{color:var(--brand);font-size:18px}
+
+  /* ===== レイアウト ===== */
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px;
+    display:grid;grid-template-columns:240px 1fr;gap:32px;align-items:start}
+  @media(max-width:880px){.wrap{grid-template-columns:1fr;gap:0}}
+
+  /* ===== サイドバー ===== */
+  .side{position:sticky;top:64px;padding:24px 0}
+  @media(max-width:880px){.side{display:none}}
+  .side h4{font-size:12px;color:var(--sub);text-transform:uppercase;letter-spacing:.08em;margin:0 0 10px}
+  .side nav a{display:block;padding:8px 12px;border-radius:10px;color:var(--ink);font-size:14px;font-weight:600;margin-bottom:2px}
+  .side nav a:hover{background:var(--brand-soft);text-decoration:none}
+  .side .note{margin-top:24px;font-size:12px;color:var(--sub);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+
+  /* ===== ヒーロー ===== */
+  .hero{padding:48px 0 24px}
+  .badge{display:inline-block;background:var(--brand-soft);color:var(--brand);font-weight:800;font-size:13px;padding:6px 14px;border-radius:99px;margin-bottom:16px}
+  .hero h1{font-size:34px;line-height:1.35;margin:0 0 14px;letter-spacing:-.01em}
+  .hero h1 em{font-style:normal;color:var(--brand)}
+  .hero p.lead{font-size:16px;color:var(--sub);margin:0 0 24px}
+  .goal{
+    background:linear-gradient(135deg,#eaf0ff,#e6f7f0);
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 24px;box-shadow:var(--shadow);
+  }
+  .goal h3{margin:0 0 10px;font-size:17px}
+  .goal ul{margin:0;padding-left:22px}
+  .goal li{margin:6px 0}
+  .goal .out{margin-top:14px;font-weight:800;color:var(--green);font-size:15px}
+
+  /* ===== ステップカード ===== */
+  .step{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:28px;margin:24px 0;scroll-margin-top:80px;
+    transition:box-shadow .3s, border-color .3s;
+  }
+  .step.done{border-color:var(--green);box-shadow:0 0 0 2px var(--green-soft),var(--shadow)}
+  .step-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:6px}
+  .step-num{
+    flex:none;width:48px;height:48px;border-radius:14px;
+    background:var(--brand);color:#fff;font-weight:800;font-size:18px;
+    display:flex;align-items:center;justify-content:center;flex-direction:column;line-height:1;
+  }
+  .step.done .step-num{background:var(--green)}
+  .step-num small{font-size:9px;font-weight:600;opacity:.85;margin-top:2px}
+  .step-title{flex:1}
+  .step-title h2{margin:0;font-size:22px}
+  .step-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  .tag{font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--bg);color:var(--sub);border:1px solid var(--line)}
+  .tag.time{background:var(--amber-soft);color:#a86c00;border-color:transparent}
+  .tag.type{background:var(--brand-soft);color:var(--brand);border-color:transparent}
+
+  /* ===== 情報ボックス ===== */
+  .box{border-radius:12px;padding:14px 16px;margin:16px 0;font-size:14.5px}
+  .box .box-h{font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+  .box.tip{background:var(--amber-soft)}
+  .box.safe{background:var(--red-soft)}
+  .box.howto{background:var(--brand-soft)}
+  .box ul,.box ol{margin:6px 0;padding-left:22px}
+  .box li{margin:4px 0}
+
+  /* ===== コピペボックス ===== */
+  .copy{position:relative;margin:16px 0}
+  .copy-label{font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .copy pre{
+    margin:0;background:#0f1b2d;color:#e7eefc;border-radius:12px;
+    padding:16px 16px;overflow-x:auto;font-size:13.5px;line-height:1.7;
+    font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;white-space:pre-wrap;
+  }
+  .copy-btn{
+    position:absolute;top:30px;right:10px;
+    background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);
+    border-radius:8px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s;
+  }
+  .copy-btn:hover{background:rgba(255,255,255,.25)}
+  .copy-btn.copied{background:var(--green);border-color:var(--green)}
+
+  /* ===== details ===== */
+  details{border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden;background:var(--card)}
+  details summary{cursor:pointer;padding:12px 16px;font-weight:700;font-size:14.5px;list-style:none;display:flex;align-items:center;gap:8px;background:var(--bg)}
+  details summary::-webkit-details-marker{display:none}
+  details summary::before{content:"▶";font-size:10px;color:var(--sub);transition:transform .2s}
+  details[open] summary::before{transform:rotate(90deg)}
+  details .body{padding:14px 18px;font-size:14.5px}
+  details .body ul,details .body ol{padding-left:22px;margin:8px 0}
+  details .body li{margin:6px 0}
+
+  /* ===== 観点テーブル ===== */
+  table.kanten{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0}
+  table.kanten th,table.kanten td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.7}
+  table.kanten th{color:var(--sub);font-size:12.5px;white-space:nowrap;background:var(--bg)}
+  table.kanten td b{color:var(--brand)}
+
+  /* ===== 完了チェック ===== */
+  .check{
+    display:flex;align-items:center;gap:12px;margin-top:18px;
+    background:var(--green-soft);border:1px dashed var(--green);
+    border-radius:12px;padding:14px 16px;cursor:pointer;user-select:none;
+  }
+  .check input{width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .check label{font-weight:800;color:#0a7d54;cursor:pointer;font-size:15px}
+
+  /* ===== 完了済みカードのグレーアウト ===== */
+  .step.done > *:not(.check):not(.done-banner){opacity:.45;filter:grayscale(.55);transition:opacity .25s,filter .25s}
+  .done-banner{display:none;align-items:center;gap:10px;background:var(--green-soft);border:1.5px solid var(--green);border-radius:12px;padding:10px 14px;margin-bottom:14px;font-size:13.5px;font-weight:700;color:#0a7d54}
+  .step.done .done-banner{display:flex}
+
+  /* ===== 修了 ===== */
+  .finish{
+    background:linear-gradient(135deg,var(--brand),#5b8cff);color:#fff;
+    border-radius:var(--radius);padding:36px 28px;text-align:center;margin:32px 0 64px;
+    box-shadow:var(--shadow-lg);
+  }
+  .finish h2{margin:0 0 10px;font-size:26px}
+  .finish p{margin:0 0 18px;opacity:.95}
+  .finish .cta{display:inline-block;background:#fff;color:var(--brand);font-weight:800;padding:12px 28px;border-radius:99px}
+  .finish.celebrate{animation:pop .6s}
+  @keyframes pop{0%{transform:scale(.96)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
+  .finish.locked{background:linear-gradient(135deg,#8a97ad,#a5b0c2);box-shadow:var(--shadow)}
+  .finish.locked .cta{color:#5b6b7e}
+
+  /* ===== 紙吹雪 ===== */
+  .confetti-piece{position:fixed;top:-16px;width:10px;height:14px;z-index:200;pointer-events:none;animation:confetti-fall linear forwards}
+  @keyframes confetti-fall{to{transform:translateY(105vh) rotate(720deg);opacity:.9}}
+
+  hr.soft{border:none;border-top:1px solid var(--line);margin:22px 0}
+  .hana{font-size:13.5px;color:var(--sub);background:var(--bg);border-radius:12px;padding:10px 14px;margin-top:14px;border-left:3px solid var(--brand)}
+  .hana b{color:var(--brand)}
+
+  /* ===== コース全体ナビ ===== */
+  .course-nav{
+    background:var(--card);border-bottom:1px solid var(--line);
+    padding:12px 20px;
+  }
+  .course-nav-inner{
+    max-width:1080px;margin:0 auto;
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  }
+  .course-nav-label{font-size:12px;font-weight:800;color:var(--sub);margin-right:4px;white-space:nowrap}
+  .course-pill{
+    display:inline-flex;align-items:center;gap:4px;
+    font-size:13px;font-weight:700;padding:6px 12px;border-radius:99px;
+    border:1px solid var(--line);background:var(--bg);color:var(--ink);
+    white-space:nowrap;
+  }
+  .course-pill:hover{background:var(--brand-soft);text-decoration:none}
+  .course-pill.current{background:var(--brand);border-color:var(--brand);color:#fff}
+  .course-pill.current:hover{background:var(--brand)}
+  .course-pill.soon{
+    background:var(--bg);color:#aab4c0;border-color:var(--line);
+    cursor:default;pointer-events:none;
+  }
+  .course-pill.soon::after{content:"準備中";font-size:10px;font-weight:800;margin-left:2px}
+
+  /* ===== 投稿フォーム ===== */
+  .post-field{margin:12px 0}
+  .post-field label{display:block;font-size:13px;font-weight:700;color:var(--sub);margin-bottom:6px}
+  .post-field input[type=text],.post-field textarea{
+    width:100%;border:1px solid var(--line);border-radius:10px;
+    padding:10px 12px;font-size:14.5px;font-family:inherit;color:var(--ink);
+    background:var(--bg);resize:vertical;
+  }
+  .post-field textarea{min-height:120px;line-height:1.7}
+  .post-submit{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--brand);color:#fff;font-weight:800;font-size:15px;
+    border:none;border-radius:99px;padding:12px 28px;cursor:pointer;transition:.2s;
+  }
+  .post-submit:hover{background:#1d4fd1}
+  .post-submit:disabled{background:var(--sub);cursor:wait}
+  .post-status{font-size:13.5px;font-weight:700;margin-top:10px}
+  .post-status.ok{color:var(--green)}
+  .post-status.err{color:var(--red)}
+  .board-link{
+    display:inline-flex;align-items:center;gap:6px;margin-top:14px;
+    font-size:13.5px;font-weight:700;color:var(--brand);
+  }
+</style>
+</head>
+<body>
+
+<!-- 進捗バー -->
+<div class="progress-bar">
+  <div class="logo">畠山式AI税理士<span>コミュニティ</span></div>
+  <div class="progress-track"><div class="progress-fill" id="fill"></div></div>
+  <div class="progress-count"><b id="cnt">0</b>/6 クリアで修了</div>
+</div>
+
+<!-- コース全体ナビ -->
+<div class="course-nav">
+  <div class="course-nav-inner">
+    <span class="course-nav-label">📚 コース全体</span>
+    <a class="course-pill" href="index.html">第1回</a>
+    <a class="course-pill" href="vol03.html">第3回</a>
+    <a class="course-pill current" href="vol05.html">第5回</a>
+    <a class="course-pill soon" href="vol07.html">第7回</a>
+    <a class="course-pill soon" href="vol09.html">第9回</a>
+    <a class="course-pill soon" href="update01.html">アプデ①</a>
+    <a class="course-pill soon" href="update02.html">アプデ②</a>
+    <a class="course-pill" href="glossary.html" style="margin-left:auto;background:var(--amber-soft);border-color:transparent;color:#a86c00">📖 用語集</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <!-- サイドバー -->
+  <aside class="side">
+    <h4>このページ</h4>
+    <nav>
+      <a href="#hero">🎯 ゴール</a>
+      <a href="#t1">① 最新キットを受け取る</a>
+      <a href="#t2">② 自動記帳を「型」で回す</a>
+      <a href="#t3">③ 仕訳帳レビュー</a>
+      <a href="#t4">④ 消費税区分レビュー</a>
+      <a href="#t5">⑤ ルールを育てて共有</a>
+      <a href="#quiz">🧠 確認テスト（修了条件）</a>
+      <a href="#post">✍️ 恩送りメモを投稿（修了条件）</a>
+      <a href="#faq">❓ よくあるつまずき</a>
+      <a href="#finish">🎉 修了</a>
+    </nav>
+    <h4 style="margin-top:24px">こまったら</h4>
+    <nav>
+      <a href="glossary.html">📖 用語集（横文字はここ）</a>
+    </nav>
+    <div class="note">
+      <b>第5回の前提</b><br>
+      第1回（freee MCP接続）と第3回（自動記帳）を先に終えてから進めてください🌸<br>
+      MF会計の方も同じ流れで進められます（各ステップに補足あり）。
+    </div>
+  </aside>
+
+  <!-- メイン -->
+  <main>
+    <!-- ヒーロー -->
+    <section class="hero" id="hero">
+      <span class="badge">第5回 / 全シリーズ</span>
+      <h1>記帳の自動化を<br><em>「レビューできる仕組み」</em>に育てる</h1>
+      <p class="lead">起票の自動化は第3回で体験しました。第5回はその先です。AIが起票した帳簿を、<b>AI自身に税理士の目でレビューさせる</b>。仕訳帳のチェックと消費税区分のチェックを「型」にして、自分の実務に合わせて育てていきます。</p>
+
+      <div class="goal">
+        <h3>🎯 この課題を終えると…</h3>
+        <ul>
+          <li>自動記帳が「その場かぎりの体験」から、<b>毎月同じ手順で回る型</b>になります</li>
+          <li>畠山が顧問先60社の月次で使っている<b>仕訳帳レビューの観点（サンプル10個）</b>をAIに実行させられます</li>
+          <li><b>消費税区分の点検観点（サンプル6個）</b>で、少額特例・海外SaaS・軽減税率などの誤りに気づけるようになります</li>
+          <li>ルール表とレビュー観点に<b>自分の実務ならではの1行</b>を足して、コミュニティに共有できます</li>
+          <li>最後に<b>確認テスト</b>（AIが先生役・70点以上で合格）を受け、<b>恩送りメモを投稿</b>すると修了です🏅</li>
+        </ul>
+        <div class="out">⏱ 目安：合計 約80〜100分　／　💪 難易度：中級（第1回・第3回を終えた方向け）</div>
+      </div>
+
+      <div class="box tip">
+        <div class="box-h">💡 この回の考え方：「起票は自動、判断は人。その間に“AIのレビュー”を挟む」</div>
+        自動化が進むほど、怖いのは「間違いに気づかないまま積み上がること」です。だから畠山の本番運用では、起票のあとに必ず<b>チェックの工程</b>を置いています。今日渡す観点表は、その本番から抜き出した<b>サンプル（土台）</b>です。一定レベルまでは畠山が用意しました。ここから先は、<b>皆さんの実務の「ヒヤッとした1件」を持ち寄って、みんなで育てていきましょう</b>。
+      </div>
+    </section>
+
+    <!-- ===== ステップ1 ===== -->
+    <section class="step" id="t1">
+      <div class="done-banner">✅ このステップは完了済み（グレー表示）。読み直しはそのままどうぞ／戻すときは下のチェックを外してください</div>
+      <div class="step-head">
+        <div class="step-num">1<small>/ 5</small></div>
+        <div class="step-title">
+          <h2>配布キットを最新版にする 📦</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約10分</span>
+            <span class="tag type">🤝 準備ステップ</span>
+          </div>
+        </div>
+      </div>
+
+      <p>配布資料はすべてGitHubの<b>配布用リポジトリ</b>（<a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">畠山式 配布用リポジトリ（haifuyou）</a>）にあります。教材は回を追うごとに更新されているので、まず手元のキットを最新版にしましょう。</p>
+
+      <div class="box howto">
+        <div class="box-h">📋 手順（すでにフォーク済みの方）</div>
+        <ol>
+          <li>GitHubで<b>自分のフォーク</b>（自分のアカウント名/haifuyou）のページを開く</li>
+          <li>「This branch is XX commits behind…」の近くにある「<b>Sync fork</b>」→「<b>Update branch</b>」を押す（これで自分のコピーが最新になります）</li>
+          <li>手元のフォルダも最新にする：緑の「<b>Code</b>」→「<b>Download ZIP</b>」でダウンロードし直して展開（<code>git clone</code> 済みの方は、Claude Codeに「このフォルダを git pull で最新にして」と頼むだけでOK）</li>
+        </ol>
+      </div>
+
+      <div class="box howto">
+        <div class="box-h">📋 手順（まだの方：GitHubアカウント作成〜受け取り）</div>
+        <ol>
+          <li><a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a> でアカウントを作る（無料。メール→パスワード→ユーザー名→確認コードの順）</li>
+          <li><a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">配布用リポジトリ（haifuyou）</a>を開き、右上の「<b>Fork</b>」→「Create fork」で自分のコピーを作る</li>
+          <li>自分のフォークのページで「<b>Code</b>」→「<b>Download ZIP</b>」→ 右クリック「すべて展開」して、<code>haifuyou</code> フォルダをドキュメントなど分かりやすい場所へ</li>
+        </ol>
+        <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ くわしい画面つきの説明は<a href="index.html#bonus">第1回課題ページの🎁セクション</a>にあります。</p>
+      </div>
+
+      <div class="box safe">
+        <div class="box-h">🔒 安全メモ</div>
+        フォークした自分のリポジトリも<b>インターネットに公開</b>されています。顧問先の資料・請求書PDF・自分の帳簿データを、フォークにアップロード（コミット）しないでください。今日の作業で作るレビュー結果のファイルも、<b>アップロードせず手元に置くだけ</b>にします。
+      </div>
+
+      <div class="check" onclick="toggle(this,event)">
+        <input type="checkbox" data-step="1">
+        <label>✅ 手元の haifuyou フォルダが最新版になっている</label>
+      </div>
+    </section>
+
+    <!-- ===== ステップ2 ===== -->
+    <section class="step" id="t2">
+      <div class="done-banner">✅ このステップは完了済み（グレー表示）。読み直しはそのままどうぞ／戻すときは下のチェックを外してください</div>
+      <div class="step-head">
+        <div class="step-num">2<small>/ 5</small></div>
+        <div class="step-title">
+          <h2>自動記帳を「型」で回す 🔁</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約15分</span>
+            <span class="tag type">🔁 第3回のおさらい＋型化</span>
+          </div>
+        </div>
+      </div>
+
+      <p>第3回でやった自動記帳を、今日は「毎月同じ手順で回す型」として実行します。キットには手順書（スキル）が同梱されているので、<b>話しかけるだけ</b>で同じ流れが再現されます。ここで起票した帳簿が、次のステップ③④のレビュー対象になります。</p>
+
+      <div class="box howto">
+        <div class="box-h">📋 手順（畠山ルート＝キットのスクリプトを使う場合）</div>
+        <ol>
+          <li>Claude Codeで <code>haifuyou</code> フォルダを開く</li>
+          <li>チャットに「<b>体験①をやりたい</b>」と送る（初回はセットアップから案内されます。第3回でセットアップ済みならすぐ動きます）</li>
+          <li>まず「見るだけモード」で判定一覧を確認 → OKな明細だけ番号で承認 → 登録</li>
+        </ol>
+        <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ 第3回のルートA（freee MCP対話方式）でもOKです。MF会計の方はMF会計MCP＋「勘定科目ルール.md」で同じ流れになります（第3回課題ページのコピペ文M参照）。</p>
+      </div>
+
+      <div class="box tip">
+        <div class="box-h">💡 型で回すことの意味</div>
+        毎回ちがう頼み方をすると、毎回ちがう結果が返ってきます。「ルール表で判定→ルール外だけAI→人が承認」という同じ型で回すから、<b>結果が安定し、間違いにも気づきやすくなる</b>。第5回のレビューも、この型の上に乗せていきます。
+      </div>
+
+      <div class="check" onclick="toggle(this,event)">
+        <input type="checkbox" data-step="2">
+        <label>✅ 未処理明細の判定一覧を出し、承認したものだけ登録できた</label>
+      </div>
+    </section>
+
+    <!-- ===== ステップ3 ===== -->
+    <section class="step" id="t3">
+      <div class="done-banner">✅ このステップは完了済み（グレー表示）。読み直しはそのままどうぞ／戻すときは下のチェックを外してください</div>
+      <div class="step-head">
+        <div class="step-num">3<small>/ 5</small></div>
+        <div class="step-title">
+          <h2>仕訳帳をAIにレビューさせる 🔍</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約20分</span>
+            <span class="tag type">🚀 本番・今日の主役①</span>
+          </div>
+        </div>
+      </div>
+
+      <p>ここからが第5回の本丸です。自動で起票された帳簿を、<b>AIに税理士の目でチェックさせます</b>。使うのは、畠山が顧問先の月次レビューで実際に使っている観点から抜き出した<b>サンプル10観点</b>です。</p>
+
+      <div class="box tip">
+        <div class="box-h">💡 レビュー観点（畠山サンプル・月次チェック10観点）</div>
+        <table class="kanten">
+          <tr><th>#</th><th>観点</th><th>何に気づける？</th></tr>
+          <tr><td>1</td><td><b>資産科目のマイナス残高</b>（現金・預金・売掛金など）</td><td>入力漏れ・二重計上・科目間違いのサイン</td></tr>
+          <tr><td>2</td><td><b>現金残高が大きすぎる／動きが不自然</b></td><td>レジ・小口の実態と帳簿のズレ</td></tr>
+          <tr><td>3</td><td><b>同日・同額・同摘要の重複仕訳</b></td><td>明細とレシートの二重登録（freeeは消込APIがないため起きやすい）</td></tr>
+          <tr><td>4</td><td><b>売掛金の滞留</b>（3ヶ月以上消込がない相手先）</td><td>回収漏れ・請求漏れ・消込忘れ</td></tr>
+          <tr><td>5</td><td><b>科目ブレ</b>（同じ相手先が月によって違う科目）</td><td>ルール表に穴がある証拠。ステップ⑤の材料に</td></tr>
+          <tr><td>6</td><td><b>期ズレ</b>（計上月と取引月の食い違い、決算期またぎ）</td><td>月次の損益が歪む。決算時の修正候補</td></tr>
+          <tr><td>7</td><td><b>役員貸付金・仮払金・仮受金の残高滞留</b></td><td>精算漏れ。決算までに整理すべき科目</td></tr>
+          <tr><td>8</td><td><b>雑費の使いすぎ</b>（経費に占める割合が高い）</td><td>科目を決めきれていない仕訳のたまり場</td></tr>
+          <tr><td>9</td><td><b>飲食系の科目と金額基準の不一致</b>（1万円以下＝会議費／超＝交際費 など自社ルールとの照合）</td><td>交際費の損金限度の管理ミス</td></tr>
+          <tr><td>10</td><td><b>報酬支払と源泉所得税</b>（外注報酬・士業報酬で預り金が立っているか）</td><td>源泉徴収漏れ（納付漏れは加算税のもと）</td></tr>
+        </table>
+        <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ 9の金額基準は畠山事務所の運用例です。自社・自事務所のルールに合わせて書き換えて使ってください。</p>
+      </div>
+
+      <div class="copy">
+        <div class="copy-label">📋 デスクトップアプリに貼るだけ：仕訳帳レビュー（観点はそのまま入っています）</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>freee MCPを使います。最初に、いま接続されている事業所名を確認して見せてください。
+私が「その事業所でOK」と言ってから、次に進んでください。
+
+OKと言ったら、今月（私が別の月を指定したらその月）の仕訳・試算表を取得して、
+次の10観点で月次レビューをしてください。
+
+1. 資産科目（現金・預金・売掛金など）にマイナス残高がないか
+2. 現金残高が不自然に大きくないか・動きが不自然でないか
+3. 同日・同額・同摘要の重複仕訳がないか
+4. 売掛金で3ヶ月以上消込のない相手先がないか
+5. 同じ相手先の仕訳で、月によって勘定科目がブレていないか
+6. 計上月と取引の月がズレていそうな仕訳がないか（期ズレ）
+7. 役員貸付金・仮払金・仮受金に滞留している残高がないか
+8. 雑費が経費全体に対して多すぎないか
+9. 飲食系の仕訳が金額基準（1万円以下=会議費／超=交際費）と合っているか
+10. 外注報酬・士業報酬の支払で、源泉所得税の預り金が立っているか
+
+結果は観点ごとに「判定（OK／要確認）／該当仕訳（日付・摘要・金額）／
+そう判断した理由」の表にして、要確認の分だけ最後にまとめ直してください。
+レポートは「事実 → 解釈 → 確認事項」の順で、
+月次レビュー_YYYYMM.md というファイルに保存してください。
+
+大事なルール：
+- あなたは「気づき」を挙げる係です。正しいかどうかの税務判断はしないでください
+- 修正はまだ実行しないでください。直し方の提案までにとどめて、
+  私が「この仕訳を直して」と指定したものだけ、1件ずつ直してください</pre>
+      </div>
+
+      <div class="box tip">
+        <div class="box-h">💡 MF会計の方は</div>
+        1行目を「MF会計（マネーフォワード クラウド会計）のMCPを使います」に変えるだけで、同じ観点でレビューできます。仕訳帳をCSVでエクスポートして、そのファイルをClaude Codeに読ませる方法でもOKです（会計ソフトを問わない、いちばん汎用的なやり方です）。
+      </div>
+
+      <div class="box safe">
+        <div class="box-h">🔒 安全メモ</div>
+        <ul>
+          <li>レビュー結果のファイル（月次レビュー_YYYYMM.md）には取引先名や金額が入ります。<b>GitHubのフォークにアップロードしない・掲示板に貼らない</b>でください</li>
+          <li>「要確認」は「間違い」ではありません。<b>最終判断はあなた（人）</b>です。AIの指摘を鵜呑みにして一括修正させないでください</li>
+        </ul>
+      </div>
+
+      <details>
+        <summary>🛠 迷ったとき・トラブル</summary>
+        <div class="body">
+          <ul>
+            <li><b>取得できる仕訳が少ない・ゼロ</b> → 対象月を明細がある月に変えて指定してください。テスト事業所で試している方は、先にステップ②で数件起票しておくとレビューの練習になります。</li>
+            <li><b>観点5（科目ブレ）が大量に出る</b> → それが正常です。ルール表が育っていない証拠なので、ステップ⑤でルール化する材料にしてください。</li>
+            <li><b>要確認が多すぎて読みきれない</b> → 「要確認のうち、金額が大きい順に5件だけ詳しく説明して」と絞り込めばOKです。</li>
+            <li><b>レポートのファイルが見つからない</b> → Claude Codeアプリのファイル一覧（サイドバー）で「月次レビュー」で探してください。</li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="check" onclick="toggle(this,event)">
+        <input type="checkbox" data-step="3">
+        <label>✅ 10観点の月次レビュー結果（要確認リスト）が出せた</label>
+      </div>
+    </section>
+
+    <!-- ===== ステップ4 ===== -->
+    <section class="step" id="t4">
+      <div class="done-banner">✅ このステップは完了済み（グレー表示）。読み直しはそのままどうぞ／戻すときは下のチェックを外してください</div>
+      <div class="step-head">
+        <div class="step-num">4<small>/ 5</small></div>
+        <div class="step-title">
+          <h2>消費税区分をAIにレビューさせる 🧾</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約20分</span>
+            <span class="tag type">🚀 本番・今日の主役②</span>
+          </div>
+        </div>
+      </div>
+
+      <p>科目が合っていても、<b>消費税区分が間違っていると申告の数字がズレます</b>。しかも税区分の間違いは画面上で目立たないので、人の目だけでは拾いきれません。ここもAIに点検の型を渡します。使うのは、畠山が実際の点検で使っている<b>サンプル6観点</b>です。</p>
+
+      <div class="box tip">
+        <div class="box-h">💡 税区分レビュー観点（畠山サンプル・6観点）</div>
+        <table class="kanten">
+          <tr><th>#</th><th>観点</th><th>よくある間違い</th></tr>
+          <tr><td>1</td><td><b>少額特例の適用漏れ</b>（税込1万円未満の課税仕入）</td><td>インボイスなし（80%控除）のままになっている。要件を満たせば全額控除にできる</td></tr>
+          <tr><td>2</td><td><b>海外SaaSの区分</b>（Claude・ChatGPT・Zoom・Canva等）</td><td>国内の課税仕入として処理している。登録国外事業者かどうかで扱いが変わる</td></tr>
+          <tr><td>3</td><td><b>軽減税率8%の誤用</b></td><td>飲食料品・定期購読新聞<b>以外</b>に8%が付いている（逆に、会議のお茶菓子が10%になっている）</td></tr>
+          <tr><td>4</td><td><b>免税事業者への支払</b>（登録番号のない相手）</td><td>適格（100%控除）で処理している。経過措置（80%→50%）の区分にすべきもの</td></tr>
+          <tr><td>5</td><td><b>非課税と対象外の混同</b></td><td>土地の賃料・保険料・利息（非課税）と、海外取引・給付金・保険金収入（対象外）がごちゃまぜ</td></tr>
+          <tr><td>6</td><td><b>売上側の区分</b></td><td>課税売上10%になっているか。値引き・返金が「課税売上のマイナス」でなく課税売上返還で処理されているか</td></tr>
+        </table>
+        <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ 少額特例には「基準期間の課税売上高1億円以下（または特定期間5千万円以下）」などの<b>適用要件</b>があります。要件を満たすかの判断は必ず人が行ってください（適用期限は2029年9月末までです）。</p>
+      </div>
+
+      <div class="copy">
+        <div class="copy-label">📋 デスクトップアプリに貼るだけ：消費税区分レビュー</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>freee MCPを使います。最初に、いま接続されている事業所名を確認して見せてください。
+あわせて、この事業所の税込・税抜の設定と、消費税の課税方式（原則・簡易・2割特例など）が
+分かれば教えてください。私が「OK」と言ってから、次に進んでください。
+
+OKと言ったら、直近3ヶ月（私が別の期間を指定したらその期間）の取引を取得して、
+消費税区分を次の6観点で点検してください。
+
+1. 税込1万円未満の課税仕入で、インボイスなし（80%控除）の区分のままのもの
+   （少額特例を使えば全額控除にできる可能性がある。ただし適用要件の判断は私がする）
+2. 海外SaaS（Claude、ChatGPT、Zoom、Canvaなど）の支払が
+   国内の課税仕入として処理されていないか
+3. 軽減税率8%が飲食料品・定期購読新聞以外に付いていないか
+4. 登録番号のない相手（免税事業者と思われる相手）への支払が
+   適格（100%控除）で処理されていないか
+5. 非課税（土地賃料・保険料・利息など）と対象外（海外取引・給付金など）が
+   混同されていないか
+6. 売上側の区分は正しいか（課税売上10%か、値引き・返金の処理が適切か）
+
+結果は「観点／該当取引（日付・摘要・金額・いまの税区分）／
+提案する税区分／理由」の表にして、税区分レビュー_YYYYMM.md に保存してください。
+
+大事なルール：
+- 一括修正はしないでください。私が内容を確認して「この取引を直して」と
+  指定したものだけ、1件ずつ修正してください
+- 適用要件の判断（少額特例が使えるか等）や、迷う論点は
+  「確認事項」として私に残してください。税務判断はあなたの仕事ではありません</pre>
+      </div>
+
+      <div class="box tip">
+        <div class="box-h">💡 MF会計の方は</div>
+        1行目を「MF会計のMCPを使います」に変えて、税区分は<b>freeeのコード番号ではなく名称</b>（課税仕入10%・軽減8%・非課税・対象外など）で指示してください。観点は同じです。
+      </div>
+
+      <div class="box safe">
+        <div class="box-h">🔒 安全メモ</div>
+        <ul>
+          <li>税区分の修正は<b>消費税申告の数字に直結</b>します。体験の段階では、テスト用の事業所や自分の事業所で試してください。顧問先の本番データを直すときは、必ず修正前後の一覧を残してください</li>
+          <li>AIの提案は「候補」です。<b>少額特例の適用可否・免税事業者かどうかの確認・迷う論点の結論は、人（税理士）の仕事</b>です。事務所職員の方は所内の税理士に確認してから直してください</li>
+        </ul>
+      </div>
+
+      <details>
+        <summary>🛠 迷ったとき・トラブル</summary>
+        <div class="body">
+          <ul>
+            <li><b>該当がゼロで手応えがない</b> → まずは正常ということです。「観点2だけ、判定の根拠になった取引を全部見せて」のように、OK判定の根拠を確認する練習をすると精度の感覚がつかめます。</li>
+            <li><b>取引が多すぎて途中で止まる</b> → 期間を1ヶ月に絞る、または「金額の大きい順に50件だけ」と上限を付けてください。</li>
+            <li><b>登録番号のあり・なしが分からない</b> → freeeの取引先設定（インボイス登録番号）を確認するようAIに頼むか、国税庁の公表サイトで検索してください。</li>
+            <li><b>直した結果が合っているか不安</b> → 修正した取引の一覧を出させて、顧問税理士・所内の税理士とレビューしてください。この「人の最終チェック」までが型です。</li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="check" onclick="toggle(this,event)">
+        <input type="checkbox" data-step="4">
+        <label>✅ 6観点の税区分レビュー結果が出て、直す・直さないを自分で判断できた</label>
+      </div>
+    </section>
+
+    <!-- ===== ステップ5 ===== -->
+    <section class="step" id="t5" style="border-color:var(--amber)">
+      <div class="done-banner">✅ このステップは完了済み（グレー表示）。読み直しはそのままどうぞ／戻すときは下のチェックを外してください</div>
+      <div class="step-head">
+        <div class="step-num" style="background:var(--amber)">5<small>/ 5</small></div>
+        <div class="step-title">
+          <h2>ルールと観点に「自分の1行」を足す 🌱</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約15分</span>
+            <span class="tag type">🌱 みんなで育てる課題</span>
+          </div>
+        </div>
+      </div>
+
+      <p>今日渡した観点表は、あくまで<b>畠山のサンプル（土台）</b>です。畠山の本番ルール表が15行から約700キーワードに育ったのと同じで、レビューの観点も「実務でヒヤッとした1件」をルール化する繰り返しで育ちます。ここからは<b>皆さんの番</b>です。</p>
+
+      <div class="box howto">
+        <div class="box-h">📋 手順：今日の気づきを1行にする</div>
+        <ol>
+          <li>ステップ③④の「要確認リスト」から、<b>自分の実務ならではの1件</b>を選ぶ（科目ブレでも、税区分の癖でも、業種特有の取引でもOK）</li>
+          <li>それを<b>ルール化</b>する。下のコピペ文をClaude Codeに貼れば、どのファイルにどう書くかまで手伝ってくれます
+            <ul>
+              <li>科目の判定ミス → <code>scripts/rules.csv</code> か <code>勘定科目ルール.md</code> に1行追加</li>
+              <li>チェックの観点 → 自分用の「レビュー観点メモ」に1個追加（③④のプロンプトに足して使う）</li>
+            </ul>
+          </li>
+          <li>（フォーク済みの方・任意）Claude Codeに「この変更を自分のフォークにコミットしてプッシュして」と頼むと、育てたルールが自分のGitHubに保存されます。<b>コミットするのはルールの行だけ</b>（帳簿データやレビュー結果は含めない）</li>
+        </ol>
+      </div>
+
+      <div class="copy">
+        <div class="copy-label">📋 デスクトップアプリに貼るだけ：気づきをルール化する</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>今日の月次レビューで見つかった「要確認」の中から、
+ルール化する価値がありそうなものを一緒に選びたいです。
+
+まず、要確認リストを「毎月起きそうか／金額が大きいか／
+ルール化すれば次から自動で防げるか」の3つの目線で並べ直してください。
+
+私が1件選んだら、
+- 勘定科目の判定に関するもの → scripts/rules.csv（または勘定科目ルール.md）に
+  追加する1行の案を作って、私がOKしたら追記してください
+- チェック観点に関するもの → 「マイレビュー観点.md」というファイルに
+  観点として1行追加してください（観点／何に気づけるか／判定の目安 の形式で）
+
+追記が終わったら、追加した1行を「恩送りメモ用」に、
+顧問先名・取引先名・具体的な金額が分からない形に言い換えて出力してください。
+（例：「特定業種の月額課金は◯◯費に固定」のような抽象化した形）</pre>
+      </div>
+
+      <div class="box tip">
+        <div class="box-h">🌱 育てたルールはコミュニティに還元されます</div>
+        追加した1行は、このあとの<b>恩送りメモ</b>に含めて投稿してください。良い観点・良いルールは畠山が配布キットに取り込み、次の配布時に<b>全員の観点表がバージョンアップ</b>します。「自分の1行がみんなの型になる」——これがこの課題の狙いです。
+      </div>
+
+      <div class="check" onclick="toggle(this,event)">
+        <input type="checkbox" data-step="5">
+        <label>✅ ルール表かレビュー観点に、自分の1行を追加した</label>
+      </div>
+    </section>
+
+    <!-- ===== 確認テスト ===== -->
+    <section class="step" id="quiz" style="border-color:var(--brand)">
+      <div class="step-head">
+        <div class="step-num">🧠<small>必須</small></div>
+        <div class="step-title">
+          <h2>確認テストを受ける（合格すると恩送りメモが出ます）</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約10分</span>
+            <span class="tag type">🏅 修了条件 その1</span>
+          </div>
+        </div>
+      </div>
+
+      <p>ステップ①〜⑤が終わったら、<b>Claude Code に先生役をお願いして</b>、今日の理解チェックを受けてください。<b>70点以上で合格</b>すると、Claudeがあなたの体験談をまとめた「<b>恩送りメモ</b>」を作ってくれます。落ちても<b>何回でも再挑戦OK</b>です（責められません🌸）。</p>
+
+      <div class="copy">
+        <div class="copy-label">📋 デスクトップアプリに貼るだけ：確認テスト＆恩送りメモ生成</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>第5回の課題（キットの最新化／自動記帳の型／仕訳帳レビュー10観点／
+消費税区分レビュー6観点／ルールと観点に自分の1行を追加）の
+理解チェックをお願いします。合格するまで、恩送りメモは出さないでください。
+
+【テストの進め方】
+1. この課題の内容から、選択式（A/B/C）のクイズを2問 → 自由記述
+   （自分の言葉で説明する問題）を1問、1問ずつ順番に出して。
+   「AIのレビューと人の税務判断の線引き」に関する問題を必ず1問入れて。
+2. 全部答え終わったら100点満点で採点して、点数と理由を短く伝えて。
+3. 70点以上で合格 → 恩送りメモへ。70点未満なら、間違えた所をやさしく
+   解説してから、別の問題でもう一度出して（何回でもOK・責めないで）。
+4. 選択肢に「お任せ」は付けないで（自分で考えて答えるテストのため）。
+
+【合格したら】
+恩送りメモを出す前に、必ず1問だけ自由入力で聞いて：
+「この課題ページで分かりづらかった所・直してほしい所はありましたか？
+（1行でもOK・思いつかなければ『特になし』でOK）」
+この質問だけは選択式にしないで。もらった答えは、恩送りメモの最後に
+「💬 課題ページへの改善案：」の行として原文のまま入れて（『特になし』なら省略OK）。
+
+そのあと、「恩送りメモ」という見出しで、チャットからそのままコピペできる
+1つのコードブロックとして出力して。中身は、
+・つまずいた所 → どう解決したか
+・レビューで見つかった気づき（へえ、と思った指摘）
+・ステップ⑤で追加した「自分の1行」（抽象化した形のもの）
+・課題ページの改善案
+を、体験談として読み応えのある長さ（8〜12行）で。実際に出たエラー文・
+ボタン名・画面の名前は、要約で削らず必ず残して。
+※ 顧問先名・取引先名・具体的な金額・事業所名・個人情報・APIキーなどの
+秘密情報は、メモに絶対に入れないで（「◯◯な明細で」のように抽象化して）。
+
+最後に「このメモをコピーして、課題ページの『恩送りメモを投稿して修了』に
+貼れば修了です🎉」と締めて。</pre>
+      </div>
+    </section>
+
+    <!-- ===== 恩送り掲示板 ===== -->
+    <section class="step" id="post" style="border-color:var(--green)">
+      <div class="done-banner">🏅 投稿ありがとうございました！この課題は修了です。下の修了バッジをご覧ください🎉</div>
+      <div class="step-head">
+        <div class="step-num" style="background:var(--green)">✍️<small>必須</small></div>
+        <div class="step-title">
+          <h2>恩送りメモを投稿して修了 🏅</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約3分</span>
+            <span class="tag type">🏅 修了条件 その2</span>
+          </div>
+        </div>
+      </div>
+
+      <p>確認テストの最後にClaudeが出してくれた「<b>恩送りメモ</b>」を、そのまま下に貼って投稿してください。<b>投稿すると修了バッジが解放されます</b>🎉 第5回のメモには<b>あなたが追加した1行</b>が入っています。それが集まって、次の配布キットの観点表になります。</p>
+
+      <div class="post-field">
+        <label for="postName">お名前・ニックネーム（任意）</label>
+        <input type="text" id="postName" placeholder="例：たけだ">
+      </div>
+      <div class="post-field">
+        <label for="postMemo">恩送りメモ（確認テストで出たメモをそのまま貼ってOK）</label>
+        <textarea id="postMemo" placeholder="例：科目ブレ観点で同じ相手先が3科目に散っていた／少額特例の対象が12件見つかった／追加した1行：サブスク型の◯◯は通信費に固定　など"></textarea>
+      </div>
+      <button class="post-submit" id="postBtn" onclick="submitPost()">🎁 恩送りメモを投稿して修了する</button>
+      <div class="post-status" id="postStatus"></div>
+
+      <div class="box safe">
+        <div class="box-h">🔒 安全メモ</div>
+        投稿内容は他の受講生・運営も閲覧できる公開掲示板に表示されます。<b>顧問先名・取引先名・具体的な金額・事業所名・APIトークンなどの秘密情報、個人情報は記載しない</b>ようお願いいたします（確認テストのプロンプトに抽象化の指示を入れてありますが、投稿前にもう一度ご自身の目で確認してください）。
+      </div>
+
+      <a class="board-link" href="board.html" target="_blank" rel="noopener">📋 みんなの投稿を見る（掲示板を開く）→</a>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <h2>❓ よくあるつまずき</h2>
+      <details>
+        <summary>顧問先の本番データでやってもいい？</summary>
+        <div class="body">レビュー（見るだけ）は本番データでも大きな事故は起きにくいですが、<b>修正は必ず1件ずつ・内容を確認してから</b>にしてください。最初はテスト用の事業所か自分の事業所で型に慣れて、それから本番に広げるのが安全です。修正前後の一覧を残すのも忘れずに。</div>
+      </details>
+      <details>
+        <summary>AIのレビュー結果は信じていいの？</summary>
+        <div class="body">AIの指摘は「気づきの候補」です。見落としを拾う網としては優秀ですが、<b>直すかどうかの判断（税務判断）は人の仕事</b>です。畠山の本番運用でも、AIの所見は必ず人が最終確認してから反映しています。この「AIが網を張り、人が判断する」分担こそが今日の型です。</div>
+      </details>
+      <details>
+        <summary>少額特例ってなに？</summary>
+        <div class="body">税込1万円未満の課税仕入なら、インボイス（適格請求書）の保存がなくても全額を仕入税額控除にできる特例です（2029年9月末まで）。ただし<b>基準期間の課税売上高1億円以下（または特定期間5千万円以下）</b>という適用要件があります。自社が要件を満たすかの判断は、必ず人が確認してください。</div>
+      </details>
+      <details>
+        <summary>MF会計でも同じことができる？</summary>
+        <div class="body">できます。ステップ③④のコピペ文の1行目を「MF会計のMCPを使います」に変えて、税区分はコード番号ではなく名称で指示してください。また、仕訳帳をCSVでエクスポートしてClaude Codeに読ませる方法なら、<b>どの会計ソフトでも同じ観点でレビューできます</b>。</div>
+      </details>
+      <details>
+        <summary>追加した1行は共有しないとダメ？</summary>
+        <div class="body">共有は恩送りメモの形でお願いしています（修了条件）。ただし<b>抽象化した形でOK</b>です。顧問先が特定される情報・具体的な金額は入れないでください。良い観点は配布キットに取り込んで、次回の配布で全員に還元します。</div>
+      </details>
+      <details>
+        <summary>確認テストに落ちたら？</summary>
+        <div class="body">何回でも再挑戦できます。70点未満のときは、Claudeが間違えた所をやさしく解説してから別の問題を出してくれます。テストは「できなかった探し」ではなく、今日の体験を自分の言葉にするための仕上げです🌸</div>
+      </details>
+      <details>
+        <summary>途中で「使用上限に達しました」と表示された</summary>
+        <div class="body">故障ではありません。Claudeの有料プランには一定時間あたりの利用上限があり、レビューのような重い処理では出やすくなります。<b>時間を置くと自動で復活します</b>ので、休憩を挟むか、続きは後日に進めてください（課題は当日中に終わらせる必要はありません）。</div>
+      </details>
+    </section>
+
+    <!-- 修了 -->
+    <section class="finish locked" id="finish">
+      <h2 id="finishMsg">🏅 修了バッジ：レビューまで任せる人</h2>
+      <p id="finishSub">5つのチェック＋恩送りメモの投稿がそろうと、ここで修了バッジが解放されます。</p>
+      <a href="#hero" class="cta">↑ 上に戻って進める</a>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // 恩送り掲示板への投稿
+  const BOARD_API = 'https://script.google.com/macros/s/AKfycbzhsHqZgC4KO_i9fMNZDY2CBbJx-0YSVNJfrPpd5M35EcjAq1iSPY_rHOUkzEBPU6gUhg/exec';
+  function submitPost(){
+    const name = document.getElementById('postName').value.trim();
+    const memo = document.getElementById('postMemo').value.trim();
+    const btn = document.getElementById('postBtn');
+    const status = document.getElementById('postStatus');
+    if(!memo){
+      status.textContent = '恩送りメモを入力してください。';
+      status.className = 'post-status err';
+      return;
+    }
+    btn.disabled = true;
+    status.textContent = '送信中…';
+    status.className = 'post-status';
+    fetch(BOARD_API, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify({name: name || '匿名', memo: '【第5回】' + memo})
+    }).then(()=>{
+      status.textContent = '投稿ありがとうございます！🌸 掲示板に反映されます。修了バッジをご覧ください🏅';
+      status.className = 'post-status ok';
+      document.getElementById('postMemo').value = '';
+      btn.disabled = false;
+      localStorage.setItem(PKEY,'1');
+      render();
+    }).catch(()=>{
+      status.textContent = '送信に失敗しました。通信環境をご確認のうえ、もう一度お試しください。';
+      status.className = 'post-status err';
+      btn.disabled = false;
+    });
+  }
+
+  // コピーボタン
+  function copyCode(btn){
+    const pre = btn.parentElement.querySelector('pre');
+    navigator.clipboard.writeText(pre.innerText).then(()=>{
+      btn.textContent='コピー済み✓';btn.classList.add('copied');
+      setTimeout(()=>{btn.textContent='コピー';btn.classList.remove('copied')},1600);
+    });
+  }
+
+  // チェックの進捗（5ステップ＋恩送り投稿＝6条件で修了）
+  const KEY='bootcamp5_progress';
+  const PKEY='bootcamp5_posted';
+  const STEP_TOTAL=5, TOTAL=6;
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
+  function save(s){localStorage.setItem(KEY,JSON.stringify(s))}
+  function isPosted(){return localStorage.getItem(PKEY)==='1'}
+
+  // 紙吹雪（修了の瞬間だけ）
+  function burst(){
+    const colors=['#2864f0','#00a86b','#f5a623','#e5484d','#7c3aed'];
+    for(let i=0;i<70;i++){
+      const p=document.createElement('div');
+      p.className='confetti-piece';
+      p.style.left=Math.random()*100+'vw';
+      p.style.background=colors[i%colors.length];
+      p.style.animationDuration=(2.2+Math.random()*1.8)+'s';
+      p.style.animationDelay=(Math.random()*.6)+'s';
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(),5000);
+    }
+  }
+
+  let prevAllDone=null;
+  function render(){
+    const s=load();
+    let done=0;
+    document.querySelectorAll('input[data-step]').forEach(cb=>{
+      const n=cb.dataset.step;
+      cb.checked=!!s[n];
+      cb.closest('.step').classList.toggle('done',!!s[n]);
+      if(s[n])done++;
+    });
+    const posted=isPosted();
+    document.getElementById('post').classList.toggle('done',posted);
+    const units=done+(posted?1:0);
+    document.getElementById('cnt').textContent=units;
+    document.getElementById('fill').style.width=(units/TOTAL*100)+'%';
+    const allDone=(done===STEP_TOTAL&&posted);
+    const fin=document.getElementById('finish');
+    const msg=document.getElementById('finishMsg');
+    const sub=document.getElementById('finishSub');
+    if(allDone){
+      fin.classList.remove('locked');
+      fin.classList.add('celebrate');
+      msg.textContent='🎉 第5回 修了おめでとうございます！「レビューまで任せる人」になりました🌸';
+      sub.textContent='起票も、チェックも、型で回る。あなたの1行が、みんなの観点表を育てます。';
+    }else{
+      fin.classList.add('locked');
+      fin.classList.remove('celebrate');
+      msg.textContent='🏅 修了バッジ：レビューまで任せる人';
+      sub.textContent = done===STEP_TOTAL
+        ? 'あとは確認テストに合格して、恩送りメモを投稿するだけです🎁'
+        : '5つのチェック＋恩送りメモの投稿がそろうと、ここで修了バッジが解放されます。';
+    }
+    if(prevAllDone===false && allDone) burst();
+    prevAllDone=allDone;
+  }
+
+  function toggle(el,e){
+    if(e.target.tagName!=='INPUT'){
+      const cb=el.querySelector('input');cb.checked=!cb.checked;
+    }
+    const s=load();
+    el.querySelectorAll('input[data-step]').forEach(cb=>{s[cb.dataset.step]=cb.checked});
+    save(s);render();
+  }
+  document.querySelectorAll('input[data-step]').forEach(cb=>{
+    cb.addEventListener('change',()=>{
+      const s=load();s[cb.dataset.step]=cb.checked;save(s);render();
+    });
+  });
+
+  render();
+</script>
+<script>window.BOOTCAMP_PAGE='vol05';</script>
+<script src="progress-tracker.js"></script>
+</body>
+</html>
