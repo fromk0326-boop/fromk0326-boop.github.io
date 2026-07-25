@@ -154,7 +154,7 @@
   .copy-label{font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px;display:flex;align-items:center;gap:6px}
   .copy pre{
     margin:0;background:#0f1b2d;color:#e7eefc;border-radius:12px;
-    padding:16px 16px;overflow-x:auto;font-size:13.5px;line-height:1.7;
+    padding:16px 16px;overflow:auto;max-height:240px;font-size:13.5px;line-height:1.7;
     font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;white-space:pre-wrap;
   }
   .copy-btn{
@@ -957,13 +957,18 @@ MCPで会計ソフト（freee／MF会計）に取引として登録してくだ�
 
       <p>freeeの「自動で経理」画面と「取引・口座振替[β版]」画面の右下に、<b>よく使う勘定科目のボタンパネル</b>を重ねて表示するChrome拡張です。明細の科目欄をクリックしてからボタンを押すだけで、科目が入力・確定されます。キーボード入力は不要です。</p>
 
-      <table class="kit-table">
-        <tr><th>機能</th><th>何ができるか</th></tr>
-        <tr><td>科目ボタンパネル</td><td>よく使う10科目をワンクリックで入力・確定（成功するとボタンが緑に光ります）</td></tr>
-        <tr><td>前回の科目ボタン</td><td>同じ取引先の明細に前回選んだ科目を記憶し、「前回: ○○」ボタンで再現。使うほど賢くなります（記録は自分のPCの中だけ）</td></tr>
-        <tr><td>取引先候補ボタン</td><td>明細の摘要から取引先名を推測してボタン表示。クリックで取引先欄に入力（未登録の取引先を勝手に新規登録はしません）</td></tr>
-        <tr><td>🔍 何費？検索</td><td>パネルからナンピを小窓で開いて、明細の内容をそのまま検索</td></tr>
-      </table>
+      <details>
+        <summary>⚙️ できること（機能一覧）</summary>
+        <div class="body">
+          <table class="kit-table">
+            <tr><th>機能</th><th>何ができるか</th></tr>
+            <tr><td>科目ボタンパネル</td><td>よく使う10科目をワンクリックで入力・確定（成功するとボタンが緑に光ります）</td></tr>
+            <tr><td>前回の科目ボタン</td><td>同じ取引先の明細に前回選んだ科目を記憶し、「前回: ○○」ボタンで再現。使うほど賢くなります（記録は自分のPCの中だけ）</td></tr>
+            <tr><td>取引先候補ボタン</td><td>明細の摘要から取引先名を推測してボタン表示。クリックで取引先欄に入力（未登録の取引先を勝手に新規登録はしません）</td></tr>
+            <tr><td>🔍 何費？検索</td><td>パネルからナンピを小窓で開いて、明細の内容をそのまま検索</td></tr>
+          </table>
+        </div>
+      </details>
 
       <details>
         <summary>🛠 インストール手順（最初の1回だけ・約5分）</summary>
@@ -999,17 +1004,18 @@ MCPで会計ソフト（freee／MF会計）に取引として登録してくだ�
 
       <p>MF会計の「連携サービスから入力」ページ（通帳・カード他／ビジネスカテゴリ）用のChrome拡張です。機能は3つ。</p>
 
-      <table class="kit-table">
-        <tr><th>機能</th><th>何ができるか</th></tr>
-        <tr><td>⚡ ルール一致一括選択</td><td>自動仕訳ルールに一致した明細（白い行）だけを一括チェック。MF推定（青い行・雲アイコン）は科目を直す可能性があるため選びません</td></tr>
-        <tr><td>科目ボタンパネル</td><td>よく使う勘定科目をワンクリックで選択・確定</td></tr>
-        <tr><td>🔍 何費？検索</td><td>摘要の内容でナンピを小窓検索。半角カナの店名（例：ﾃﾞﾆ-ｽﾞ）も自動で読みやすく変換してから検索します</td></tr>
-      </table>
-
-      <div class="box tip">
-        <div class="box-h">💡 「一括登録」ボタンは自分で押す設計です</div>
-        拡張がやるのは<b>チェックを入れるところまで</b>。登録の実行は必ず人が「一括登録」ボタンを押します。「自動仕訳ルールとして保存」「適格」のチェックにも一切触りません。体験①と同じ「最後は人が承認する」思想です。
-      </div>
+      <details>
+        <summary>⚙️ できること（機能一覧）</summary>
+        <div class="body">
+          <table class="kit-table">
+            <tr><th>機能</th><th>何ができるか</th></tr>
+            <tr><td>⚡ ルール一致一括選択</td><td>自動仕訳ルールに一致した明細（白い行）だけを一括チェック。MF推定（青い行・雲アイコン）は科目を直す可能性があるため選びません</td></tr>
+            <tr><td>科目ボタンパネル</td><td>よく使う勘定科目をワンクリックで選択・確定</td></tr>
+            <tr><td>🔍 何費？検索</td><td>摘要の内容でナンピを小窓検索。半角カナの店名（例：ﾃﾞﾆ-ｽﾞ）も自動で読みやすく変換してから検索します</td></tr>
+          </table>
+          <p style="margin:10px 0 0">💡 <b>「一括登録」ボタンは自分で押す設計です</b>：拡張がやるのはチェックを入れるところまで。登録の実行は必ず人が押します（「自動仕訳ルールとして保存」「適格」には一切触りません）。体験①と同じ「最後は人が承認する」思想です。</p>
+        </div>
+      </details>
 
       <details>
         <summary>🛠 インストール手順（最初の1回だけ・約5分）</summary>

@@ -126,7 +126,7 @@
   .copy-label{font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px;display:flex;align-items:center;gap:6px}
   .copy pre{
     margin:0;background:#0f1b2d;color:#e7eefc;border-radius:12px;
-    padding:16px 16px;overflow-x:auto;font-size:13.5px;line-height:1.7;
+    padding:16px 16px;overflow:auto;max-height:240px;font-size:13.5px;line-height:1.7;
     font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;white-space:pre-wrap;
   }
   .copy-btn{
@@ -307,7 +307,7 @@
 
     <!-- ===== ステップ1 ===== -->
     <section class="step" id="t1">
-      <div class="done-banner">✅ このステップは完了済み（グレー表示）。読み直しはそのままどうぞ／戻すときは下のチェックを外してください</div>
+      <div class="done-banner">✅ 完了済み（チェックを外すと戻せます）</div>
       <div class="step-head">
         <div class="step-num">1<small>/ 4</small></div>
         <div class="step-title">
@@ -321,11 +321,6 @@
 
       <p>まずは伝票が起票される「箱」をご用意ください。クラウド会計freeeの無料アカウントを作成します。<b>すでにfreeeのアカウントをお持ちの方はこのステップは飛ばしてOKです</b>。</p>
 
-      <div class="box tip">
-        <div class="box-h">💡 これで何がラクになる？</div>
-        freeeは「取引」を入れると、複式簿記の仕訳を自動で組み立ててくれるクラウド会計です。あとでAIがここに直接書き込めるようになります。
-      </div>
-
       <div class="box howto">
         <div class="box-h">📋 手順</div>
         <ol>
@@ -338,8 +333,8 @@
       </div>
 
       <div class="box safe">
-        <div class="box-h">🔒 安全メモ</div>
-        パスワードの使い回しはお控えください。ログイン情報やトークンが映る画面は📸スクリーンショット・画面共有をしないようご注意ください。
+        <div class="box-h">🔒 安全メモ（この講座全体の共通ルール）</div>
+        パスワードの使い回しはお控えください。また、<b>ログイン情報・カード情報・トークンが映る画面は📸スクリーンショット・画面共有をしない</b>。これは今日の全ステップ共通のお約束です。
       </div>
 
       <details>
@@ -361,7 +356,7 @@
 
     <!-- ===== ステップ2 ===== -->
     <section class="step" id="t2">
-      <div class="done-banner">✅ このステップは完了済み（グレー表示）。読み直しはそのままどうぞ／戻すときは下のチェックを外してください</div>
+      <div class="done-banner">✅ 完了済み（チェックを外すと戻せます）</div>
       <div class="step-head">
         <div class="step-num">2<small>/ 4</small></div>
         <div class="step-title">
@@ -375,11 +370,6 @@
 
       <p>freeeに口座やカードをつなぐと、明細が自動で取り込まれます。これが「AIが自動で起票する」体験の元になります。<b>すでに口座連携が済んでいる方はこのステップは飛ばしてOKです</b>。</p>
 
-      <div class="box tip">
-        <div class="box-h">💡 これで何がラクになる？</div>
-        口座・カードを連携すると、入出金明細が自動でfreeeに届くようになります。あとはAIがその明細を見て「これは消耗品費っぽいですね、登録しますか？」と提案し、起票するという流れが作れます。
-      </div>
-
       <div class="box howto">
         <div class="box-h">📋 手順</div>
         <ol>
@@ -392,7 +382,7 @@
 
       <div class="box safe">
         <div class="box-h">🔒 安全メモ</div>
-        ネットバンキングのID・パスワードはfreee社の正規連携画面以外には絶対に入力しないでください。連携作業中の画面は📸スクリーンショット・画面共有をしないようご注意ください。
+        ネットバンキングのID・パスワードは、freee社の正規連携画面以外には絶対に入力しないでください。
       </div>
 
       <details>
@@ -415,7 +405,7 @@
 
     <!-- ===== ステップ3 ===== -->
     <section class="step" id="t3">
-      <div class="done-banner">✅ このステップは完了済み（グレー表示）。読み直しはそのままどうぞ／戻すときは下のチェックを外してください</div>
+      <div class="done-banner">✅ 完了済み（チェックを外すと戻せます）</div>
       <div class="step-head">
         <div class="step-num">3<small>/ 4</small></div>
         <div class="step-title">
@@ -427,12 +417,7 @@
         </div>
       </div>
 
-      <p>次は、AIに作業をお願いするための道具「Claude Code」をご自身のPCに入れます。インストール手順は<b>事前に共有しているUnikoukokunさんの課題ページ</b>にまとまっていますので、基本的にはそちらを見ながら進めてください。</p>
-
-      <div class="box tip">
-        <div class="box-h">💡 これで何がラクになる？</div>
-        Claude Codeは、AIに自然な言葉で指示できるデスクトップアプリです。「この請求書を登録して」のような依頼を、そのまま実行に変えてくれる相棒です。<b>ターミナル（黒い画面）は不要</b>で、デスクトップアプリだけで完結します。
-      </div>
+      <p>次は、AIに自然な言葉で指示できるデスクトップアプリ「Claude Code」をご自身のPCに入れます。<b>ターミナル（黒い画面）は不要</b>で、アプリだけで完結します。インストール手順は<b>事前に共有しているUnikoukokunさんの課題ページ</b>にまとまっていますので、基本的にはそちらを見ながら進めてください。</p>
 
       <div class="box howto">
         <div class="box-h">📋 進め方</div>
@@ -447,25 +432,14 @@
 
       <p><b>Claude Codeアプリを開いて「こんにちは」と話しかけてみて、返事が来れば成功！</b></p>
 
-      <div class="box tip">
-        <div class="box-h">📝 Claude Codeが作った資料はどこで見る？</div>
-        Claude Codeにお願いすると、議事録やメモなどを<b>Markdown（.md）ファイル</b>として作ってくれることがあります。<b>Wordなど別のアプリを開く必要はなく、Claude Codeデスクトップアプリの中のファイル一覧・プレビュー画面でそのまま読めます</b>ので、この先の課題でも「作ってもらったファイルはアプリ内で見る」が基本と覚えておいてください。
-      </div>
-
-      <div class="box safe">
-        <div class="box-h">🔒 安全メモ</div>
-        クレジットカード情報の入力画面・ログイン画面は📸スクリーンショット・画面共有をしないようご注意ください。
-      </div>
-
       <details>
         <summary>🛠 迷ったとき・トラブル</summary>
         <div class="body">
           <ul>
-            <li><b>課金しないと使える？</b> → 使えません。無料プランのままではClaude Codeは動きません。月額のProプラン（年額ではなく月額を選択）にご加入ください。</li>
             <li><b>Googleアカウントがない</b> → メールアドレスでの新規登録も可能です。当日サポートいたします。</li>
             <li><b>Gitを案内されたけどよく分からない</b> → アプリの案内に従ってGUIインストールするだけでOKです。コマンド入力は不要です。</li>
             <li><b>インストールしたのに反応しない</b> → アプリを完全に閉じて開き直してください。それでも直らない場合はPCを再起動してください。</li>
-            <li><b>作ってもらったmdファイルが見当たらない</b> → Claude Codeアプリのファイル一覧（サイドバー）をご確認ください。「〇〇というファイル名で作った」とAIが答えた名前で探すと見つかりやすいです。</li>
+            <li><b>作ってもらったmd（メモ）ファイルはどこで見る？</b> → Wordなど別アプリは不要で、Claude Codeアプリのファイル一覧（サイドバー）からそのまま読めます。見当たらないときは、AIが答えたファイル名で探すと見つかりやすいです。</li>
           </ul>
         </div>
       </details>
@@ -478,7 +452,7 @@
 
     <!-- ===== ステップ4 ===== -->
     <section class="step" id="t4">
-      <div class="done-banner">✅ このステップは完了済み（グレー表示）。読み直しはそのままどうぞ／戻すときは下のチェックを外してください</div>
+      <div class="done-banner">✅ 完了済み（チェックを外すと戻せます）</div>
       <div class="step-head">
         <div class="step-num">4<small>/ 4</small></div>
         <div class="step-title">
@@ -491,11 +465,6 @@
       </div>
 
       <p>いよいよ本番です！ Claude Code と freee を「MCP」でつなぐと、AIがあなたの代わりにfreeeへ伝票を起票できるようになります。<b>ターミナル（黒い画面）は使いません。Claude Codeデスクトップアプリのチャットに文章を貼るだけ</b>で、接続作業はClaude自身が進めてくれます。</p>
-
-      <div class="box tip">
-        <div class="box-h">💡 MCPってなに？</div>
-        MCP（Model Context Protocol）は、AIと外部サービスをつなぐ“共通プラグ”。これを挿すと、Claude Codeが「freeeを操作する手」を手に入れるイメージです。
-      </div>
 
       <div class="box howto">
         <div class="box-h">📋 手順①：freee MCPプラグインを入れる（デスクトップアプリに貼るだけ）</div>
@@ -572,10 +541,8 @@ freeeに、本日付で「消耗品費 1,100円（税込）／現金」の取引
         <div class="box-h">🔒 安全メモ</div>
         <ul>
           <li><b>複数の事業所につながる可能性がある方（税理士・複数社経営の方）は、起票前に必ず「いま接続している事業所名」を確認する。</b>顧問先など別の事業所への誤登録が、今日いちばん防ぎたい事故です（上のコピペ文には確認の一文を入れてあります）。</li>
-          <li>必ず「登録前に内容を見せて」と添えて、<b>確認してから登録</b>させる癖をつける。</li>
-          <li>最初は少額・少件数で試すのが安心。</li>
-          <li><b>登録した後も、freeeの「自動で経理」には同じ明細が未処理のまま残ります</b>（明細を消込済みにするAPIがfreeeから提供されていないため）。二重登録を防ぐため、登録後にfreee画面で該当明細を「無視」にするか、登録済みの取引との紐づけを手動で行ってください。</li>
-          <li>認証画面・トークンが映る画面は📸撮らない・共有しない。</li>
+          <li>必ず「登録前に内容を見せて」と添えて<b>確認してから登録</b>させる（最初は少額・少件数で）。</li>
+          <li><b>登録した後も、freeeの「自動で経理」には同じ明細が未処理のまま残ります</b>（消込APIが無いため）。二重登録を防ぐため、登録後にfreee画面で該当明細を「無視」にするか、手動で紐づけてください。</li>
         </ul>
       </div>
 
@@ -622,11 +589,6 @@ freeeに、本日付で「消耗品費 1,100円（税込）／現金」の取引
       <p>ここまでで「自動起票デビュー」は完了です。<b>時間に余裕がある方だけ</b>、ここから先に進んでみてください。畠山から配布している「AI事務所テンプレート一式」を使うと、Claude Codeに<b>あなた専用のキャラ・事務所ルール・安全ロック・記憶機能</b>を一気に持たせられます。</p>
 
       <div class="box tip">
-        <div class="box-h">🪟 先に確認：Windowsの方は「Git」と「Python」が必要です</div>
-        テンプレートのうち「②セキュリティ」と「④Hooks」は、Gitに付属する<b>Git Bash</b>と<b>Python</b>という道具を使います。ステップ③④でGitをまだ入れていない方は、先に <a href="https://git-scm.com/" target="_blank" rel="noopener">git-scm.com</a> からGitを、<a href="https://www.python.org/" target="_blank" rel="noopener">python.org</a> からPythonをインストールしてください（どちらも画面に沿って進めるだけでOK。迷ったらClaudeに「GitとPythonのインストールを案内して」と頼めば道案内してくれます）。Macの方は標準搭載なので、追加インストールは基本的に不要です。
-      </div>
-
-      <div class="box tip">
         <div class="box-h">💡 何が手に入る？</div>
         <ul>
           <li>① <b>md設定</b>：AIの名前・性格、事務所のルール（CLAUDE.md）</li>
@@ -637,6 +599,14 @@ freeeに、本日付で「消耗品費 1,100円（税込）／現金」の取引
         <div style="text-align:center;margin-top:14px">
           <a href="guide.html" target="_blank" rel="noopener" class="course-pill" style="display:inline-flex;padding:10px 22px;font-size:14px">📖 詳細解説はこちら（任意）</a>
         </div>
+      </div>
+
+      <details>
+        <summary>📋 進め方を開く（GitHubアカウント作成 → Fork → 開く → 設置。約20分＋設置1時間）</summary>
+        <div class="body">
+      <div class="box tip">
+        <div class="box-h">🪟 先に確認：Windowsの方は「Git」と「Python」が必要です</div>
+        テンプレートのうち「②セキュリティ」と「④Hooks」は、Gitに付属する<b>Git Bash</b>と<b>Python</b>という道具を使います。ステップ③④でGitをまだ入れていない方は、先に <a href="https://git-scm.com/" target="_blank" rel="noopener">git-scm.com</a> からGitを、<a href="https://www.python.org/" target="_blank" rel="noopener">python.org</a> からPythonをインストールしてください（どちらも画面に沿って進めるだけでOK。迷ったらClaudeに「GitとPythonのインストールを案内して」と頼めば道案内してくれます）。Macの方は標準搭載なので、追加インストールは基本的に不要です。
       </div>
 
       <div class="box tip">
@@ -735,6 +705,8 @@ freeeに、本日付で「消耗品費 1,100円（税込）／現金」の取引
             <li><b>このステップは今日できなかった</b> → 問題ありません。次回以降のブートキャンプで進めればOKです。</li>
           </ul>
         </div>
+        </div>
+      </details>
       </details>
     </section>
 

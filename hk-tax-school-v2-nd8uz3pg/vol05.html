@@ -126,7 +126,7 @@
   .copy-label{font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px;display:flex;align-items:center;gap:6px}
   .copy pre{
     margin:0;background:#0f1b2d;color:#e7eefc;border-radius:12px;
-    padding:16px 16px;overflow-x:auto;font-size:13.5px;line-height:1.7;
+    padding:16px 16px;overflow:auto;max-height:240px;font-size:13.5px;line-height:1.7;
     font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;white-space:pre-wrap;
   }
   .copy-btn{
@@ -296,7 +296,7 @@
     <section class="hero" id="hero">
       <span class="badge">第5回 / 全シリーズ</span>
       <h1>記帳の自動化を<br><em>「レビューできる仕組み」</em>に育てる</h1>
-      <p class="lead">起票の自動化は第3回で体験しました。第5回はその先です。AIが起票した帳簿を、<b>AI自身に税理士の目でレビューさせる</b>。仕訳帳のチェックと消費税区分のチェックを「型」にして、自分の実務に合わせて育てていきます。</p>
+      <p class="lead">起票の自動化は第3回で体験しました。第5回はその先、「起票は自動、判断は人。<b>その間にAIのレビューを挟む</b>」です。仕訳帳と消費税区分のチェックを「型」にして、畠山のサンプル観点を土台に、みんなで育てていきます。</p>
 
       <div class="goal">
         <h3>🎯 この課題を終えると…</h3>
@@ -310,15 +310,11 @@
         <div class="out">⏱ 目安：合計 約80〜100分　／　💪 難易度：中級（第1回・第3回を終えた方向け）</div>
       </div>
 
-      <div class="box tip">
-        <div class="box-h">💡 この回の考え方：「起票は自動、判断は人。その間に“AIのレビュー”を挟む」</div>
-        自動化が進むほど、怖いのは「間違いに気づかないまま積み上がること」です。だから畠山の本番運用では、起票のあとに必ず<b>チェックの工程</b>を置いています。今日渡す観点表は、その本番から抜き出した<b>サンプル（土台）</b>です。一定レベルまでは畠山が用意しました。ここから先は、<b>皆さんの実務の「ヒヤッとした1件」を持ち寄って、みんなで育てていきましょう</b>。
-      </div>
     </section>
 
     <!-- ===== ステップ1 ===== -->
     <section class="step" id="t1">
-      <div class="done-banner">✅ このステップは完了済み（グレー表示）。読み直しはそのままどうぞ／戻すときは下のチェックを外してください</div>
+      <div class="done-banner">✅ 完了済み（チェックを外すと戻せます）</div>
       <div class="step-head">
         <div class="step-num">1<small>/ 5</small></div>
         <div class="step-title">
@@ -343,13 +339,8 @@
       </div>
 
       <div class="box howto">
-        <div class="box-h">📋 手順（まだの方：GitHubアカウント作成〜受け取り）</div>
-        <ol>
-          <li><a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a> でアカウントを作る（無料。メール→パスワード→ユーザー名→確認コードの順）</li>
-          <li><a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">配布用リポジトリ（haifuyou）</a>を開き、右上の「<b>Fork</b>」→「Create fork」で<b>自分のGitHubに複製</b>する（＝受け取り完了）</li>
-          <li>ブラウザ版はセッションでフォークを選ぶだけ。デスクトップ版はClaude Codeにクローンを頼む（コピペ文は<a href="index.html#bonus">第1回課題ページの🎁セクション</a>へ）</li>
-        </ol>
-        <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ くわしい画面つきの説明は<a href="index.html#bonus">第1回課題ページの🎁セクション</a>にあります。</p>
+        <div class="box-h">📋 はじめての方（まだフォークしていない方）</div>
+        GitHubアカウント作成 → Fork → 開き方（ブラウザ版／クローン）まで、<a href="index.html#bonus">第1回課題ページの🎁セクション</a>の手順で受け取ってください（約10分）。
       </div>
 
       <div class="box safe">
@@ -365,7 +356,7 @@
 
     <!-- ===== ステップ2 ===== -->
     <section class="step" id="t2">
-      <div class="done-banner">✅ このステップは完了済み（グレー表示）。読み直しはそのままどうぞ／戻すときは下のチェックを外してください</div>
+      <div class="done-banner">✅ 完了済み（チェックを外すと戻せます）</div>
       <div class="step-head">
         <div class="step-num">2<small>/ 5</small></div>
         <div class="step-title">
@@ -402,7 +393,7 @@
 
     <!-- ===== ステップ3 ===== -->
     <section class="step" id="t3">
-      <div class="done-banner">✅ このステップは完了済み（グレー表示）。読み直しはそのままどうぞ／戻すときは下のチェックを外してください</div>
+      <div class="done-banner">✅ 完了済み（チェックを外すと戻せます）</div>
       <div class="step-head">
         <div class="step-num">3<small>/ 5</small></div>
         <div class="step-title">
@@ -473,8 +464,7 @@ OKと言ったら、今月（私が別の月を指定したらその月）の仕
       <div class="box safe">
         <div class="box-h">🔒 安全メモ</div>
         <ul>
-          <li>レビュー結果のファイル（月次レビュー_YYYYMM.md）には取引先名や金額が入ります。<b>GitHubのフォークにアップロードしない・掲示板に貼らない</b>でください</li>
-          <li>「要確認」は「間違い」ではありません。<b>最終判断はあなた（人）</b>です。AIの指摘を鵜呑みにして一括修正させないでください</li>
+          <li>レビュー結果のファイル（月次レビュー_YYYYMM.md）には取引先名や金額が入ります。<b>GitHubのフォークにアップロードしない・掲示板に貼らない</b>でください。「要確認」は「間違い」ではなく、最終判断はあなた（人）です</li>
         </ul>
       </div>
 
@@ -498,7 +488,7 @@ OKと言ったら、今月（私が別の月を指定したらその月）の仕
 
     <!-- ===== ステップ4 ===== -->
     <section class="step" id="t4">
-      <div class="done-banner">✅ このステップは完了済み（グレー表示）。読み直しはそのままどうぞ／戻すときは下のチェックを外してください</div>
+      <div class="done-banner">✅ 完了済み（チェックを外すと戻せます）</div>
       <div class="step-head">
         <div class="step-num">4<small>/ 5</small></div>
         <div class="step-title">
@@ -590,7 +580,7 @@ OKと言ったら、直近3ヶ月（私が別の期間を指定したらその�
 
     <!-- ===== ステップ5 ===== -->
     <section class="step" id="t5" style="border-color:var(--amber)">
-      <div class="done-banner">✅ このステップは完了済み（グレー表示）。読み直しはそのままどうぞ／戻すときは下のチェックを外してください</div>
+      <div class="done-banner">✅ 完了済み（チェックを外すと戻せます）</div>
       <div class="step-head">
         <div class="step-num" style="background:var(--amber)">5<small>/ 5</small></div>
         <div class="step-title">
