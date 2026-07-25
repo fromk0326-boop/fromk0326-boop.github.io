@@ -654,20 +654,38 @@ freeeに、本日付で「消耗品費 1,100円（税込）／現金」の取引
       </div>
 
       <div class="box howto">
-        <div class="box-h">📋 手順②：配布用リポジトリからテンプレート一式を受け取る</div>
+        <div class="box-h">📋 手順②：フォークする（＝自分のGitHubに複製。これが「受け取り」です）</div>
         <ol>
           <li>GitHubにログインした状態で、配布用リポジトリを開く → <a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">畠山式 配布用リポジトリ（haifuyou）</a></li>
-          <li>ページ右上の「<b>Fork</b>」ボタンを押す →（設定はそのまま）緑の「Create fork」を押す。これで<b>自分のアカウントに教材のコピー</b>ができます</li>
-          <li>自分のフォークのページで、緑の「<b>Code</b>」ボタン →「<b>Download ZIP</b>」を選ぶ</li>
-          <li>ダウンロードしたZIPを右クリック →「すべて展開」（Macはダブルクリック）して、出てきた <code>haifuyou</code> フォルダをドキュメントなど分かりやすい場所に移動する</li>
+          <li>ページ右上の「<b>Fork</b>」ボタンを押す →（設定はそのまま）緑の「Create fork」を押す。これで<b>教材一式が自分のGitHubに複製</b>されます。<b>受け取りはこれで完了</b>です</li>
         </ol>
-        <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ 急いでいる方は、Forkせずに配布用リポジトリから直接「Code」→「Download ZIP」でもOKです（その場合も中身は同じです）。<code>git clone</code> が分かる方はcloneでも構いません。<b>ブラウザ版Claude Code（claude.ai/code）で教材を使う場合は、ZIPのダウンロードは不要</b>です（Forkだけしておけば、セッション作成時に自分のフォークを選ぶだけで教材一式が開きます）。</p>
+        <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ ローカルにダウンロードして持つのではなく、<b>まず自分のGitHubに複製を持つ</b>のがこの講座の基本形です。ここがブラウザ版Claude Codeの作業場になり、第5回でルール表を「育てる」場所にもなります。教材が更新されたら、自分のフォークの「<b>Sync fork</b>」ボタンで最新に追いつけます。</p>
       </div>
 
       <div class="box howto">
-        <div class="box-h">📋 手順③：Claude Codeで開いて、設置をお願いする</div>
+        <div class="box-h">📋 手順③：教材を開く（2つの方法）</div>
+        <ul>
+          <li>🌐 <b>ブラウザ版Claude Code</b>：claude.ai/code → 新しいセッション → <b>自分のフォーク（haifuyou）を選ぶだけ</b>。ダウンロードは不要です</li>
+          <li>💻 <b>デスクトップ版</b>（今回のテンプレート設置はこちら）：下のコピペ文で、<b>クローン（PCへの取り込み）をClaude自身にやってもらいます</b></li>
+        </ul>
+      </div>
+
+      <div class="copy">
+        <div class="copy-label">📋 デスクトップ版に貼るだけ：自分のフォークをPCに取り込む</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>私のGitHubアカウントにフォークした教材リポジトリを、このPCに取り込みたいです。
+リポジトリは https://github.com/{{あなたのGitHubユーザー名}}/haifuyou です。
+
+1. gitが入っているか確認して、無ければインストールから案内してください
+2. ドキュメント配下の分かりやすい場所にクローンしてください
+3. 終わったらそのフォルダを開いて、中に何が入っているか簡単に説明してください</pre>
+      </div>
+      <p style="margin:4px 0 0;font-size:13px;color:var(--sub)">※ クローンで取り込むと、教材の更新は「git pullして」の一言で取り込めて、自分が育てたルール表を自分のGitHubに保存もできます。gitがどうしてもうまく入らない場合だけ、フォークのページで「Code」→「Download ZIP」→右クリック「すべて展開」の代替ルートでもOKです（この場合、更新のたびにZIPの取り直しになります）。</p>
+
+      <div class="box howto">
+        <div class="box-h">📋 手順④：テンプレートの設置をお願いする</div>
         <ol>
-          <li>Claude Codeで、展開した <code>haifuyou</code> フォルダを開く（この中の「<b>セットアップ</b>」フォルダが第1回のテンプレート一式です）</li>
+          <li>Claude Codeで、取り込んだ <code>haifuyou</code> フォルダを開く（この中の「<b>セットアップ</b>」フォルダが第1回のテンプレート一式です）</li>
           <li>下のコピペ文を会話画面に貼って送信（{{ }}の部分はご自身の情報に書き換えてください）↓</li>
         </ol>
         <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ このテンプレート一式（キャラ設定・セキュリティ・メモリ・Hooks）は、<b>ご自身のPCのClaude Codeに設置するもの</b>なので、この手順はデスクトップ版で進めてください。</p>

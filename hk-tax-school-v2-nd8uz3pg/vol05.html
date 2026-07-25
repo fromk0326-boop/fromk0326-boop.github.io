@@ -338,7 +338,7 @@
           <li>GitHubで<b>自分のフォーク</b>（自分のアカウント名/haifuyou）のページを開く</li>
           <li>「This branch is XX commits behind…」の近くにある「<b>Sync fork</b>」→「<b>Update branch</b>」を押す（これで自分のコピーが最新になります）</li>
           <li><b>ブラウザ版Claude Code（claude.ai/code）の方はここまででOK</b>。セッション作成時に自分のフォークを選べば、最新の教材一式が開いた状態から始められます</li>
-          <li>デスクトップ版の方は、手元のフォルダも最新にする：緑の「<b>Code</b>」→「<b>Download ZIP</b>」でダウンロードし直して展開（<code>git clone</code> 済みの方は、Claude Codeに「このフォルダを git pull で最新にして」と頼むだけでOK）</li>
+          <li>デスクトップ版の方は、手元のフォルダも最新にする：クローンで取り込んだ方はClaude Codeに「<b>このフォルダを git pull で最新にして</b>」と頼むだけ。ZIPで取り込んだ方は「Code」→「Download ZIP」で取り直して展開（この機会にクローンへの切り替えもおすすめ。第1回🎁のコピペ文で頼めます）</li>
         </ol>
       </div>
 
@@ -346,8 +346,8 @@
         <div class="box-h">📋 手順（まだの方：GitHubアカウント作成〜受け取り）</div>
         <ol>
           <li><a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a> でアカウントを作る（無料。メール→パスワード→ユーザー名→確認コードの順）</li>
-          <li><a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">配布用リポジトリ（haifuyou）</a>を開き、右上の「<b>Fork</b>」→「Create fork」で自分のコピーを作る</li>
-          <li>自分のフォークのページで「<b>Code</b>」→「<b>Download ZIP</b>」→ 右クリック「すべて展開」して、<code>haifuyou</code> フォルダをドキュメントなど分かりやすい場所へ</li>
+          <li><a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">配布用リポジトリ（haifuyou）</a>を開き、右上の「<b>Fork</b>」→「Create fork」で<b>自分のGitHubに複製</b>する（＝受け取り完了）</li>
+          <li>ブラウザ版はセッションでフォークを選ぶだけ。デスクトップ版はClaude Codeにクローンを頼む（コピペ文は<a href="index.html#bonus">第1回課題ページの🎁セクション</a>へ）</li>
         </ol>
         <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ くわしい画面つきの説明は<a href="index.html#bonus">第1回課題ページの🎁セクション</a>にあります。</p>
       </div>
@@ -614,7 +614,7 @@ OKと言ったら、直近3ヶ月（私が別の期間を指定したらその�
               <li>チェックの観点 → 自分用の「レビュー観点メモ」に1個追加（③④のプロンプトに足して使う）</li>
             </ul>
           </li>
-          <li>（フォーク済みの方・任意）Claude Codeに「この変更を自分のフォークにコミットしてプッシュして」と頼むと、育てたルールが自分のGitHubに保存されます。<b>コミットするのはルールの行だけ</b>（帳簿データやレビュー結果は含めない）</li>
+          <li>（クローンで取り込んだ方・任意）Claude Codeに「この変更を自分のフォークにコミットしてプッシュして」と頼むと、育てたルールが自分のGitHubに保存されます。<b>コミットするのはルールの行だけ</b>（帳簿データやレビュー結果は含めない）</li>
         </ol>
       </div>
 
