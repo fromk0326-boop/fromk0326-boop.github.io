@@ -162,6 +162,19 @@
   .check input{width:20px;height:20px;accent-color:var(--green);cursor:pointer}
   .check label{font-weight:800;color:#0a7d54;cursor:pointer;font-size:15px}
 
+  /* ===== 追いつきチェック（ステップ0） ===== */
+  .step.catchup{border-color:var(--amber)}
+  .step.catchup .step-num{background:var(--amber)}
+  .step.catchup.ok{border-color:var(--green)}
+  .step.catchup.ok .step-num{background:var(--green)}
+  .catchup-banner{display:none;align-items:center;gap:10px;background:var(--green-soft);border:1.5px solid var(--green);border-radius:12px;padding:10px 14px;margin-bottom:14px;font-size:13.5px;font-weight:700;color:#0a7d54}
+  .step.catchup.ok .catchup-banner{display:flex}
+  .check.mini{margin-top:12px;padding:11px 14px}
+  .check.mini label{font-size:14px}
+  .judge{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0}
+  .judge th,.judge td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.7}
+  .judge th{color:var(--sub);font-size:12.5px;white-space:nowrap;background:var(--bg)}
+
   /* ===== 完了済みカードのグレーアウト ===== */
   .step.done > *:not(.check):not(.done-banner){opacity:.45;filter:grayscale(.55);transition:opacity .25s,filter .25s}
   .done-banner{display:none;align-items:center;gap:10px;background:var(--green-soft);border:1.5px solid var(--green);border-radius:12px;padding:10px 14px;margin-bottom:14px;font-size:13.5px;font-weight:700;color:#0a7d54}
@@ -269,6 +282,7 @@
     <h4>このページ</h4>
     <nav>
       <a href="#hero">🎯 ゴール</a>
+      <a href="#t0">🧭 追いつきチェック（まず最初に）</a>
       <a href="#t1">① 最新キットを受け取る</a>
       <a href="#t2">② 自動記帳を「型」で回す</a>
       <a href="#t3">③ 仕訳帳レビュー</a>
@@ -285,7 +299,8 @@
     </nav>
     <div class="note">
       <b>第5回の前提</b><br>
-      第1回（freee MCP接続）と第3回（自動記帳）を先に終えてから進めてください🌸<br>
+      第1回（Claude Codeのセットアップ／MCP接続）と第3回（自動記帳）の上に積み上がる回です。<br>
+      追いつけているか不安な方は、まず<a href="#t0">🧭 追いつきチェック</a>から（5分）🌸<br>
       MF会計の方も同じ流れで進められます（各ステップに補足あり）。
     </div>
   </aside>
@@ -307,9 +322,135 @@
           <li>ルール表とレビュー観点に<b>自分の実務ならではの1行</b>を足して、コミュニティに共有できます</li>
           <li>最後に<b>確認テスト</b>（AIが先生役・70点以上で合格）を受け、<b>恩送りメモを投稿</b>すると修了です🏅</li>
         </ul>
-        <div class="out">⏱ 目安：合計 約80〜100分　／　💪 難易度：中級（第1回・第3回を終えた方向け）</div>
+        <div class="out">⏱ 目安：合計 約85〜105分　／　💪 難易度：中級（第1回・第3回を終えた方向け）</div>
+        <p style="margin:12px 0 0;font-size:14px">👉 その前に、<a href="#t0"><b>🧭 追いつきチェック（5分）</b></a>で今日の出発点を確かめましょう。つまずいていても大丈夫、戻り道を用意しています。</p>
       </div>
 
+    </section>
+
+    <!-- ===== 追いつきチェック（ステップ0） ===== -->
+    <section class="step catchup" id="t0">
+      <div class="catchup-banner">✅ 2つとも確認できました。このままステップ①へ進んでください🌸</div>
+      <div class="step-head">
+        <div class="step-num">0<small>まず</small></div>
+        <div class="step-title">
+          <h2>追いつきチェック：今日の出発点を確かめる 🧭</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約5分</span>
+            <span class="tag type">🧭 全員やってください</span>
+          </div>
+        </div>
+      </div>
+
+      <p>第5回は、<b>第1回（Claude Codeのセットアップ）</b>と<b>第3回（記帳の自動化）</b>の上に積み上がります。まずはその2つが「今も動く状態か」を5分で確かめてから始めましょう。</p>
+
+      <div class="box tip">
+        <div class="box-h">💡 これは「できていない人を落とす」チェックではありません</div>
+        つまずいたまま今日の内容に入ると、原因が二重になって余計に分からなくなります。先に自分の位置を確かめて、必要なら<b>今日はキャッチアップに使う</b>と決めるのも立派な進み方です。戻り道は下に用意しています。
+      </div>
+
+      <!-- ① セットアップと配布キット -->
+      <h3 style="margin:26px 0 6px;font-size:18px">① Claude Codeのセットアップ／配布キット（第1回の内容）</h3>
+      <p style="margin:0 0 10px">確かめるのは「<b>配布キット（haifuyou）をClaude Codeで開けるか</b>」と「<b>第1回の4点セットが自分のPCに入っているか</b>」の2点です。キットのフォルダを開いた状態のClaude Codeに、下のコピペ文を貼ってください。</p>
+
+      <div class="copy">
+        <div class="copy-label">📋 コピペ文①：第1回の準備ができているか点検してもらう</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>この講座の第1回の準備が終わっているか、点検してください。
+直すのはまだです。まず現状を「OK／要対応」の表で見せてください。
+
+1. いま開いているフォルダは配布キット（haifuyou）ですか？
+   一番上に README.md / CLAUDE.md / .claude / 第3回_freeeオート経理 /
+   第4回_Chrome拡張 がそろっているか確認してください
+2. このキットは最新版ですか？（git管理下なら、更新が来ていないか確認）
+3. 私のPCのClaude Code側に、第1回で設置した4点セット
+   （CLAUDE.mdとルール／セキュリティ設定／メモリ／Hooks）が入っていますか？
+4. freeeまたはMF会計のMCPは、いま接続されていますか？
+
+足りないものがあれば、「どれを・どの順番で・何分くらいで直せるか」だけ
+先に教えてください。実際の修正は、私がOKと言ってから始めてください。</pre>
+      </div>
+
+      <div class="check mini" onclick="toggleCatchup(this,event)">
+        <input type="checkbox" data-catchup="1">
+        <label>✅ ①がすべてOK（キットを開けて、4点セットも入っている）</label>
+      </div>
+
+      <details>
+        <summary>🛟 ①でつまずいた方へ（戻り道）</summary>
+        <div class="body">
+          <ul>
+            <li><b>そもそもキットが手元にない／フォルダを開けない</b> → <a href="index.html#bonus">第1回課題ページの🎁セクション</a>へ。GitHubアカウント作成 → Fork → 開き方まで約10分でそろいます</li>
+            <li><b>キットはあるが、<code>第3回_freeeオート経理</code> や <code>第4回_Chrome拡張</code> が無い</b> → 中身が古い版です。Claude Codeに「<b>このフォルダを git pull で最新にして</b>」と頼んでください（ZIPで受け取った方は、フォークのページで「Sync fork」→ Download ZIP を取り直し）</li>
+            <li><b>4点セットが入っていない</b> → <a href="index.html#bonus">第1回の🎁セクション</a>のコピペ文で設置できます。今日の内容は4点セットが無くても進められるので、<b>時間が無ければ後回しでもOK</b>です</li>
+            <li><b>MCPがつながっていない</b> → 今日のステップ②で必要になります。「MCPの接続状態を確認して、再認証の手順を案内して」とClaude Codeに伝えるのがいちばん早いです</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- ② 記帳の自動化 -->
+      <h3 style="margin:30px 0 6px;font-size:18px">② 記帳の自動化（第3回の内容）</h3>
+      <p style="margin:0 0 10px">今日のステップ③④のレビューは、<b>「起票された帳簿」があってはじめて意味を持ちます</b>。第3回の自動記帳が今も動くかを、登録せずに確認します。</p>
+
+      <div class="copy">
+        <div class="copy-label">📋 コピペ文②：自動記帳が今も動くか点検してもらう（登録はしません）</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>第3回でやった「自動記帳」が、今も動く状態か点検してください。
+会計ソフトへの登録は絶対にしないでください。確認だけです。
+
+1. .env に Anthropic APIキーとfreeeの設定値が入っていますか？
+   値そのものは画面に出さず、「入っている／空です」だけ教えてください
+2. freeeの認証は生きていますか？
+   python .claude/skills/setup/freee_auth.py --companies
+   を実行して、事業所の一覧が取れるか試してください
+   （取れたら事業所名だけ見せてください）
+3. 第3回_freeeオート経理/勘定科目ルール.md と
+   .claude/skills/jido-kicho/rules.csv は手元にありますか？
+   それぞれ何行ありますか？
+4. 「見るだけモード」で未処理明細を3件だけ判定できますか？
+   python .claude/skills/jido-kicho/auto_keiri.py --limit 3
+   判定結果の表を見せてください。登録はしないでください
+
+つまずいた箇所があれば、原因と直し方を1つずつ教えてください。</pre>
+      </div>
+
+      <p style="margin:4px 0 0;font-size:13px;color:var(--sub)">※ <b>MF会計の方・第3回をルートA（freee MCP対話方式）で進めた方</b>は、2と4は読み替えでOKです。「MCPの接続状態を確認して、未処理（未仕訳）明細を3件だけ取得して、勘定科目ルール.md で判定した表を見せて。登録はしないで」と伝えてください。</p>
+
+      <div class="check mini" onclick="toggleCatchup(this,event)">
+        <input type="checkbox" data-catchup="2">
+        <label>✅ ②がOK（未処理明細の判定一覧を、登録せずに出せた）</label>
+      </div>
+
+      <details>
+        <summary>🛟 ②でつまずいた方へ（戻り道）</summary>
+        <div class="body">
+          <ul>
+            <li><b>.env が無い・APIキーが空</b> → <a href="vol03.html">第3回課題ページ</a>のステップ④「キットのセットアップ」のコピペ文からやり直せます（Anthropic APIキーの取り方も同じ場所にあります）</li>
+            <li><b>freeeの認証が切れている</b> → Claude Codeに「<b>freeeの再認証をお願いします</b>」と伝えてください。<code>.claude/skills/setup/freee_auth.py</code> で再認証できます。<b>freeeアプリのコールバックURLは <code>http://127.0.0.1:8088/callback</code> を一字一句そのまま</b>登録するのがつまずきポイントです</li>
+            <li><b>未処理明細が1件もない</b> → 環境としては正常です。今日のステップ②は飛ばして、<b>過去の仕訳帳をエクスポートしてステップ③のレビューから参加</b>してください（むしろ今日の主役はレビューです）</li>
+            <li><b>そもそも第3回をやっていない</b> → 今日は無理に追いつこうとせず、<a href="vol03.html">第3回課題ページ</a>を先に進めるのがおすすめです。第5回はアーカイブ動画とこのページで後日そのまま再現できます</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- 判定 -->
+      <h3 style="margin:30px 0 6px;font-size:18px">🧭 チェック結果から、今日の進み方を決める</h3>
+      <table class="judge">
+        <tr><th>結果</th><th>今日の進み方</th></tr>
+        <tr><td><b>①②とも OK</b></td><td>そのままステップ①へ。今日の主役はステップ③④のレビューです</td></tr>
+        <tr><td><b>①はOK、②が×</b></td><td>ステップ①②で第3回の内容をやり直せます。時間が足りなければ、<b>手持ちの仕訳帳CSVを使ってステップ③から参加</b>してください</td></tr>
+        <tr><td><b>①が×</b></td><td>まず第1回の🎁セクションでキットを受け取るところから。<b>今日はここまでで十分</b>です。第5回は後日このページで再現できます</td></tr>
+        <tr><td><b>会計ソフトが freee／MF 以外</b></td><td>ステップ②は飛ばして構いません。<b>ステップ③④（仕訳帳・消費税区分のレビュー）は、どの会計ソフトの仕訳帳CSVでも使えます</b></td></tr>
+      </table>
+
+      <div class="box safe">
+        <div class="box-h">🔒 点検のときの安全メモ</div>
+        <ul>
+          <li>点検のコピペ文には「<b>登録はしないでください</b>」の一文が入っています。消さないでください</li>
+          <li>APIキー・トークンの<b>値そのもの</b>は画面に出させないでください（「入っている／空です」だけで十分です）</li>
+          <li>点検結果をそのまま掲示板やSNSに貼らないでください。事業所名や口座情報が混ざることがあります</li>
+        </ul>
+      </div>
     </section>
 
     <!-- ===== ステップ1 ===== -->
@@ -600,7 +741,7 @@ OKと言ったら、直近3ヶ月（私が別の期間を指定したらその�
           <li>ステップ③④の「要確認リスト」から、<b>自分の実務ならではの1件</b>を選ぶ（科目ブレでも、税区分の癖でも、業種特有の取引でもOK）</li>
           <li>それを<b>ルール化</b>する。下のコピペ文をClaude Codeに貼れば、どのファイルにどう書くかまで手伝ってくれます
             <ul>
-              <li>科目の判定ミス → <code>scripts/rules.csv</code> か <code>勘定科目ルール.md</code> に1行追加</li>
+              <li>科目の判定ミス → <code>.claude/skills/jido-kicho/rules.csv</code> か <code>第3回_freeeオート経理/勘定科目ルール.md</code> に1行追加</li>
               <li>チェックの観点 → 自分用の「レビュー観点メモ」に1個追加（③④のプロンプトに足して使う）</li>
             </ul>
           </li>
@@ -618,8 +759,10 @@ OKと言ったら、直近3ヶ月（私が別の期間を指定したらその�
 ルール化すれば次から自動で防げるか」の3つの目線で並べ直してください。
 
 私が1件選んだら、
-- 勘定科目の判定に関するもの → scripts/rules.csv（または勘定科目ルール.md）に
-  追加する1行の案を作って、私がOKしたら追記してください
+- 勘定科目の判定に関するもの
+  → .claude/skills/jido-kicho/rules.csv
+    （または 第3回_freeeオート経理/勘定科目ルール.md）に
+    追加する1行の案を作って、私がOKしたら追記してください
 - チェック観点に関するもの → 「マイレビュー観点.md」というファイルに
   観点として1行追加してください（観点／何に気づけるか／判定の目安 の形式で）
 
@@ -911,7 +1054,35 @@ Q5. この課題ページで分かりづらかった所・直してほしい所�
     });
   });
 
+  // 追いつきチェック（ステップ0）は修了条件に含めず、別キーで保存する
+  const CKEY='bootcamp5_catchup';
+  function loadCatchup(){try{return JSON.parse(localStorage.getItem(CKEY))||{}}catch(e){return {}}}
+  function renderCatchup(){
+    const c=loadCatchup();
+    let n=0;
+    document.querySelectorAll('input[data-catchup]').forEach(cb=>{
+      cb.checked=!!c[cb.dataset.catchup];
+      if(cb.checked)n++;
+    });
+    document.getElementById('t0').classList.toggle('ok',n===2);
+  }
+  function toggleCatchup(el,e){
+    if(e.target.tagName!=='INPUT'){
+      const cb=el.querySelector('input');cb.checked=!cb.checked;
+    }
+    const c=loadCatchup();
+    el.querySelectorAll('input[data-catchup]').forEach(cb=>{c[cb.dataset.catchup]=cb.checked});
+    localStorage.setItem(CKEY,JSON.stringify(c));renderCatchup();
+  }
+  document.querySelectorAll('input[data-catchup]').forEach(cb=>{
+    cb.addEventListener('change',()=>{
+      const c=loadCatchup();c[cb.dataset.catchup]=cb.checked;
+      localStorage.setItem(CKEY,JSON.stringify(c));renderCatchup();
+    });
+  });
+
   render();
+  renderCatchup();
 </script>
 <script>window.BOOTCAMP_PAGE='vol05';</script>
 <script src="progress-tracker.js"></script>

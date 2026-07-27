@@ -568,7 +568,7 @@ https://beta.mcp.developers.biz.moneyforward.com/mcp/ca/v3
       <div class="box howto">
         <div class="box-h">📋 進め方（当日・freee／MF共通）</div>
         <ol>
-          <li>配布キット（GitHubの配布用リポジトリ）に入っている<b>「勘定科目ルール.md」（ルール表のひな形）</b>を用意する（キットの受け取り方は<a href="#faq">FAQ</a>参照。第1回でテンプレートを受け取った方は、その <code>haifuyou</code> フォルダの一番上に入っています）</li>
+          <li>配布キット（GitHubの配布用リポジトリ）に入っている<b>「勘定科目ルール.md」（ルール表のひな形）</b>を用意する（キットの受け取り方は<a href="#faq">FAQ</a>参照。第1回でテンプレートを受け取った方は、その <code>haifuyou</code> フォルダの <code>第3回_freeeオート経理/</code> の中に入っています）</li>
           <li>Claude Codeでキットのフォルダを開く。<b>ブラウザ版Claude Code（claude.ai/code）の方は、フォークした配布用リポジトリをセッションで選ぶだけ</b>です（ルール表は最初から入っているので、コピーやダウンロードは不要）</li>
           <li>自分の会計ソフトのコピペ文（下のAまたはM）を送信する</li>
           <li>一覧表を確認して、OKな明細だけ承認 → 計上</li>
@@ -599,7 +599,7 @@ https://beta.mcp.developers.biz.moneyforward.com/mcp/ca/v3
 freeeの「自動で経理」に溜まっている
 未処理の入出金明細を、5件だけ取得してください。
 
-次に、このフォルダにある「勘定科目ルール.md」を読んで、
+次に、第3回_freeeオート経理/勘定科目ルール.md を読んで、
 明細を1件ずつ次の順で判定してください。
 1. NGキーワード（給与・税金・借入返済など）に当たる
    → 「要確認」にして、登録対象から外す
@@ -651,19 +651,20 @@ freeeの「自動で経理」に溜まっている
       <details>
         <summary>📦 配布キット「freeeオート経理（体験版）」で畠山ルートを試す（後日の自主トレ用）</summary>
         <div class="body">
-          <p>キット一式は、<b>GitHubの配布用リポジトリ</b>（<a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">畠山式 配布用リポジトリ（haifuyou）</a>）で配布しています。第1回のテンプレート（セットアップフォルダ）と同じ場所です。<b>第1回でフォーク・ダウンロード済みの方は、その <code>haifuyou</code> フォルダがそのままキットです</b>（追加のダウンロード不要）。動かすには<b>Python</b>と<b>Anthropic APIキー</b>が必要です（下の手順に含まれています）。</p>
+          <p>キット一式は、<b>GitHubの配布用リポジトリ</b>（<a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">畠山式 配布用リポジトリ（haifuyou）</a>）で配布しています。第1回のテンプレート（<code>.claude/</code>）と同じリポジトリです。<b>第1回でフォーク・ダウンロード済みの方は、その <code>haifuyou</code> フォルダがそのままキットです</b>（追加のダウンロード不要。教材が更新されているので「git pullして」と一言だけお願いしてください）。動かすには<b>Python</b>と<b>Anthropic APIキー</b>が必要です（下の手順に含まれています）。</p>
           <p style="font-size:13.5px;color:var(--sub)">※ 教材の受け取り・ふだんの作業はブラウザ版Claude Code（claude.ai/code でフォークを選ぶだけ）でもOKですが、<b>このキットの実行（freee認証・スクリプト実行）は、ご自身のPCのClaude Code（デスクトップ）での利用を前提</b>にしています。</p>
           <table class="kit-table">
-            <tr><th>ファイル</th><th>役割</th></tr>
-            <tr><td><code>README.md</code></td><td>セットアップと実行の手順書（Claude Codeが読んで進めてくれます）</td></tr>
-            <tr><td><code>CLAUDE.md</code></td><td>Claude Code用の案内ルール（フォルダを開くと自動で読み込まれます）</td></tr>
-            <tr><td><code>.env.example</code></td><td>APIキーなどを入れる設定ファイルのひな形（コピーして<code>.env</code>を作ります）</td></tr>
-            <tr><td><code>auto_keiri.py</code></td><td>本体。明細取得→ルール判定→ルール外はAI判定→freee計上</td></tr>
-            <tr><td><code>invoice_ocr.py</code></td><td>請求書PDFの読み取り→freee起票（体験②の畠山ルート版）</td></tr>
-            <tr><td><code>rules.csv</code></td><td>勘定科目ルール表（畠山の本番ルール表から汎用キーワード約160個を抜き出した実物ベース）</td></tr>
-            <tr><td><code>freee_auth.py</code></td><td>freee APIとの認証</td></tr>
+            <tr><th>場所</th><th>役割</th></tr>
+            <tr><td><code>第3回_freeeオート経理/README.md</code></td><td>セットアップと実行の手順書（Claude Codeが読んで進めてくれます）</td></tr>
+            <tr><td><code>第3回_freeeオート経理/勘定科目ルール.md</code></td><td>当日ワークで使うルール表のひな形（MCPルート用）</td></tr>
+            <tr><td><code>第3回_freeeオート経理/請求書PDFを置く場所/</code></td><td>体験②で読み取らせる請求書PDFの置き場</td></tr>
+            <tr><td><code>.claude/skills/setup/freee_auth.py</code></td><td>freee APIとの認証</td></tr>
+            <tr><td><code>.claude/skills/jido-kicho/auto_keiri.py</code></td><td>本体。明細取得→ルール判定→ルール外はAI判定→freee計上</td></tr>
+            <tr><td><code>.claude/skills/jido-kicho/rules.csv</code></td><td>勘定科目ルール表（畠山の本番ルール表から汎用キーワード約160個を抜き出した実物ベース）</td></tr>
+            <tr><td><code>.claude/skills/invoice-ocr/invoice_ocr.py</code></td><td>請求書PDFの読み取り→freee起票（体験②の畠山ルート版）</td></tr>
+            <tr><td><code>CLAUDE.md</code> / <code>.env.example</code>（キットの一番上）</td><td>Claude Code用の案内ルールと、APIキーを入れる設定ファイルのひな形（コピーして<code>.env</code>を作ります）</td></tr>
           </table>
-          <p style="font-size:13.5px;color:var(--sub)">※ プログラム本体（<code>auto_keiri.py</code>など）はキット内の <code>scripts/</code> フォルダに入っています。場所を覚える必要はありません。Claude Codeに「セットアップして」「体験①をやりたい」と話しかければ、正しい場所のファイルを実行してくれます。</p>
+          <p style="font-size:13.5px;color:var(--sub)">※ 覚え方はひとつだけ。<b>読む資料は「回ごとのフォルダ」、動かすプログラムは <code>.claude/skills/</code></b>。場所を暗記する必要はありません。Claude Codeに「セットアップして」「体験①をやりたい」と話しかければ、正しい場所のファイルを実行してくれます。<br>※ <code>CLAUDE.md</code> と <code>.gitignore</code> はキットの一番上にあることで効く仕組みなので、<b>移動させないでください</b>。</p>
           <p><b>進め方（初めての方はこの順番どおりに）</b></p>
           <ol>
             <li><b>Anthropic APIキーを取得する</b>：<a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a> でアカウント作成 → Billingでクレジット購入（最低額の5ドルで十分。体験で使うのは数円〜数十円程度）→ API Keysでキーを作成し、「sk-ant-」で始まる文字列を控える（<b>作成した瞬間にしか表示されません</b>）</li>
@@ -676,17 +677,21 @@ freeeの「自動で経理」に溜まっている
             <div class="copy-label">📋 キットのセットアップ（Pythonの用意から全部Claudeに任せる）</div>
             <button class="copy-btn" onclick="copyCode(this)">コピー</button>
 <pre>このフォルダは、配布された「freeeオート経理（体験版）」のキットです。
-README.md を読んで、実行に必要なセットアップを進めてください。
+第3回_freeeオート経理/README.md を読んで、実行に必要なセットアップを進めてください。
 
 1. Python環境の確認（入っていなければ、インストールから案内してください）
 2. 必要なライブラリのインストール
-3. 設定ファイル（.env）の作成。Anthropic APIキーとfreeeの設定値を
-   どこに入力すればよいか、私に分かりやすく教えてください
-4. freeeアプリの作成と認証（freee_auth.py）も、README.md の手順に
-   沿って1つずつ案内してください
+   （第3回_freeeオート経理/requirements.txt を使ってください）
+3. 設定ファイル（.env）の作成。.env.example をコピーして作ります。
+   Anthropic APIキーとfreeeの設定値をどこに入力すればよいか、
+   私に分かりやすく教えてください
+4. freeeアプリの作成と認証（.claude/skills/setup/freee_auth.py）も、
+   README.md の手順に沿って1つずつ案内してください
+   ※ freeeアプリのコールバックURLは
+     http://127.0.0.1:8088/callback を一字一句このまま登録します
 
-セットアップが終わったら、体験①（auto_keiri.py）を「見るだけモード」で
-実行して、判定結果の一覧を見せてください。
+セットアップが終わったら、体験①（.claude/skills/jido-kicho/auto_keiri.py）を
+「見るだけモード」で実行して、判定結果の一覧を見せてください。
 freeeへの登録は、私が明細を選んで承認するまで行わないでください。</pre>
           </div>
           <p><b>安全メモ</b>：APIキーはパスワードと同じ秘密情報です。掲示板・チャット・SNSには絶対に貼らず、.envファイルの中にだけ書いてください。万一漏れたら、console.anthropic.comでそのキーを削除すれば大丈夫です。</p>
@@ -710,7 +715,7 @@ freeeへの登録は、私が明細を選んで承認するまで行わないで
 
 データ連携で取り込まれた未仕訳の明細を、5件だけ取得してください。
 
-次に、このフォルダにある「勘定科目ルール.md」を読んで、
+次に、第3回_freeeオート経理/勘定科目ルール.md を読んで、
 明細を1件ずつ次の順で判定してください。
 1. NGキーワード（給与・税金・借入返済など）に当たる
    → 「要確認」にして、計上対象から外す
@@ -737,7 +742,7 @@ freeeへの登録は、私が明細を選んで承認するまで行わないで
         <div class="copy-label">📋 コピペ文R：ルール表を育てる（freee／MF共通）</div>
         <button class="copy-btn" onclick="copyCode(this)">コピー</button>
 <pre>今回「判定元＝AI」になった明細について、
-勘定科目ルール.md に追加するルール案を作ってください。
+第3回_freeeオート経理/勘定科目ルール.md に追加するルール案を作ってください。
 （キーワード／勘定科目／メモ の形式で）
 
 私が「OK」と言ったルールだけ、勘定科目ルール.md に追記してください。
@@ -777,17 +782,17 @@ freeeへの登録は、私が明細を選んで承認するまで行わないで
           <p><b>進め方（freee／MF共通）</b></p>
           <ol>
             <li>会計ソフトの画面から仕訳帳をCSVでエクスポートする（freee：「レポート」→「仕訳帳」、MF：「会計帳簿」→「仕訳帳」）。<b>まずは自分の事務所（自社）の直近3ヶ月分</b>がおすすめです</li>
-            <li>CSVを作業用フォルダ（勘定科目ルール.md と同じ場所）に入れて、Claude Codeで下のコピペ文Sを送る</li>
+            <li>CSVをキットの <code>第3回_freeeオート経理/</code> フォルダ（勘定科目ルール.md と同じ場所）に入れて、Claude Codeで下のコピペ文Sを送る</li>
             <li>提案されたルール案を1行ずつ確認して、OKなものだけ追記してもらう</li>
           </ol>
           <div class="copy">
             <div class="copy-label">📋 コピペ文S：仕訳帳からルール表のたたき台を作る（freee／MF共通）</div>
             <button class="copy-btn" onclick="copyCode(this)">コピー</button>
-<pre>このフォルダに入れた仕訳帳のCSVを読んでください。
+<pre>第3回_freeeオート経理/ に入れた仕訳帳のCSVを読んでください。
 
 経費系の科目（通信費・旅費交通費・消耗品費・会議費など）について、
 摘要のキーワードと勘定科目の組み合わせを集計して、
-勘定科目ルール.md に追加するルール案を作ってください。
+第3回_freeeオート経理/勘定科目ルール.md に追加するルール案を作ってください。
 
 ・「キーワード／勘定科目／メモ」の形式で、出現回数の多い順に最大20行
 ・すでにルール表にあるキーワードは除外する
@@ -872,9 +877,9 @@ MCPで会計ソフト（freee／MF会計）に取引として登録してくだ�
           <p><b>前提</b>：ステップ④の折りたたみにあるキットのセットアップ（Python・Anthropic APIキー・.env・freee認証）が済んでいること。登録先は<b>freeeのみ対応</b>です（MF会計の方はミニ体験のMCP方式をお使いください）。</p>
           <p><b>動かし方（2段階）</b></p>
           <ol>
-            <li><b>請求書PDFを置く</b>：キット内の <code>scripts/invoices/</code> フォルダにPDFを入れます（何枚でもOK）。場所を探すのが面倒なら、Claude Codeに「この請求書をinvoicesフォルダに入れてください」と頼んでも大丈夫です</li>
-            <li><b>まず読み取るだけ（登録しないので安全）</b>：<code>python scripts/invoice_ocr.py</code> を実行すると、全PDFについて「取引先名／請求日／支払期日／税込金額／内容の要約／勘定科目の候補と理由／源泉所得税の対象らしさ」が一覧表示され、<code>invoice_result.csv</code>（Excelで開けます）にも保存されます</li>
-            <li><b>確認した1枚だけ登録</b>：金額と日付を自分の目で確認したら、<code>python scripts/invoice_ocr.py --register --file 請求書A.pdf</code> のようにファイル名を指定して実行。その1枚だけがfreeeに支出取引として登録されます</li>
+            <li><b>請求書PDFを置く</b>：キット内の <code>第3回_freeeオート経理/請求書PDFを置く場所/</code> にPDFを入れます（何枚でもOK）。場所を探すのが面倒なら、Claude Codeに「この請求書を、請求書PDFを置く場所に入れてください」と頼んでも大丈夫です</li>
+            <li><b>まず読み取るだけ（登録しないので安全）</b>：<code>python .claude/skills/invoice-ocr/invoice_ocr.py</code> を実行すると、全PDFについて「取引先名／請求日／支払期日／税込金額／内容の要約／勘定科目の候補と理由／源泉所得税の対象らしさ」が一覧表示され、<code>第3回_freeeオート経理/invoice_result.csv</code>（Excelで開けます）にも保存されます</li>
+            <li><b>確認した1枚だけ登録</b>：金額と日付を自分の目で確認したら、<code>python .claude/skills/invoice-ocr/invoice_ocr.py --register --file 請求書A.pdf</code> のようにファイル名を指定して実行。その1枚だけがfreeeに支出取引として登録されます</li>
           </ol>
           <p>実際にはコマンドを覚える必要はありません。キットのフォルダをClaude Codeで開いて<b>「体験②をやりたい」「請求書を読み取って」と話しかけるだけ</b>で、同梱の手順書（スキル）に沿って1ステップずつ案内してくれます。</p>
           <p><b>体験版の割り切り</b>：税区分は「課税仕入10%」固定で登録します。源泉所得税は「対象らしい」と印を付けるだけで、自動計算はしません。OCRの金額・日付は必ず原本と突合してから登録してください。</p>
@@ -986,7 +991,7 @@ MCPで会計ソフト（freee／MF会計）に取引として登録してくだ�
         <summary>🛠 インストール手順（最初の1回だけ・約5分）</summary>
         <div class="body">
           <ol>
-            <li><b>フォルダを用意する</b>：配布キット（<code>haifuyou</code> フォルダ）の中の <code>追加配布/freee-kamoku-buttons</code> フォルダがこの拡張の本体です。キットごと、ドキュメントなど<b>消さない場所</b>に置いてください<br><span style="font-size:13px;color:var(--sub)">※ 拡張はこのフォルダを読み込み続けます。後でフォルダを消したり移動したりすると動かなくなります。手元のキットに <code>追加配布</code> フォルダが無い方は、配布用リポジトリから最新版を取り直してください（Fork済みなら「Sync fork」→ Download ZIP）</span></li>
+            <li><b>フォルダを用意する</b>：配布キット（<code>haifuyou</code> フォルダ）の中の <code>第4回_Chrome拡張/freee-kamoku-buttons</code> フォルダがこの拡張の本体です。キットごと、ドキュメントなど<b>消さない場所</b>に置いてください<br><span style="font-size:13px;color:var(--sub)">※ 拡張はこのフォルダを読み込み続けます。後でフォルダを消したり移動したりすると動かなくなります。手元のキットに <code>第4回_Chrome拡張</code> フォルダが無い方は、キットを最新版にしてください（Claude Codeに「git pullして」と頼むのがいちばん早いです。古い版では <code>追加配布/</code> という名前でした）</span></li>
             <li><b>Chromeで拡張を読み込む</b>：アドレスバーに <code>chrome://extensions</code> と入力して開く → 右上の「<b>デベロッパーモード</b>」をON → 「<b>パッケージ化されていない拡張機能を読み込む</b>」をクリック → 手順1のフォルダを選択</li>
             <li>一覧に「freee勘定科目ボタン」が出れば完了。freeeの「自動で経理」画面を開くと、右下にパネルが表示されます<br><span style="font-size:13px;color:var(--sub)">※ すでにfreeeのタブを開いていた場合は、そのタブを再読み込みしてください</span></li>
           </ol>
@@ -1033,7 +1038,7 @@ MCPで会計ソフト（freee／MF会計）に取引として登録してくだ�
         <summary>🛠 インストール手順（最初の1回だけ・約5分）</summary>
         <div class="body">
           <ol>
-            <li><b>フォルダを用意する</b>：配布キット（<code>haifuyou</code> フォルダ）の中の <code>追加配布/mf-bulk-select-extension</code> フォルダがこの拡張の本体です。キットごと、ドキュメントなど<b>消さない場所</b>に置いてください</li>
+            <li><b>フォルダを用意する</b>：配布キット（<code>haifuyou</code> フォルダ）の中の <code>第4回_Chrome拡張/mf-bulk-select-extension</code> フォルダがこの拡張の本体です。キットごと、ドキュメントなど<b>消さない場所</b>に置いてください</li>
             <li><b>Chromeで拡張を読み込む</b>：<code>chrome://extensions</code> を開く → 右上の「<b>デベロッパーモード</b>」をON → 「<b>パッケージ化されていない拡張機能を読み込む</b>」→ 手順1のフォルダを選択</li>
             <li>MFの「連携サービスから入力」ページを開くと、「一括登録」ボタンの隣に「⚡ ルール一致を全選択」、画面右下に科目ボタンパネルが表示されます<br><span style="font-size:13px;color:var(--sub)">※ すでにMFのタブを開いていた場合は、そのタブを再読み込みしてください</span></li>
           </ol>
@@ -1074,7 +1079,7 @@ MCPで会計ソフト（freee／MF会計）に取引として登録してくだ�
 
       <div class="box news">
         <div class="box-h">📦 配布場所</div>
-        2つの拡張は、<b>配布用リポジトリ（haifuyou）の <code>追加配布/</code> フォルダに同梱</b>しています。第1回・第3回でキットを受け取り済みの方は、キットを最新版にすれば手元に揃います（Fork済みなら「Sync fork」→ Download ZIP または「git pullして」とClaudeに依頼）。ナンピはURLを開くだけなので配布物はありません。<a href="https://nanpi.pages.dev" target="_blank" rel="noopener">nanpi.pages.dev</a> をブックマークしてください。
+        2つの拡張は、<b>配布用リポジトリ（haifuyou）の <code>第4回_Chrome拡張/</code> フォルダに同梱</b>しています。第1回・第3回でキットを受け取り済みの方は、キットを最新版にすれば手元に揃います（クローン済みならClaude Codeに「<b>git pullして</b>」と頼むだけ。ZIPで受け取った方は、フォークのページで「Sync fork」してから Download ZIP を取り直してください）。ナンピはURLを開くだけなので配布物はありません。<a href="https://nanpi.pages.dev" target="_blank" rel="noopener">nanpi.pages.dev</a> をブックマークしてください。
       </div>
     </section>
 
@@ -1204,7 +1209,7 @@ Q5. この課題ページで分かりづらかった所・直してほしい所�
       </details>
       <details>
         <summary>配布資料はいつ・どこでもらえますか？</summary>
-        <div class="body">メインの配布資料は<b>GitHubの配布用リポジトリ</b>（<a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">畠山式 配布用リポジトリ（haifuyou）</a>）で公開しています。中身は「勘定科目ルール.md（ルール表ひな形）」「MF会計MCPセットアップガイド」「freeeオート経理（体験版）キット（<code>scripts/</code>一式）」「第1回のセットアップ4点セット（<code>セットアップ/</code>）」です。受け取り方（GitHubアカウント作成→Fork→Download ZIP、ブラウザ版はフォークを選ぶだけ）は第1回課題ページの🎁セクションにまとめてあります。<b>追加配布のChrome拡張2本もリポジトリの <code>追加配布/</code> フォルダに同梱</b>しています（<a href="#extra">追加配布セクション</a>参照）。<b>サンプル請求書（練習用PDF）だけ</b>は、Google Driveの会員様配布資料フォルダ（テンプレート &gt; 第3回-記帳）でのご案内です。資料は受講後も手元に残り、フォークして自分の実務用に育てていけます。教材が更新されたら、自分のフォークの「Sync fork」ボタンで最新版を取り込めます。</div>
+        <div class="body">メインの配布資料は<b>GitHubの配布用リポジトリ</b>（<a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">畠山式 配布用リポジトリ（haifuyou）</a>）で公開しています。中身は回ごとのフォルダに分かれていて、<code>.claude/</code>（第1回のセットアップ4点セット＋動かすプログラム一式）、<code>第3回_freeeオート経理/</code>（勘定科目ルール.md・MF会計MCPセットアップガイド・請求書PDFの置き場）、<code>第4回_Chrome拡張/</code>（拡張2本）という構成です。<b>読む資料は回ごとのフォルダ、動かすプログラムは <code>.claude/skills/</code></b> と覚えてください。受け取り方（GitHubアカウント作成→Fork→クローン、ブラウザ版はフォークを選ぶだけ）は第1回課題ページの🎁セクションにまとめてあります。<b>追加配布のChrome拡張2本もリポジトリの <code>第4回_Chrome拡張/</code> フォルダに同梱</b>しています（<a href="#extra">追加配布セクション</a>参照）。<b>サンプル請求書（練習用PDF）だけ</b>は、Google Driveの会員様配布資料フォルダ（テンプレート &gt; 第3回-記帳）でのご案内です。資料は受講後も手元に残り、フォークして自分の実務用に育てていけます。教材が更新されたら、Claude Codeに「<b>git pullして</b>」と頼めば最新版を取り込めます（ZIPで受け取った方は、フォークのページで「Sync fork」→ Download ZIP を取り直してください）。</div>
       </details>
       <details>
         <summary>確認テストに落ちたら？</summary>
