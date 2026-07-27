@@ -206,6 +206,11 @@
   .check input{width:20px;height:20px;accent-color:var(--green);cursor:pointer}
   .check label{font-weight:800;color:#0a7d54;cursor:pointer;font-size:15px}
 
+  /* ===== 完了済みカードのグレーアウト ===== */
+  .step.done > *:not(.check):not(.done-banner){opacity:.45;filter:grayscale(.55);transition:opacity .25s,filter .25s}
+  .done-banner{display:none;align-items:center;gap:10px;background:var(--green-soft);border:1.5px solid var(--green);border-radius:12px;padding:10px 14px;margin-bottom:14px;font-size:13.5px;font-weight:700;color:#0a7d54}
+  .step.done .done-banner{display:flex}
+
   /* ===== 修了 ===== */
   .finish{
     background:linear-gradient(135deg,var(--brand),#5b8cff);color:#fff;
@@ -217,6 +222,12 @@
   .finish .cta{display:inline-block;background:#fff;color:var(--brand);font-weight:800;padding:12px 28px;border-radius:99px}
   .finish.celebrate{animation:pop .6s}
   @keyframes pop{0%{transform:scale(.96)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
+  .finish.locked{background:linear-gradient(135deg,#8a97ad,#a5b0c2);box-shadow:var(--shadow)}
+  .finish.locked .cta{color:#5b6b7e}
+
+  /* ===== 紙吹雪 ===== */
+  .confetti-piece{position:fixed;top:-16px;width:10px;height:14px;z-index:200;pointer-events:none;animation:confetti-fall linear forwards}
+  @keyframes confetti-fall{to{transform:translateY(105vh) rotate(720deg);opacity:.9}}
 
   hr.soft{border:none;border-top:1px solid var(--line);margin:22px 0}
 
@@ -276,7 +287,7 @@
 <div class="progress-bar">
   <div class="logo">畠山式AI税理士<span>コミュニティ</span></div>
   <div class="progress-track"><div class="progress-fill" id="fill"></div></div>
-  <div class="progress-count"><b id="cnt">0</b>/5 課題クリア</div>
+  <div class="progress-count"><b id="cnt">0</b>/6 クリアで修了</div>
   <button class="toggle-all" id="toggleAllBtn" onclick="toggleAllDetails()">▼ 補足を全部ひらく</button>
 </div>
 
@@ -307,7 +318,8 @@
       <a href="#t4">④ 体験①：未処理明細の登録</a>
       <a href="#t5">⑤ 体験②：請求書OCR起票（共通）</a>
       <a href="#extra">🎁 追加配布：拡張ボタン＆ナンピ</a>
-      <a href="#post">✍️ 恩送りメモを投稿</a>
+      <a href="#quiz">🧠 確認テスト（修了条件）</a>
+      <a href="#post">✍️ 恩送りメモを投稿（修了条件）</a>
       <a href="#faq">❓ よくあるつまずき</a>
       <a href="#finish">🎉 修了</a>
     </nav>
@@ -1066,35 +1078,98 @@ MCPで会計ソフト（freee／MF会計）に取引として登録してくだ�
       </div>
     </section>
 
-    <!-- ===== 恩送り掲示板 ===== -->
-    <section class="step" id="post" style="border-color:var(--green)">
+    <!-- ===== 確認テスト ===== -->
+    <section class="step" id="quiz" style="border-color:var(--brand)">
       <div class="step-head">
-        <div class="step-num" style="background:var(--green)">✍️<small>任意</small></div>
+        <div class="step-num">🧠<small>必須</small></div>
         <div class="step-title">
-          <h2>恩送りメモを投稿する</h2>
+          <h2>確認テストを受ける（合格すると恩送りメモが出ます）</h2>
           <div class="step-meta">
-            <span class="tag time">⏱ 約3分</span>
-            <span class="tag type">🌟 任意（チェック対象外）</span>
+            <span class="tag time">⏱ 約10分</span>
+            <span class="tag type">🏅 修了条件 その1</span>
           </div>
         </div>
       </div>
 
-      <p>第3回の課題を通して感じたことを、ぜひ教えてください。<b>良かった点・改善してほしい点、どちらも歓迎</b>です。いただいた内容は、次回以降のブートキャンプ資料のアップデートに反映させていただきます。</p>
+      <p>ステップ①〜⑤が終わったら、<b>Claude Code に先生役をお願いして</b>、今日の理解チェックを受けてください。落ちても<b>何回でも再挑戦OK</b>です（責められません🌸）。<b>70点以上で合格</b>すると、続けてClaudeが今日の体験を<b>1問ずつインタビュー</b>してくれます。<b>その答えがそのまま「恩送りメモ」になります</b>（Claudeが体験談を代筆することはありません。うまく言葉にできなくても、Claudeが質問で引き出してくれるので大丈夫です）。</p>
+
+      <div class="box tip">
+        <div class="box-h">💡 流れはこれだけ</div>
+        下のコピペ文をClaude Codeに貼る → クイズ2問＋記述1問に答える → 合格したら<b>インタビュー5問</b>に答える → あなたの答えが恩送りメモになる → 次のセクションに貼って投稿 → <b>修了🎉</b>
+      </div>
+
+      <div class="copy">
+        <div class="copy-label">📋 デスクトップアプリに貼るだけ：確認テスト＆恩送りメモ生成</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>第3回の課題（環境チェック／会計ソフトとのMCP連携／勘定科目ルールを育てる2段階構造／未処理明細の登録／請求書PDFのOCR起票）の理解チェックをお願いします。合格するまで、恩送りメモは出さないでください。
+
+【テストの進め方】
+1. この課題の内容から、選択式（A/B/C）のクイズを2問 → 自由記述（自分の言葉で説明する問題）を1問、1問ずつ順番に出して。
+2. そのうち1問は必ず「勘定科目ルールを育てる2段階構造（その場で決めた判断を、ルール表に昇格させる）」に関する問題にして。
+3. 全部答え終わったら100点満点で採点して、点数と理由を短く伝えて。
+4. 70点以上で合格 → インタビューへ。70点未満なら、間違えた所をやさしく解説してから、別の問題でもう一度出して（何回でもOK・責めないで）。
+5. 選択肢に「お任せ」は付けないで（自分で考えて答えるテストのため）。
+
+【合格したら：インタビュー】
+恩送りメモの中身は、あなた（AI）が想像で書かないでください。私の体験を聞き出して、私が話した言葉だけで作ります。
+次の5問を、1問ずつ・自由入力で聞いてください（選択式にしない・まとめて聞かない）。
+
+Q1. 今日いちばん時間がかかった／詰まったのはどこ？ そのとき画面には何と出ていた？（エラー文・ボタン名・画面の名前は、思い出せる範囲でそのまま）
+Q2. それはどうやって抜けた？（自分でやったこと、Claudeに何と頼んだか）
+Q3. AIが出してきた起票案（未処理明細／請求書PDF）を見て、そのまま登録した？ それとも直した？ 直したなら、どこをどう直した？
+Q4. 勘定科目ルール表に足した（または「これは足しておきたい」と思った）1行は何？ なぜそれを足そうと思った？
+Q5. この課題ページで分かりづらかった所・直してほしい所はありましたか？（1行でもOK・思いつかなければ『特になし』でOK）
+
+なお、Q3・Q4は顧問先名・取引先名・具体的な金額を出さずに、「◯◯な明細で」のように抽象化して答えます。私が実名や金額を答えてしまったときは、メモに書く前に抽象化してください。
+
+インタビューのルール：
+- 答えが短くても責めないで。ただし一言だけの答えには、1回だけ「たとえばどんな場面？」と具体化を促して。それでも出てこなければ、そのまま次へ進んで。
+- 「思い出せない」「特にない」と言われたら、思い出す手がかりとして、この課題で実際に起きがちな場面を3つほど挙げて「近いものはある？」と聞いてOK。ただし当てはまらなければ「なし」のまま進めて。私が言っていないことを、あなたが代わりに書かないで。
+- 私の答えを、立派な文章に書き換えないで。言い回しは私のまま、誤字と重複だけ直す程度にして。
+
+【恩送りメモの出力】
+インタビューが終わったら、「恩送りメモ」という見出しで、チャットからそのままコピペできる1つのコードブロックとして出力して。
+・1行目は必ず「確認テスト：◯点（◯回目で合格）」にする
+・続けて、私がQ1〜Q4で話した内容を、話した順に体験談としてまとめる
+・最後に、Q5の答えを「💬 課題ページへの改善案：」の行として原文のまま入れる（『特になし』なら省略OK）
+・長さは私が話した分だけでいい。8行に届かなくてもOK。足りないからといって、私が言っていない体験・感想・エラー文を足さないで。盛るくらいなら短い方がいい
+・私が挙げたエラー文・ボタン名・画面の名前は、要約で削らずそのまま残して（次の受講生に一番効く情報のため）
+※ 顧問先名・取引先名・具体的な金額・事業所名・個人情報・APIキーなどの秘密情報は、メモに絶対に入れないで。
+
+最後に「このメモをコピーして、課題ページの『恩送りメモを投稿して修了』に貼れば修了です🎉」と締めて。</pre>
+      </div>
+    </section>
+
+    <!-- ===== 恩送り掲示板 ===== -->
+    <section class="step" id="post" style="border-color:var(--green)">
+      <div class="done-banner">🏅 投稿ありがとうございました！この課題は修了です。下の修了バッジをご覧ください🎉</div>
+      <div class="step-head">
+        <div class="step-num" style="background:var(--green)">✍️<small>必須</small></div>
+        <div class="step-title">
+          <h2>恩送りメモを投稿して修了 🏅</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約3分</span>
+            <span class="tag type">🏅 修了条件 その2</span>
+          </div>
+        </div>
+      </div>
+
+      <p>確認テストの最後にClaudeが出してくれた「<b>恩送りメモ</b>」を、そのまま下に貼って投稿してください。<b>投稿すると修了バッジが解放されます</b>🎉 あなたのつまずきと解決の記録が、次の受講生への一番のプレゼントになります。良かった点・改善してほしい点は、次回以降のブートキャンプ資料のアップデートに反映させていただきます。</p>
 
       <div class="post-field">
         <label for="postName">お名前・ニックネーム（任意）</label>
         <input type="text" id="postName" placeholder="例：たけだ">
       </div>
       <div class="post-field">
-        <label for="postMemo">恩送りメモ（良かったこと・改善してほしいこと、どちらもOKです）</label>
-        <textarea id="postMemo" placeholder="例：第3回：MF会計でも起票できて感動しました／ルール表の育て方が腹落ちしました　など"></textarea>
+        <label for="postMemo">恩送りメモ（確認テストで出たメモをそのまま貼ってOK）</label>
+        <textarea id="postMemo" placeholder="例：MCP連携で認証画面が出ず、アプリを再起動したら通りました／定期課金の明細で毎回迷うので、ルール表に1行足しました　など"></textarea>
       </div>
-      <button class="post-submit" id="postBtn" onclick="submitPost()">📮 投稿する</button>
+      <button class="post-submit" id="postBtn" onclick="submitPost()">🎁 恩送りメモを投稿して修了する</button>
       <div class="post-status" id="postStatus"></div>
 
       <div class="box safe">
         <div class="box-h">🔒 安全メモ</div>
-        投稿内容は他の受講生・運営も閲覧できる公開掲示板に表示されます。APIキーやパスワードなどの秘密情報、個人情報は記載しないようお願いいたします。
+        投稿内容は他の受講生・運営も閲覧できる公開掲示板に表示されます。APIキーやパスワードなどの秘密情報、<b>顧問先名・取引先名・具体的な金額</b>・個人情報は記載しないようお願いいたします。
       </div>
 
       <a class="board-link" href="board.html" target="_blank" rel="noopener">📋 みんなの投稿を見る（掲示板を開く）→</a>
@@ -1131,13 +1206,17 @@ MCPで会計ソフト（freee／MF会計）に取引として登録してくだ�
         <summary>配布資料はいつ・どこでもらえますか？</summary>
         <div class="body">メインの配布資料は<b>GitHubの配布用リポジトリ</b>（<a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">畠山式 配布用リポジトリ（haifuyou）</a>）で公開しています。中身は「勘定科目ルール.md（ルール表ひな形）」「MF会計MCPセットアップガイド」「freeeオート経理（体験版）キット（<code>scripts/</code>一式）」「第1回のセットアップ4点セット（<code>セットアップ/</code>）」です。受け取り方（GitHubアカウント作成→Fork→Download ZIP、ブラウザ版はフォークを選ぶだけ）は第1回課題ページの🎁セクションにまとめてあります。<b>追加配布のChrome拡張2本もリポジトリの <code>追加配布/</code> フォルダに同梱</b>しています（<a href="#extra">追加配布セクション</a>参照）。<b>サンプル請求書（練習用PDF）だけ</b>は、Google Driveの会員様配布資料フォルダ（テンプレート &gt; 第3回-記帳）でのご案内です。資料は受講後も手元に残り、フォークして自分の実務用に育てていけます。教材が更新されたら、自分のフォークの「Sync fork」ボタンで最新版を取り込めます。</div>
       </details>
+      <details>
+        <summary>確認テストに落ちたら？</summary>
+        <div class="body">何回でも再挑戦できます。70点未満のときは、Claudeが間違えた所をやさしく解説してから別の問題を出してくれます。テストは「できなかった探し」ではなく、今日の体験を自分の言葉にするための仕上げです🌸</div>
+      </details>
     </section>
 
     <!-- 修了 -->
-    <section class="finish" id="finish">
-      <h2 id="finishMsg">🎉 第3回 完了を目指そう！</h2>
-      <p>5つのチェックが全部つくと、ここが「修了」に変わります。</p>
-      <a href="#hero" class="cta">↑ 上に戻ってチェックを進める</a>
+    <section class="finish locked" id="finish">
+      <h2 id="finishMsg">🏅 修了バッジ：自動記帳デビュー</h2>
+      <p id="finishSub">5つのチェック＋恩送りメモの投稿がそろうと、ここで修了バッジが解放されます。</p>
+      <a href="#hero" class="cta">↑ 上に戻って進める</a>
     </section>
 
   </main>
@@ -1165,10 +1244,12 @@ MCPで会計ソフト（freee／MF会計）に取引として登録してくだ�
       headers: {'Content-Type': 'text/plain;charset=utf-8'},
       body: JSON.stringify({name: name || '匿名', memo: '【第3回】' + memo})
     }).then(()=>{
-      status.textContent = '投稿ありがとうございます！🌸 掲示板に反映されます。';
+      status.textContent = '投稿ありがとうございます！🌸 掲示板に反映されます。修了バッジをご覧ください🏅';
       status.className = 'post-status ok';
       document.getElementById('postMemo').value = '';
       btn.disabled = false;
+      localStorage.setItem(PKEY,'1');
+      render();
     }).catch(()=>{
       status.textContent = '送信に失敗しました。通信環境をご確認のうえ、もう一度お試しください。';
       status.className = 'post-status err';
@@ -1193,12 +1274,30 @@ MCPで会計ソフト（freee／MF会計）に取引として登録してくだ�
     });
   }
 
-  // チェックの進捗
+  // チェックの進捗（5ステップ＋恩送り投稿＝6条件で修了）
   const KEY='bootcamp3_progress';
-  const TOTAL=5;
+  const PKEY='bootcamp3_posted';
+  const STEP_TOTAL=5, TOTAL=6;
   function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
   function save(s){localStorage.setItem(KEY,JSON.stringify(s))}
+  function isPosted(){return localStorage.getItem(PKEY)==='1'}
 
+  // 紙吹雪（修了の瞬間だけ）
+  function burst(){
+    const colors=['#2864f0','#00a86b','#f5a623','#e5484d','#7c3aed'];
+    for(let i=0;i<70;i++){
+      const p=document.createElement('div');
+      p.className='confetti-piece';
+      p.style.left=Math.random()*100+'vw';
+      p.style.background=colors[i%colors.length];
+      p.style.animationDuration=(2.2+Math.random()*1.8)+'s';
+      p.style.animationDelay=(Math.random()*.6)+'s';
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(),5000);
+    }
+  }
+
+  let prevAllDone=null;
   function render(){
     const s=load();
     let done=0;
@@ -1208,17 +1307,30 @@ MCPで会計ソフト（freee／MF会計）に取引として登録してくだ�
       cb.closest('.step').classList.toggle('done',!!s[n]);
       if(s[n])done++;
     });
-    document.getElementById('cnt').textContent=done;
-    document.getElementById('fill').style.width=(done/TOTAL*100)+'%';
+    const posted=isPosted();
+    document.getElementById('post').classList.toggle('done',posted);
+    const units=done+(posted?1:0);
+    document.getElementById('cnt').textContent=units;
+    document.getElementById('fill').style.width=(units/TOTAL*100)+'%';
+    const allDone=(done===STEP_TOTAL&&posted);
     const fin=document.getElementById('finish');
     const msg=document.getElementById('finishMsg');
-    if(done===TOTAL){
-      msg.textContent='🎉 第3回 修了おめでとうございます！自動記帳の本丸、突破です🌸';
+    const sub=document.getElementById('finishSub');
+    if(allDone){
+      fin.classList.remove('locked');
       fin.classList.add('celebrate');
+      msg.textContent='🎉 第3回 修了おめでとうございます！自動記帳の本丸、突破です🌸';
+      sub.textContent='あなたは「AIに記帳を任せる型」を手に入れました。恩送りメモもありがとうございます！';
     }else{
-      msg.textContent='🎉 第3回 完了を目指そう！';
+      fin.classList.add('locked');
       fin.classList.remove('celebrate');
+      msg.textContent='🏅 修了バッジ：自動記帳デビュー';
+      sub.textContent = done===STEP_TOTAL
+        ? 'あとは確認テストに合格して、恩送りメモを投稿するだけです🎁'
+        : '5つのチェック＋恩送りメモの投稿がそろうと、ここで修了バッジが解放されます。';
     }
+    if(prevAllDone===false && allDone) burst();
+    prevAllDone=allDone;
   }
 
   function toggle(el,e){
