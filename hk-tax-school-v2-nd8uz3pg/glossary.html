@@ -75,6 +75,18 @@
   .o-cc{background:var(--brand-soft);color:var(--brand)}
   .o-gh{background:#f3ecff;color:#6f42c1}
   .term-head .origin+.origin{margin-left:0}
+
+  /* GitHub全体図カード */
+  .flow{margin:14px 0 4px}
+  .flow-step{display:flex;gap:12px;padding:10px 0;border-top:1px dashed var(--line);font-size:14px}
+  .flow-step:first-child{border-top:none}
+  .flow-no{flex:none;width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:4px}
+  .flow-auto{display:inline-block;font-size:11.5px;font-weight:800;color:var(--green);background:var(--green-soft);border-radius:99px;padding:1px 10px;margin-left:4px;white-space:nowrap}
+  .flow-you{display:inline-block;font-size:11.5px;font-weight:800;color:#fff;background:var(--brand);border-radius:99px;padding:1px 10px;margin-left:4px;white-space:nowrap}
+  .gd-table-wrap{overflow-x:auto;margin-top:10px}
+  .gd-table{width:100%;border-collapse:collapse;font-size:13px}
+  .gd-table th,.gd-table td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+  .gd-table th{background:var(--bg);white-space:nowrap}
   .legend{
     background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
     padding:16px 20px;margin:0 0 8px;font-size:13.5px;box-shadow:var(--shadow);
@@ -460,6 +472,28 @@
       <p class="term-body">GitHub上のリポジトリを、自分のPCへ丸ごとコピーしてくること。インポート（非公開コピー）が「GitHubの中で自分の倉庫にコピー」なのに対し、クローンは「倉庫から手元のPCへコピー」です。ブラウザ版Claude Codeでは裏側で自動的に行われるので、エラー文などで見かけたときに「ああ、手元へのコピーね」と分かれば十分です。</p>
     </div>
 
+    <div class="term" id="flow-github">
+      <div class="term-head"><span class="term-name">ブランチ→PR→マージの流れ（全体図）</span><span class="term-read">まずはこの1枚だけ</span></div>
+      <p class="term-body">Google Driveは「保存した瞬間、全員に反映」の<b>1段階</b>。GitHubは<b>4つの段階に分かれていて、それぞれに名前が付いているだけ</b>です。「更新したつもりなのに変わってない」の正体は、ほぼ全部「途中の段階で止まっている」こと。この1枚が頭に入れば、下の用語は全部つながります。</p>
+      <div class="flow">
+        <div class="flow-step"><span class="flow-no">1</span><div><b>ブランチを切る</b>：原本（main）には触らず、下書き用の枝分かれコピーを作る<span class="flow-auto">Claudeが自動でやる</span></div></div>
+        <div class="flow-step"><span class="flow-no">2</span><div><b>コミット</b>＝手元でセーブ：「ここまでやった」という記録を打つ。<b>まだ自分の作業場の中だけ</b>で、GitHubには何も起きていません<span class="flow-auto">Claudeが自動でやる</span></div></div>
+        <div class="flow-step"><span class="flow-no">3</span><div><b>プッシュ</b>＝GitHubへ送る：ここで初めてGitHub上に現れます。<b>ただしまだ下書きの枝の上</b>。本体（main）は変わっていません<span class="flow-auto">Claudeが自動でやる</span></div></div>
+        <div class="flow-step"><span class="flow-no">4</span><div><b>プルリクエスト（PR）</b>＝取り込み申請：「この下書きを本体に取り込んでください」という申請書を作る。<b>申請しただけでは反映されません</b></div></div>
+        <div class="flow-step"><span class="flow-no">5</span><div><b>マージ</b>＝承認ボタン：PRのページで緑の「Merge」ボタンを押す。<b>この瞬間に、はじめて本体（main）が更新されます</b><span class="flow-you">ここだけ自分でやる</span></div></div>
+      </div>
+      <div class="gd-table-wrap">
+        <table class="gd-table">
+          <tr><th>やりたいこと</th><th>Google Drive</th><th>GitHub</th></tr>
+          <tr><td>保存する</td><td>自動保存（意識しない）</td><td><b>コミット</b>（記録を打って初めて保存）</td></tr>
+          <tr><td>共有の場所に上げる</td><td>保存と同時</td><td><b>プッシュ</b>（送って初めて上がる）</td></tr>
+          <tr><td>正式版に反映する</td><td>保存と同時</td><td><b>PR→マージ</b>（承認して初めて反映）</td></tr>
+        </table>
+      </div>
+      <div class="term-eg"><b>たとえるなら</b>：下書き用の仕訳帳で作業し（ブランチ）、仕訳を起票し（コミット）、所内の共有棚に提出し（プッシュ）、承認申請を出し（PR）、所長の承認で正式な帳簿に反映される（マージ）。原本をいきなり書き換えられない代わりに、<b>誰がいつ何を変えたか全部残り、いつでも戻せる</b>のがこの仕組みの利点です。</div>
+      <div class="term-eg"><b>「更新したつもりなのに変わってない」ときは</b>：①コミット前（記録すらない）②プッシュ前（自分の作業場だけ）③PRを作っただけ（申請書止まり）④マージ前（承認待ち）のどこかで止まっています。Claudeに「<b>いまどの段階？マージまで終わってる？</b>」と聞けば、現在地と次にやることを教えてくれます。</div>
+    </div>
+
     <div class="term">
       <div class="term-head"><span class="term-name">ブランチ</span><span class="term-read">branch</span></div>
       <p class="term-body">リポジトリの中の「作業用の枝分かれ」。本体（<b>main</b>という名前のブランチ）を直接いじらず、枝分かれしたコピーの上で安全に変更を進める仕組みです。ブラウザ版Claude Codeが作業のたびに「claude/◯◯」という名前を自動で作っているのがブランチです。</p>
@@ -469,11 +503,13 @@
     <div class="term">
       <div class="term-head"><span class="term-name">コミット</span><span class="term-read">commit</span></div>
       <p class="term-body">変更を「この時点の記録」として保存すること、またその記録1件のこと。ゲームのセーブポイントのように、後からいつでもその時点の状態に戻れます。リポジトリのページに「◯ commits behind」と出たら「本家より記録が◯件分遅れています」という意味です。</p>
+      <div class="term-eg"><b>Drive感覚との違い</b>：Google Driveは勝手に保存されますが、GitHubの世界では<b>コミットを打つまで「保存した」扱いになりません</b>。実際はClaudeが作業の節目ごとに自動で打ってくれるので、自分で操作する必要はありません。</div>
     </div>
 
     <div class="term">
       <div class="term-head"><span class="term-name">プッシュ／プル</span><span class="term-read">push / pull</span></div>
-      <p class="term-body">手元の変更記録（コミット）をGitHubへ送り出すのが「プッシュ」、GitHub側の最新を手元へ取り込むのが「プル」。送る＝push、受け取る＝pull、という対の言葉です。「pushしておきました」と言われたら「GitHubに反映済みです」という意味です。</p>
+      <p class="term-body">手元の変更記録（コミット）をGitHubへ送り出すのが「プッシュ」、GitHub側の最新を手元へ取り込むのが「プル」。送る＝push、受け取る＝pull、という対の言葉です。</p>
+      <div class="term-eg"><b>注意</b>：Claudeの「pushしておきました」は「GitHub上の<b>作業ブランチまでは</b>反映済み」という意味。<b>本体（main）にはまだ入っていません</b>。本体に反映するには、PRを作ってマージ（承認）するところまで進めます（→上の全体図）。</div>
     </div>
 
     <div class="term">
@@ -594,8 +630,8 @@
   // ===== 横断タグ：GitHubまわりのことば =====
   const GITHUB_TERMS = new Set([
     'Git','Git Bash／bash','.gitignore','GitHub','リポジトリ','フォーク','Sync fork',
-    'クローン','ブランチ','コミット','プッシュ／プル','プルリクエスト（PR）','マージ',
-    'コンフリクト','ブラウザ版Claude Code'
+    'クローン','ブランチ→PR→マージの流れ（全体図）','ブランチ','コミット','プッシュ／プル',
+    'プルリクエスト（PR）','マージ','コンフリクト','ブラウザ版Claude Code'
   ]);
   document.querySelectorAll('.term').forEach(t=>{
     const name = t.querySelector('.term-name').textContent.trim();
