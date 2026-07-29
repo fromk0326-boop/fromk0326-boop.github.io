@@ -73,6 +73,8 @@
   .o-gen{background:#eef2f6;color:#5b6b7e;border:1px solid var(--line)}
   .o-ai{background:var(--amber-soft);color:#a86c00}
   .o-cc{background:var(--brand-soft);color:var(--brand)}
+  .o-gh{background:#f3ecff;color:#6f42c1}
+  .term-head .origin+.origin{margin-left:0}
   .legend{
     background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
     padding:16px 20px;margin:0 0 8px;font-size:13.5px;box-shadow:var(--shadow);
@@ -115,9 +117,10 @@
 
   <div class="legend">
     <h3>🏷 バッジの見方：それは「どの世界のことば」？</h3>
-    <div class="legend-row"><span class="origin o-gen">🌍 IT一般</span><span>ソフトウェアの世界で昔から使われている共通語。<b>一度覚えれば、Claude以外のツールでもずっと通じます</b>。実はこのページの大半（68語中53語）がこれです。</span></div>
+    <div class="legend-row"><span class="origin o-gen">🌍 IT一般</span><span>ソフトウェアの世界で昔から使われている共通語。<b>一度覚えれば、Claude以外のツールでもずっと通じます</b>。実はこのページの大半（69語中54語）がこれです。</span></div>
     <div class="legend-row"><span class="origin o-ai">🧠 生成AI共通</span><span>ChatGPTなど、他の生成AIでも同じ意味で通じることば（6語）。</span></div>
     <div class="legend-row"><span class="origin o-cc">💠 Claude特有</span><span>Claude／Claude Codeだけのことば。他のツールでは通じません。<b>この9語だけがClaude専用の暗記対象</b>です。</span></div>
+    <div class="legend-row"><span class="origin o-gh">🐙 GitHub</span><span>GitHubまわりのことば（ブランチ・コミット・push・PRなど）。<b>ブラウザ版Claude Codeの作業報告によく出てきます</b>。上のバッジと重ねて付く「横断タグ」です。</span></div>
     <div class="legend-note">つまり「横文字が多くて大変」に見えて、Claude専用に覚えることはごく一部。ほとんどはIT業界の共通語なので、覚えた分だけ他のツールでも財産になります。</div>
     <div class="origin-filter">
       <span class="of-label">絞り込み：</span>
@@ -125,6 +128,7 @@
       <button class="of-btn" data-origin="gen" onclick="setOrigin(this)">🌍 IT一般</button>
       <button class="of-btn" data-origin="ai" onclick="setOrigin(this)">🧠 生成AI共通</button>
       <button class="of-btn" data-origin="cc" onclick="setOrigin(this)">💠 Claude特有</button>
+      <button class="of-btn" data-origin="github" onclick="setOrigin(this)">🐙 GitHub</button>
     </div>
   </div>
 
@@ -496,6 +500,12 @@
     </div>
 
     <div class="term">
+      <div class="term-head"><span class="term-name">エイリアス</span><span class="term-read">alias／別名</span></div>
+      <p class="term-body">「別名」のこと。ITの世界では、長い正式名の代わりに使う短い呼び名を指します。たとえばClaudeのモデル指定で、正式なバージョン名ではなく「opus」とだけ書くのが「エイリアス指定」。呼び名を固定しておけば、新しいOpusが出たとき<b>自動的に最新版を指すようになる</b>のが利点です。</p>
+      <div class="term-eg"><b>たとえるなら</b>：宛名を「所長」と書いておくイメージ。代替わりしても、そのときの所長にちゃんと届きます。</div>
+    </div>
+
+    <div class="term">
       <div class="term-head"><span class="term-name">Python</span><span class="term-read">パイソン</span></div>
       <p class="term-body">世界で最もよく使われているプログラミング言語のひとつ。第3回の「freeeオート経理（体験版）」はPythonで書かれています。<b>自分で書ける必要はありません</b>。動かすためにPCに入れておく、という位置づけです。</p>
     </div>
@@ -577,19 +587,34 @@
     'Git':'gen','GitHub':'gen','リポジトリ':'gen','フォーク':'gen','Sync fork':'gen',
     'クローン':'gen','ブランチ':'gen','コミット':'gen','プッシュ／プル':'gen',
     'プルリクエスト（PR）':'gen','マージ':'gen','コンフリクト':'gen',
-    'ブラウザ版Claude Code':'cc','Python':'gen','GUI':'gen','エラー':'gen','OCR':'gen',
+    'ブラウザ版Claude Code':'cc','エイリアス':'gen','Python':'gen','GUI':'gen','エラー':'gen','OCR':'gen',
     // 料金・プランのことば
     'Proプラン（課金）':'cc','使用上限（レート制限）':'ai','お試し期間（トライアル）':'gen','サブスクリプション（サブスク）':'gen'
   };
+  // ===== 横断タグ：GitHubまわりのことば =====
+  const GITHUB_TERMS = new Set([
+    'Git','Git Bash／bash','.gitignore','GitHub','リポジトリ','フォーク','Sync fork',
+    'クローン','ブランチ','コミット','プッシュ／プル','プルリクエスト（PR）','マージ',
+    'コンフリクト','ブラウザ版Claude Code'
+  ]);
   document.querySelectorAll('.term').forEach(t=>{
     const name = t.querySelector('.term-name').textContent.trim();
+    const head = t.querySelector('.term-head');
     const o = ORIGIN_MAP[name];
-    if(!o) return;
-    t.dataset.origin = o;
-    const s = document.createElement('span');
-    s.className = 'origin ' + ORIGIN_TYPES[o].cls;
-    s.textContent = ORIGIN_TYPES[o].label;
-    t.querySelector('.term-head').appendChild(s);
+    if(o){
+      t.dataset.origin = o;
+      const s = document.createElement('span');
+      s.className = 'origin ' + ORIGIN_TYPES[o].cls;
+      s.textContent = ORIGIN_TYPES[o].label;
+      head.appendChild(s);
+    }
+    if(GITHUB_TERMS.has(name)){
+      t.dataset.github = '1';
+      const g = document.createElement('span');
+      g.className = 'origin o-gh';
+      g.textContent = '🐙 GitHub';
+      head.appendChild(g);
+    }
   });
 
   let activeOrigin = 'all';
@@ -605,7 +630,9 @@
     let hit = 0;
     terms.forEach(t=>{
       const text = t.textContent.toLowerCase();
-      const show = (!q || text.includes(q)) && (activeOrigin==='all' || t.dataset.origin===activeOrigin);
+      const originOK = activeOrigin==='all'
+        || (activeOrigin==='github' ? t.dataset.github==='1' : t.dataset.origin===activeOrigin);
+      const show = (!q || text.includes(q)) && originOK;
       t.classList.toggle('hide', !show);
       if(show) hit++;
     });
