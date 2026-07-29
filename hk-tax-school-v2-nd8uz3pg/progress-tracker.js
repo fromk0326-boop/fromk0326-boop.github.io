@@ -84,7 +84,7 @@ window.BOOTCAMP_PROGRESS_API = 'https://script.google.com/macros/s/AKfycbzZ5EyAR
   const pageLabel = PAGE_LABELS[PAGE] || PAGE;
 
   function sosPromptText(stepTitle){
-    return 'いま「畠山式AI税理士ブートキャンプ ' + pageLabel + '」の「' + stepTitle + '」で詰まっています。\n' +
+    return 'いま「畠山式税理士AIコミュニティ ' + pageLabel + '」の「' + stepTitle + '」で詰まっています。\n' +
 'ただし、何が分からないのかを自分でもうまく説明できません。\n\n' +
 'あなたに先生役をお願いします。次の進め方で、私を「次の1手」まで連れて行ってください。\n\n' +
 '1. まず、状況を把握するための質問を1つずつして（一度に1問だけ）。\n' +
