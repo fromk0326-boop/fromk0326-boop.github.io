@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コース全体マップ｜畠山式AI税理士コミュニティ</title>
+<style>
+  :root{
+    --bg:#f5f7fa;--card:#ffffff;--ink:#1f2d3d;--sub:#5b6b7e;--line:#e6ebf1;
+    --brand:#2864f0;--brand-soft:#eaf0ff;--green:#00a86b;--green-soft:#e6f7f0;
+    --amber:#f5a623;--amber-soft:#fff6e6;--red:#e5484d;--red-soft:#fdeced;
+    --radius:16px;--shadow:0 4px 20px rgba(31,45,61,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;font-family:"Hiragino Kaku Gothic ProN","Yu Gothic UI","Meiryo",system-ui,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.8;
+  }
+  a{color:var(--brand);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 20px 80px}
+
+  /* ===== コース全体ナビ ===== */
+  .course-nav{
+    position:sticky;top:0;z-index:20;background:rgba(245,247,250,.95);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  }
+  .course-nav-inner{
+    max-width:1000px;margin:0 auto;padding:10px 20px;
+    display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+  }
+  .course-nav-label{font-size:12px;font-weight:800;color:var(--sub);margin-right:4px;white-space:nowrap}
+  .course-pill{
+    font-size:13px;font-weight:700;padding:5px 14px;border-radius:99px;
+    border:1px solid var(--line);background:var(--card);color:var(--ink);white-space:nowrap;
+  }
+  .course-pill:hover{background:var(--brand-soft);text-decoration:none}
+  .course-pill.current{background:var(--brand);border-color:var(--brand);color:#fff}
+  .course-pill.current:hover{background:var(--brand)}
+  .course-pill.soon{
+    color:#b0bcc9;background:var(--bg);pointer-events:none;
+  }
+  .course-pill.soon::after{content:"準備中";font-size:10px;font-weight:800;margin-left:2px}
+
+  .head{padding-top:36px}
+  .badge{display:inline-block;background:var(--brand-soft);color:var(--brand);font-weight:800;font-size:13px;padding:6px 14px;border-radius:99px;margin-bottom:16px}
+  h1{font-size:28px;margin:0 0 10px}
+  p.lead{color:var(--sub);font-size:15px;margin:0 0 20px}
+
+  .guide{
+    background:linear-gradient(135deg,#eaf0ff,#e6f7f0);
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 22px;margin:0 0 36px;font-size:14.5px;box-shadow:var(--shadow);
+  }
+  .guide b{color:var(--brand)}
+
+  /* ===== マインドマップ ===== */
+  .tree{display:grid;grid-template-columns:250px 1fr;align-items:start}
+  .root{
+    position:sticky;top:80px;
+    background:var(--ink);color:#fff;border-radius:var(--radius);
+    padding:22px 20px;text-align:center;box-shadow:var(--shadow);
+  }
+  .root .rt{font-size:17px;font-weight:800;line-height:1.5}
+  .root .rs{font-size:12px;color:#c6d0dc;margin-top:8px;line-height:1.6}
+  .root::after{
+    content:"";position:absolute;top:50%;right:-28px;width:28px;height:3px;
+    background:var(--line);
+  }
+  .branches{position:relative;padding-left:56px;display:flex;flex-direction:column;gap:20px}
+  .branches::before{
+    content:"";position:absolute;left:28px;top:44px;bottom:44px;width:3px;
+    background:var(--line);border-radius:2px;
+  }
+  .branch{position:relative}
+  .branch::before{
+    content:"";position:absolute;left:-28px;top:36px;width:28px;height:3px;
+    background:var(--line);
+  }
+  .bcard{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:18px 22px;border-left:5px solid var(--accent,var(--brand));
+  }
+  .bhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+  .bnum{
+    font-size:12px;font-weight:800;color:#fff;background:var(--accent,var(--brand));
+    padding:3px 12px;border-radius:99px;white-space:nowrap;
+  }
+  a.btitle{font-size:16.5px;font-weight:800;color:var(--ink)}
+  a.btitle:hover{color:var(--brand)}
+  .bbadge{font-size:12px;font-weight:700;color:var(--sub);margin-left:auto;white-space:nowrap}
+  .bnote{font-size:13px;color:var(--sub);margin:2px 0 10px}
+  .leaves{display:flex;gap:8px;flex-wrap:wrap}
+  .leaf{
+    font-size:13px;font-weight:700;padding:6px 14px;border-radius:99px;
+    background:var(--bg);border:1px solid var(--line);color:var(--ink);white-space:nowrap;
+  }
+  .leaf:hover{background:var(--brand-soft);border-color:var(--brand);text-decoration:none}
+  .leaf.opt::after{content:"任意";font-size:10px;font-weight:800;color:var(--amber);margin-left:4px}
+  .leaf.dis{color:#b0bcc9;pointer-events:none}
+  .branch.soon .bcard{border-left-color:#c9d3dd;background:#fbfcfe}
+  .branch.soon .bnum{background:#c9d3dd}
+  .goal{
+    font-size:12.5px;color:var(--sub);background:var(--bg);
+    border-left:3px solid var(--accent,var(--brand));border-radius:8px;
+    padding:6px 12px;margin-top:10px;
+  }
+  .goal b{color:var(--ink)}
+
+  @media (max-width:820px){
+    .tree{grid-template-columns:1fr}
+    .root{position:static;margin-bottom:20px}
+    .root::after{display:none}
+    .branches{padding-left:32px}
+    .branches::before{left:12px;top:0}
+    .branch::before{left:-20px;width:20px}
+    .bbadge{margin-left:0;width:100%}
+    .leaf{white-space:normal;line-height:1.5}
+    .bnum,.course-pill{white-space:normal}
+  }
+</style>
+</head>
+<body>
+
+<!-- コース全体ナビ -->
+<div class="course-nav">
+  <div class="course-nav-inner">
+    <span class="course-pill current">🗺 コース全体</span>
+    <a class="course-pill" href="index.html">第1回</a>
+    <a class="course-pill" href="vol03.html">第3回</a>
+    <a class="course-pill" href="vol05.html">第5回</a>
+    <a class="course-pill soon" href="vol07.html">第7回</a>
+    <a class="course-pill soon" href="vol09.html">第9回</a>
+    <a class="course-pill soon" href="update01.html">アプデ①</a>
+    <a class="course-pill soon" href="update02.html">アプデ②</a>
+    <a class="course-pill" href="glossary.html" style="margin-left:auto;background:var(--amber-soft);border-color:transparent;color:#a86c00">📖 用語集</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="head">
+    <span class="badge">畠山式AI税理士コミュニティ</span>
+    <h1>🗺 コース全体マップ</h1>
+    <p class="lead">この講座で「どこまで来たか・次に何をやるか」をひと目で確認できるページです。気になる項目を押すと、その回の該当ステップに直接飛べます。</p>
+  </div>
+
+  <div class="guide">
+    🧭 <b>いまの自分はどこ？</b><br>
+    各回の最後にある<b>修了バッジ</b>が現在地の目印です。最後に取ったバッジの<b>次の回</b>から再開してください。はじめての方は第1回からどうぞ。途中の回から合流する場合は、第5回冒頭の「追いつき実力テスト」で出発点を確かめられます。
+  </div>
+
+  <div class="tree">
+    <div class="root">
+      <div class="rt">🏫 畠山式<br>AI税理士ブートキャンプ</div>
+      <div class="rs">記帳の自動化を<br>「体験 → 仕組み → レビュー」へ<br>段階的に育てていきます</div>
+    </div>
+
+    <div class="branches">
+
+      <!-- 第1回 -->
+      <div class="branch" style="--accent:var(--brand)">
+        <div class="bcard">
+          <div class="bhead">
+            <span class="bnum">第1回</span>
+            <a class="btitle" href="index.html">freee × Claude Code 自動起票デビュー</a>
+            <span class="bbadge">🏅 修了バッジ：自動起票デビュー</span>
+          </div>
+          <p class="bnote">環境をゼロから整えて、「伝票が自動で起票される」を初体験する回です。</p>
+          <div class="leaves">
+            <a class="leaf" href="index.html#t1">① freeeアカウント作成</a>
+            <a class="leaf" href="index.html#t2">② 口座・カード連携</a>
+            <a class="leaf" href="index.html#t3">③ Claude Code導入</a>
+            <a class="leaf" href="index.html#t4">④ freee MCP接続 → 自動起票</a>
+            <a class="leaf opt" href="index.html#bonus">🎁 AI事務所テンプレート一式</a>
+            <a class="leaf" href="index.html#quiz">🧠 確認テスト → 恩送りメモ</a>
+          </div>
+          <div class="goal">ゴール：<b>freeeとClaude Codeがつながり、AIが伝票を起票する流れを体験できた</b></div>
+        </div>
+      </div>
+
+      <!-- 第3回 -->
+      <div class="branch" style="--accent:var(--green)">
+        <div class="bcard">
+          <div class="bhead">
+            <span class="bnum">第3回</span>
+            <a class="btitle" href="vol03.html">未処理明細の登録 × OCR起票</a>
+            <span class="bbadge">🏅 修了バッジ：自動記帳デビュー</span>
+          </div>
+          <p class="bnote">自動記帳の本丸。「勘定科目ルールを育てる」考え方を身につけ、自分の会計ソフトで回す回です。MF会計の方もここから合流できます。</p>
+          <div class="leaves">
+            <a class="leaf" href="vol03.html#t1">① 環境チェック</a>
+            <a class="leaf" href="vol03.html#t2">② 会計ソフトとMCP連携（freee／MF）</a>
+            <a class="leaf" href="vol03.html#t3">③ 勘定科目ルールの2段階構造</a>
+            <a class="leaf" href="vol03.html#t4">④ 未処理明細の登録</a>
+            <a class="leaf" href="vol03.html#t5">⑤ 請求書OCR起票</a>
+            <a class="leaf opt" href="vol03.html#extra">🎁 小道具：ナンピ・Chrome拡張</a>
+            <a class="leaf" href="vol03.html#quiz">🧠 確認テスト → 恩送りメモ</a>
+          </div>
+          <div class="goal">ゴール：<b>未処理明細とOCR起票を自分の環境で回し、ルール表を育て始めた</b></div>
+        </div>
+      </div>
+
+      <!-- 第5回 -->
+      <div class="branch" style="--accent:var(--amber)">
+        <div class="bcard">
+          <div class="bhead">
+            <span class="bnum">第5回</span>
+            <a class="btitle" href="vol05.html">記帳自動化を「レビューできる仕組み」に育てる</a>
+            <span class="bbadge">🏅 修了バッジ：レビューまで任せる人</span>
+          </div>
+          <p class="bnote">起票して終わりではなく、AIに「チェックさせる」側へ。仕訳帳・消費税区分のレビューを型にする回です。</p>
+          <div class="leaves">
+            <a class="leaf" href="vol05.html#t0">🧭 追いつき実力テスト</a>
+            <a class="leaf" href="vol05.html#t1">① 配布キットを最新版に</a>
+            <a class="leaf" href="vol05.html#t2">② 自動記帳を「型」で回す</a>
+            <a class="leaf" href="vol05.html#t3">③ 仕訳帳をAIレビュー</a>
+            <a class="leaf" href="vol05.html#t4">④ 消費税区分をAIレビュー</a>
+            <a class="leaf" href="vol05.html#t5">⑤ レビューをスキルに育てる</a>
+            <a class="leaf" href="vol05.html#quiz">🧠 確認テスト → 恩送りメモ</a>
+          </div>
+          <div class="goal">ゴール：<b>記帳 → レビューまでの一連の流れを、AIに任せる型ができた</b></div>
+        </div>
+      </div>
+
+      <!-- 今後の回 -->
+      <div class="branch soon">
+        <div class="bcard">
+          <div class="bhead">
+            <span class="bnum">今後の回</span>
+            <span class="btitle" style="font-size:16.5px;font-weight:800">第7回・第9回・アプデ回</span>
+            <span class="bbadge">🔒 準備中</span>
+          </div>
+          <p class="bnote">公開され次第、このマップと上のナビに追加されます。配信をお待ちください。</p>
+          <div class="leaves">
+            <span class="leaf dis">第7回（準備中）</span>
+            <span class="leaf dis">第9回（準備中）</span>
+            <span class="leaf dis">アプデ①（準備中）</span>
+            <span class="leaf dis">アプデ②（準備中）</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- サポートページ -->
+      <div class="branch" style="--accent:var(--red)">
+        <div class="bcard">
+          <div class="bhead">
+            <span class="bnum">いつでも</span>
+            <span class="btitle" style="font-size:16.5px;font-weight:800">サポートページ</span>
+          </div>
+          <p class="bnote">どの回の途中でも使える、困ったときの駆け込み先です。</p>
+          <div class="leaves">
+            <a class="leaf" href="glossary.html">📖 用語集（分からない横文字はここ）</a>
+            <a class="leaf" href="board.html">🏅 恩送りメモ掲示板</a>
+            <a class="leaf" href="guide.html">🧰 テンプレート詳細解説</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
