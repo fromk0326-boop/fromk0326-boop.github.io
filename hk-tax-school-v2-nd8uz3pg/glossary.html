@@ -438,22 +438,22 @@
     <div class="term">
       <div class="term-head"><span class="term-name">リポジトリ</span><span class="term-read">repository／リポ</span></div>
       <p class="term-body">GitHub上の「フォルダひとつ分の倉庫」のこと。教材の配布用リポジトリ（haifuyou）には、テンプレート・キット・ルール表など配布物が丸ごと入っています。</p>
-      <div class="term-eg"><b>たとえるなら</b>：事務所の共有キャビネットの引き出し1段。中身ごと自分用にコピーもできます（→フォーク）。</div>
+      <div class="term-eg"><b>たとえるなら</b>：事務所の共有キャビネットの引き出し1段。中身ごと自分用にコピーもできます（本講座では「インポート」で非公開コピーを作ります）。</div>
     </div>
 
     <div class="term">
       <div class="term-head"><span class="term-name">フォーク</span><span class="term-read">Fork</span></div>
-      <p class="term-body">他の人のリポジトリを、<b>自分のアカウントに丸ごとコピー</b>すること。GitHubのページ右上の「Fork」ボタンを押すだけです。フォークは自分専用に書き換えてOKで、ルール表を育てる先もここ。<b>フォークも全世界に公開される</b>ので、顧問先の資料や帳簿データは入れないでください。</p>
+      <p class="term-body">他の人のリポジトリを、<b>自分のアカウントに丸ごとコピー</b>するGitHubの機能。ただしフォークは<b>必ず全世界に公開され、あとから非公開にできません</b>。そのため本講座では使わず、代わりに<b>インポート（github.com/new/import）で非公開コピー</b>を作って受け取ります。以前フォークで受け取った方は、第5回課題ページの「受け取り方法の変更」を見て引っ越してください。</p>
     </div>
 
     <div class="term">
       <div class="term-head"><span class="term-name">Sync fork</span><span class="term-read">シンクフォーク</span></div>
-      <p class="term-body">フォークした自分のコピーを、<b>元の教材の最新版に追いつかせる</b>ボタン。自分のフォークのページに「◯ commits behind」と出たら、「Sync fork」→「Update branch」を押すだけで最新になります。教材が更新されたときはこれ。</p>
+      <p class="term-body">フォークした自分のコピーを、元の教材の最新版に追いつかせるボタン。<b>本講座では現在使いません</b>（受け取りをフォークからインポート＝非公開コピーに変更したため、このボタン自体が表示されません）。教材が更新されたときは、Claude Codeに「<b>配布用リポジトリ https://github.com/fromk0326-boop/haifuyou から最新を取り込んで</b>」と頼めば最新になります。</p>
     </div>
 
     <div class="term">
       <div class="term-head"><span class="term-name">クローン</span><span class="term-read">clone</span></div>
-      <p class="term-body">GitHub上のリポジトリを、自分のPCへ丸ごとコピーしてくること。フォークが「GitHubの中で自分の倉庫にコピー」なのに対し、クローンは「倉庫から手元のPCへコピー」です。ブラウザ版Claude Codeでは裏側で自動的に行われるので、エラー文などで見かけたときに「ああ、手元へのコピーね」と分かれば十分です。</p>
+      <p class="term-body">GitHub上のリポジトリを、自分のPCへ丸ごとコピーしてくること。インポート（非公開コピー）が「GitHubの中で自分の倉庫にコピー」なのに対し、クローンは「倉庫から手元のPCへコピー」です。ブラウザ版Claude Codeでは裏側で自動的に行われるので、エラー文などで見かけたときに「ああ、手元へのコピーね」と分かれば十分です。</p>
     </div>
 
     <div class="term">
@@ -464,7 +464,7 @@
 
     <div class="term">
       <div class="term-head"><span class="term-name">コミット</span><span class="term-read">commit</span></div>
-      <p class="term-body">変更を「この時点の記録」として保存すること、またその記録1件のこと。ゲームのセーブポイントのように、後からいつでもその時点の状態に戻れます。フォークのページに出る「◯ commits behind」は「本家より記録が◯件分遅れています」という意味です。</p>
+      <p class="term-body">変更を「この時点の記録」として保存すること、またその記録1件のこと。ゲームのセーブポイントのように、後からいつでもその時点の状態に戻れます。リポジトリのページに「◯ commits behind」と出たら「本家より記録が◯件分遅れています」という意味です。</p>
     </div>
 
     <div class="term">
@@ -476,7 +476,7 @@
       <div class="term-head"><span class="term-name">プルリクエスト（PR）</span><span class="term-read">pull request／ピーアール</span></div>
       <p class="term-body">「このブランチの変更を、本体に取り込んでください」という<b>申請</b>のこと。略してPR。変更内容の一覧と承認ボタンがセットになったページが作られ、中身を確認してから取り込めます。ブラウザ版Claude Codeで作業を終えると「PRを作成」と案内されますが、押した時点では<b>まだ申請書ができただけ</b>で、本体には反映されていません。反映するのが次の「マージ」です。</p>
       <div class="term-eg"><b>たとえるなら</b>：スタッフが作った仕訳の「承認待ち」一覧。内容を確認して、問題なければ承認（マージ）します。</div>
-      <div class="term-eg"><b>背景</b>：名前は「私の変更をプル（取り込み）してください、というリクエスト」の意味。教材更新で使う「Sync fork」とは別物です。</div>
+      <div class="term-eg"><b>背景</b>：名前は「私の変更をプル（取り込み）してください、というリクエスト」の意味。教材更新（配布用リポジトリから最新を取り込む作業）とは別物です。</div>
     </div>
 
     <div class="term">
@@ -492,7 +492,7 @@
 
     <div class="term">
       <div class="term-head"><span class="term-name">ブラウザ版Claude Code</span><span class="term-read">claude.ai/code</span></div>
-      <p class="term-body">Claude Codeをインストールなしで、ブラウザ（Chrome等）の中で使える版。<b>GitHubのリポジトリを選んでセッションを始める</b>仕組みなので、フォークした配布用リポジトリを選べば、教材一式が開いた状態から作業できます。第3回以降の配信ではこちらが主流です。</p>
+      <p class="term-body">Claude Codeをインストールなしで、ブラウザ（Chrome等）の中で使える版。<b>GitHubのリポジトリを選んでセッションを始める</b>仕組みなので、自分の非公開リポジトリ（教材をインポートしたhaifuyou）を選べば、教材一式が開いた状態から作業できます。第3回以降の配信ではこちらが主流です。</p>
     </div>
 
     <div class="term">

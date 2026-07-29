@@ -569,7 +569,7 @@ https://beta.mcp.developers.biz.moneyforward.com/mcp/ca/v3
         <div class="box-h">📋 進め方（当日・freee／MF共通）</div>
         <ol>
           <li>配布キット（GitHubの配布用リポジトリ）に入っている<b>「勘定科目ルール.md」（ルール表のひな形）</b>を用意する（キットの受け取り方は<a href="#faq">FAQ</a>参照。第1回でテンプレートを受け取った方は、その <code>haifuyou</code> フォルダの <code>第3回_freeeオート経理/</code> の中に入っています）</li>
-          <li>Claude Codeでキットのフォルダを開く。<b>ブラウザ版Claude Code（claude.ai/code）の方は、フォークした配布用リポジトリをセッションで選ぶだけ</b>です（ルール表は最初から入っているので、コピーやダウンロードは不要）</li>
+          <li>Claude Codeでキットのフォルダを開く。<b>ブラウザ版Claude Code（claude.ai/code）の方は、自分の非公開リポジトリ（haifuyou）をセッションで選ぶだけ</b>です（ルール表は最初から入っているので、コピーやダウンロードは不要）</li>
           <li>自分の会計ソフトのコピペ文（下のAまたはM）を送信する</li>
           <li>一覧表を確認して、OKな明細だけ承認 → 計上</li>
           <li>仕上げのコピペ文（R）で、今日の「新顔」をルール表に追加する</li>
@@ -651,8 +651,8 @@ freeeの「自動で経理」に溜まっている
       <details>
         <summary>📦 配布キット「freeeオート経理（体験版）」で畠山ルートを試す（後日の自主トレ用）</summary>
         <div class="body">
-          <p>キット一式は、<b>GitHubの配布用リポジトリ</b>（<a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">畠山式 配布用リポジトリ（haifuyou）</a>）で配布しています。第1回のテンプレート（<code>.claude/</code>）と同じリポジトリです。<b>第1回でフォーク・ダウンロード済みの方は、その <code>haifuyou</code> フォルダがそのままキットです</b>（追加のダウンロード不要。教材が更新されているので「git pullして」と一言だけお願いしてください）。動かすには<b>Python</b>と<b>Anthropic APIキー</b>が必要です（下の手順に含まれています）。</p>
-          <p style="font-size:13.5px;color:var(--sub)">※ 教材の受け取り・ふだんの作業はブラウザ版Claude Code（claude.ai/code でフォークを選ぶだけ）でもOKですが、<b>このキットの実行（freee認証・スクリプト実行）は、ご自身のPCのClaude Code（デスクトップ）での利用を前提</b>にしています。</p>
+          <p>キット一式は、<b>GitHubの配布用リポジトリ</b>（<a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">畠山式 配布用リポジトリ（haifuyou）</a>）で配布しています。第1回のテンプレート（<code>.claude/</code>）と同じリポジトリです。<b>第1回で非公開コピー・ダウンロード済みの方は、その <code>haifuyou</code> フォルダがそのままキットです</b>（追加のダウンロード不要。教材が更新されているので「配布用リポジトリ https://github.com/fromk0326-boop/haifuyou から最新を取り込んで」と一言だけお願いしてください）。動かすには<b>Python</b>と<b>Anthropic APIキー</b>が必要です（下の手順に含まれています）。</p>
+          <p style="font-size:13.5px;color:var(--sub)">※ 教材の受け取り・ふだんの作業はブラウザ版Claude Code（claude.ai/code で自分の非公開リポジトリを選ぶだけ）でもOKですが、<b>このキットの実行（freee認証・スクリプト実行）は、ご自身のPCのClaude Code（デスクトップ）での利用を前提</b>にしています。</p>
           <table class="kit-table">
             <tr><th>場所</th><th>役割</th></tr>
             <tr><td><code>第3回_freeeオート経理/README.md</code></td><td>セットアップと実行の手順書（Claude Codeが読んで進めてくれます）</td></tr>
@@ -668,8 +668,8 @@ freeeの「自動で経理」に溜まっている
           <p><b>進め方（初めての方はこの順番どおりに）</b></p>
           <ol>
             <li><b>Anthropic APIキーを取得する</b>：<a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a> でアカウント作成 → Billingでクレジット購入（最低額の5ドルで十分。体験で使うのは数円〜数十円程度）→ API Keysでキーを作成し、「sk-ant-」で始まる文字列を控える（<b>作成した瞬間にしか表示されません</b>）</li>
-            <li><b>キットを受け取る（＝フォーク）</b>：GitHubにログインして<a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">配布用リポジトリ（haifuyou）</a>を開き、右上の「<b>Fork</b>」で<b>自分のGitHubに複製</b>する（GitHubアカウントの作り方は第1回課題ページの🎁セクション参照）<br><span style="font-size:13px;color:var(--sub)">※ <b>第1回でFork・取り込み済みの方はこの手順は不要</b>です。手元の <code>haifuyou</code> フォルダをそのまま使ってください</span></li>
-            <li><b>PCに取り込む（クローン）</b>：Claude Codeデスクトップアプリに「<b>私のフォーク https://github.com/（自分のユーザー名）/haifuyou をこのPCにクローンして開いて。gitが無ければインストールから案内して</b>」と頼む<br><span style="font-size:13px;color:var(--sub)">※ クローンなら、育てたルール表を自分のGitHubに保存でき、教材更新も「git pullして」の一言で取り込めます。gitがうまく入らない場合だけ、フォークのページで「Code」→「Download ZIP」→右クリック「すべて展開」の代替ルートでもOK</span></li>
+            <li><b>キットを受け取る（＝非公開コピーを作る）</b>：GitHubにログインして<a href="https://github.com/new/import" target="_blank" rel="noopener">github.com/new/import</a>（インポート画面）を開き、URL欄に <code>https://github.com/fromk0326-boop/haifuyou</code> を貼り付け、リポジトリ名 <code>haifuyou</code>・<b>「Private（非公開）」を選んで</b>「Begin import」（手順の詳細とGitHubアカウントの作り方は第1回課題ページの🎁セクション参照）<br><span style="font-size:13px;color:var(--sub)">※ Forkボタンは使いません（フォークは必ず公開され、非公開にできないため）。<b>第1回で受け取り・取り込み済みの方はこの手順は不要</b>です。手元の <code>haifuyou</code> フォルダをそのまま使ってください</span></li>
+            <li><b>PCに取り込む（クローン）</b>：Claude Codeデスクトップアプリに「<b>私のGitHubアカウントに複製（インポート）した教材リポジトリ https://github.com/（自分のユーザー名）/haifuyou をこのPCにクローンして開いて。非公開（Private）リポジトリなので、必要ならGitHubへのログインから案内して。gitが無ければインストールから案内して</b>」と頼む<br><span style="font-size:13px;color:var(--sub)">※ クローンなら、育てたルール表を自分のGitHub（非公開）に保存でき、教材更新も「配布用リポジトリから最新を取り込んで」の一言でOK。gitがうまく入らない場合だけ、自分のリポジトリのページで「Code」→「Download ZIP」→右クリック「すべて展開」の代替ルートでもOK</span></li>
             <li><b>Claude Codeデスクトップアプリで開く</b>：「フォルダを開く」から、取り込んだ <code>haifuyou</code> フォルダを選ぶ</li>
             <li><b>次のコピペ文を送る</b>：あとはClaude Codeが1ステップずつ案内してくれます</li>
           </ol>
@@ -1079,7 +1079,7 @@ MCPで会計ソフト（freee／MF会計）に取引として登録してくだ�
 
       <div class="box news">
         <div class="box-h">📦 配布場所</div>
-        2つの拡張は、<b>配布用リポジトリ（haifuyou）の <code>第4回_Chrome拡張/</code> フォルダに同梱</b>しています。第1回・第3回でキットを受け取り済みの方は、キットを最新版にすれば手元に揃います（クローン済みならClaude Codeに「<b>git pullして</b>」と頼むだけ。ZIPで受け取った方は、フォークのページで「Sync fork」してから Download ZIP を取り直してください）。ナンピはURLを開くだけなので配布物はありません。<a href="https://nanpi.pages.dev" target="_blank" rel="noopener">nanpi.pages.dev</a> をブックマークしてください。
+        2つの拡張は、<b>配布用リポジトリ（haifuyou）の <code>第4回_Chrome拡張/</code> フォルダに同梱</b>しています。第1回・第3回でキットを受け取り済みの方は、キットを最新版にすれば手元に揃います（クローン済みならClaude Codeに「<b>配布用リポジトリ https://github.com/fromk0326-boop/haifuyou から最新を取り込んで</b>」と頼むだけ。ZIPで受け取った方は、配布用リポジトリのページで Download ZIP を取り直してください）。ナンピはURLを開くだけなので配布物はありません。<a href="https://nanpi.pages.dev" target="_blank" rel="noopener">nanpi.pages.dev</a> をブックマークしてください。
       </div>
     </section>
 
@@ -1209,7 +1209,7 @@ Q5. この課題ページで分かりづらかった所・直してほしい所�
       </details>
       <details>
         <summary>配布資料はいつ・どこでもらえますか？</summary>
-        <div class="body">メインの配布資料は<b>GitHubの配布用リポジトリ</b>（<a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">畠山式 配布用リポジトリ（haifuyou）</a>）で公開しています。中身は回ごとのフォルダに分かれていて、<code>.claude/</code>（第1回のセットアップ4点セット＋動かすプログラム一式）、<code>第3回_freeeオート経理/</code>（勘定科目ルール.md・MF会計MCPセットアップガイド・請求書PDFの置き場）、<code>第4回_Chrome拡張/</code>（拡張2本）という構成です。<b>読む資料は回ごとのフォルダ、動かすプログラムは <code>.claude/skills/</code></b> と覚えてください。受け取り方（GitHubアカウント作成→Fork→クローン、ブラウザ版はフォークを選ぶだけ）は第1回課題ページの🎁セクションにまとめてあります。<b>追加配布のChrome拡張2本もリポジトリの <code>第4回_Chrome拡張/</code> フォルダに同梱</b>しています（<a href="#extra">追加配布セクション</a>参照）。<b>サンプル請求書（練習用PDF）だけ</b>は、Google Driveの会員様配布資料フォルダ（テンプレート &gt; 第3回-記帳）でのご案内です。資料は受講後も手元に残り、フォークして自分の実務用に育てていけます。教材が更新されたら、Claude Codeに「<b>git pullして</b>」と頼めば最新版を取り込めます（ZIPで受け取った方は、フォークのページで「Sync fork」→ Download ZIP を取り直してください）。</div>
+        <div class="body">メインの配布資料は<b>GitHubの配布用リポジトリ</b>（<a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">畠山式 配布用リポジトリ（haifuyou）</a>）で公開しています。中身は回ごとのフォルダに分かれていて、<code>.claude/</code>（第1回のセットアップ4点セット＋動かすプログラム一式）、<code>第3回_freeeオート経理/</code>（勘定科目ルール.md・MF会計MCPセットアップガイド・請求書PDFの置き場）、<code>第4回_Chrome拡張/</code>（拡張2本）という構成です。<b>読む資料は回ごとのフォルダ、動かすプログラムは <code>.claude/skills/</code></b> と覚えてください。受け取り方（GitHubアカウント作成→非公開コピー作成（インポート）→クローン、ブラウザ版は自分の非公開リポジトリを選ぶだけ）は第1回課題ページの🎁セクションにまとめてあります。<b>追加配布のChrome拡張2本もリポジトリの <code>第4回_Chrome拡張/</code> フォルダに同梱</b>しています（<a href="#extra">追加配布セクション</a>参照）。<b>サンプル請求書（練習用PDF）だけ</b>は、Google Driveの会員様配布資料フォルダ（テンプレート &gt; 第3回-記帳）でのご案内です。資料は受講後も手元に残り、非公開コピーを自分の実務用に育てていけます。教材が更新されたら、Claude Codeに「<b>配布用リポジトリ https://github.com/fromk0326-boop/haifuyou から最新を取り込んで</b>」と頼めば最新版を取り込めます（ZIPで受け取った方は、配布用リポジトリのページで Download ZIP を取り直してください）。</div>
       </details>
       <details>
         <summary>確認テストに落ちたら？</summary>
