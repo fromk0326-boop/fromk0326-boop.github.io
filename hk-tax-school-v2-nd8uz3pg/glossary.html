@@ -115,9 +115,9 @@
 
   <div class="legend">
     <h3>🏷 バッジの見方：それは「どの世界のことば」？</h3>
-    <div class="legend-row"><span class="origin o-gen">🌍 IT一般</span><span>ソフトウェアの世界で昔から使われている共通語。<b>一度覚えれば、Claude以外のツールでもずっと通じます</b>。実はこのページの大半（57語中43語）がこれです。</span></div>
+    <div class="legend-row"><span class="origin o-gen">🌍 IT一般</span><span>ソフトウェアの世界で昔から使われている共通語。<b>一度覚えれば、Claude以外のツールでもずっと通じます</b>。実はこのページの大半（68語中53語）がこれです。</span></div>
     <div class="legend-row"><span class="origin o-ai">🧠 生成AI共通</span><span>ChatGPTなど、他の生成AIでも同じ意味で通じることば（6語）。</span></div>
-    <div class="legend-row"><span class="origin o-cc">💠 Claude特有</span><span>Claude／Claude Codeだけのことば。他のツールでは通じません。<b>この8語だけがClaude専用の暗記対象</b>です。</span></div>
+    <div class="legend-row"><span class="origin o-cc">💠 Claude特有</span><span>Claude／Claude Codeだけのことば。他のツールでは通じません。<b>この9語だけがClaude専用の暗記対象</b>です。</span></div>
     <div class="legend-note">つまり「横文字が多くて大変」に見えて、Claude専用に覚えることはごく一部。ほとんどはIT業界の共通語なので、覚えた分だけ他のツールでも財産になります。</div>
     <div class="origin-filter">
       <span class="of-label">絞り込み：</span>
@@ -452,6 +452,45 @@
     </div>
 
     <div class="term">
+      <div class="term-head"><span class="term-name">クローン</span><span class="term-read">clone</span></div>
+      <p class="term-body">GitHub上のリポジトリを、自分のPCへ丸ごとコピーしてくること。フォークが「GitHubの中で自分の倉庫にコピー」なのに対し、クローンは「倉庫から手元のPCへコピー」です。ブラウザ版Claude Codeでは裏側で自動的に行われるので、エラー文などで見かけたときに「ああ、手元へのコピーね」と分かれば十分です。</p>
+    </div>
+
+    <div class="term">
+      <div class="term-head"><span class="term-name">ブランチ</span><span class="term-read">branch</span></div>
+      <p class="term-body">リポジトリの中の「作業用の枝分かれ」。本体（<b>main</b>という名前のブランチ）を直接いじらず、枝分かれしたコピーの上で安全に変更を進める仕組みです。ブラウザ版Claude Codeが作業のたびに「claude/◯◯」という名前を自動で作っているのがブランチです。</p>
+      <div class="term-eg"><b>たとえるなら</b>：帳簿の原本には直接触らず、下書き用のコピーで作業して、確認が済んでから原本に反映するイメージです。</div>
+    </div>
+
+    <div class="term">
+      <div class="term-head"><span class="term-name">コミット</span><span class="term-read">commit</span></div>
+      <p class="term-body">変更を「この時点の記録」として保存すること、またその記録1件のこと。ゲームのセーブポイントのように、後からいつでもその時点の状態に戻れます。フォークのページに出る「◯ commits behind」は「本家より記録が◯件分遅れています」という意味です。</p>
+    </div>
+
+    <div class="term">
+      <div class="term-head"><span class="term-name">プッシュ／プル</span><span class="term-read">push / pull</span></div>
+      <p class="term-body">手元の変更記録（コミット）をGitHubへ送り出すのが「プッシュ」、GitHub側の最新を手元へ取り込むのが「プル」。送る＝push、受け取る＝pull、という対の言葉です。「pushしておきました」と言われたら「GitHubに反映済みです」という意味です。</p>
+    </div>
+
+    <div class="term">
+      <div class="term-head"><span class="term-name">プルリクエスト（PR）</span><span class="term-read">pull request／ピーアール</span></div>
+      <p class="term-body">「このブランチの変更を、本体に取り込んでください」という<b>申請</b>のこと。略してPR。変更内容の一覧と承認ボタンがセットになったページが作られ、中身を確認してから取り込めます。ブラウザ版Claude Codeで作業を終えると「PRを作成」と案内されますが、押した時点では<b>まだ申請書ができただけ</b>で、本体には反映されていません。反映するのが次の「マージ」です。</p>
+      <div class="term-eg"><b>たとえるなら</b>：スタッフが作った仕訳の「承認待ち」一覧。内容を確認して、問題なければ承認（マージ）します。</div>
+      <div class="term-eg"><b>背景</b>：名前は「私の変更をプル（取り込み）してください、というリクエスト」の意味。教材更新で使う「Sync fork」とは別物です。</div>
+    </div>
+
+    <div class="term">
+      <div class="term-head"><span class="term-name">マージ</span><span class="term-read">merge</span></div>
+      <p class="term-body">枝分かれしたブランチの変更を、本体（main）に<b>合流させて1つにする</b>こと。プルリクエストの画面で「Merge」ボタンを押すと実行され、この瞬間にはじめて変更が本体に反映されます。マージが済んだ作業用ブランチは、削除してしまって構いません。</p>
+      <div class="term-eg"><b>たとえるなら</b>：承認ボタンそのもの。下書きの仕訳を承認して、正式な帳簿に反映させるイメージです。</div>
+    </div>
+
+    <div class="term">
+      <div class="term-head"><span class="term-name">コンフリクト</span><span class="term-read">conflict／衝突</span></div>
+      <p class="term-body">同じファイルの同じ箇所が、別々の場所で違う内容に変更されていて、マージのときに「どちらを採用すべきか決められません」とぶつかった状態。故障ではなく、<b>PCが人間に判断を求めている</b>だけです。慌てずClaudeに「コンフリクトを解消して」と頼めば、両方の変更を見比べて整理してくれます。</p>
+    </div>
+
+    <div class="term">
       <div class="term-head"><span class="term-name">ブラウザ版Claude Code</span><span class="term-read">claude.ai/code</span></div>
       <p class="term-body">Claude Codeをインストールなしで、ブラウザ（Chrome等）の中で使える版。<b>GitHubのリポジトリを選んでセッションを始める</b>仕組みなので、フォークした配布用リポジトリを選べば、教材一式が開いた状態から作業できます。第3回以降の配信ではこちらが主流です。</p>
     </div>
@@ -535,7 +574,10 @@
     'MCP':'ai','API':'gen','APIキー／トークン':'gen','認証／認可（許可する）':'gen',
     '連携／同期':'gen','クラウド':'gen','ローカル':'gen','ブラウザ':'gen',
     // 開発ツールのことば
-    'Git':'gen','GitHub':'gen','Python':'gen','GUI':'gen','エラー':'gen','OCR':'gen',
+    'Git':'gen','GitHub':'gen','リポジトリ':'gen','フォーク':'gen','Sync fork':'gen',
+    'クローン':'gen','ブランチ':'gen','コミット':'gen','プッシュ／プル':'gen',
+    'プルリクエスト（PR）':'gen','マージ':'gen','コンフリクト':'gen',
+    'ブラウザ版Claude Code':'cc','Python':'gen','GUI':'gen','エラー':'gen','OCR':'gen',
     // 料金・プランのことば
     'Proプラン（課金）':'cc','使用上限（レート制限）':'ai','お試し期間（トライアル）':'gen','サブスクリプション（サブスク）':'gen'
   };
