@@ -487,13 +487,40 @@ D 記帳の準備: OK(ルール表◯行・未処理◯件) ／ 要対応
         <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ 削除するのは<b>自分のフォーク</b>（自分のアカウント名/haifuyou）です。配布用リポジトリ本体ではありません。手順に迷ったら、削除の前にClaude Codeへ画面を見せながら相談してください。</p>
       </div>
 
+      <div class="box tip">
+        <div class="box-h">💡 あなたが育てたファイルは消えません</div>
+        正しい手順で受け取れば、<b>あなたが編集したファイル（勘定科目ルール.md・rules.csvなど）は消えません</b>。新しく増えたファイルはそのまま足され、あなたが編集したファイルはあなたの版が残ります。同じファイルの同じ場所をお互いに変えていた場合だけ「どちらを残しますか？」と確認が入ります（勝手に上書きされることはありません）。
+      </div>
+
       <div class="box howto">
         <div class="box-h">📋 手順（すでに非公開コピーで受け取り済みの方＝最新化）</div>
         <ol>
-          <li><b>ブラウザ版Claude Code（claude.ai/code）の方</b>：自分の非公開リポジトリ（自分のアカウント名/haifuyou）でセッションを開き、「<b>配布用リポジトリ https://github.com/fromk0326-boop/haifuyou から最新の教材を取り込んで</b>」と頼む（取り込み後の保存＝コミットもそのまま案内してくれます）</li>
-          <li><b>デスクトップ版の方</b>：手元の <code>haifuyou</code> フォルダをClaude Codeで開き、同じく「<b>配布用リポジトリから最新を取り込んで</b>」と頼むだけ。ZIPで取り込んだ方は<a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">配布用リポジトリ</a>の「Code」→「Download ZIP」で取り直して展開（この機会にクローンへの切り替えもおすすめ。第1回🎁のコピペ文で頼めます）</li>
+          <li><b>ブラウザ版Claude Code（claude.ai/code）の方</b>：自分の非公開リポジトリ（自分のアカウント名/haifuyou）でセッションを開き、<b>下のコピペ文</b>を貼る（取り込み後の保存＝コミットもそのまま案内してくれます）</li>
+          <li><b>デスクトップ版の方</b>：手元の <code>haifuyou</code> フォルダをClaude Codeで開き、<b>同じコピペ文</b>を貼るだけ（ZIPで受け取っている方は、先に下の⚠️を読んでください）</li>
           <li><b>最新化できたかの目印</b>：キットに <code>第5回_帳簿レビュー</code> フォルダが増えていればOKです。今日使うプロンプト・観点表・練習用のデモ帳簿は全部この中にあります</li>
         </ol>
+      </div>
+
+      <div class="copy">
+        <div class="copy-label">📋 貼るだけで最新化：教材の更新を安全に取り込んでもらう</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>配布用リポジトリ https://github.com/fromk0326-boop/haifuyou から
+最新の教材を取り込んでください。
+
+お願いしたいこと：
+1. 取り込みの前に、このフォルダにある私の変更をすべて
+   コミットして保存する
+2. 上書きではなくマージで取り込む
+   （私が編集したファイルを勝手に消したり元に戻したりしない）
+3. 同じファイルを私と配布側の両方が変更していた場合は、
+   両方の中身を見せて、どちらを残すか1件ずつ私に確認する
+4. 終わったら「新しく増えたファイル」「更新されたファイル」
+   「私の変更がそのまま残ったファイル」を一覧で教えてください</pre>
+      </div>
+
+      <div class="box safe">
+        <div class="box-h">⚠️ ZIPで受け取っている方へ</div>
+        ZIPには「新しい部分だけ受け取る」仕組みがありません。<b>古いフォルダに上書き展開すると、あなたの編集が全部消えます</b>。ZIPで続ける場合は、①<a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">配布用リポジトリ</a>の「Code」→「Download ZIP」を<b>新しいフォルダに展開</b> → ②自分が育てたファイル（勘定科目ルール.md・rules.csvなど）を古いフォルダからコピーして戻す、の2段階にしてください。この機会にクローンへの切り替えがおすすめです（第1回🎁のコピペ文で頼めます）。
       </div>
 
       <div class="box howto">
@@ -505,6 +532,8 @@ D 記帳の準備: OK(ルール表◯行・未処理◯件) ／ 要対応
         <div class="box-h">🔒 安全メモ</div>
         受け取りに使う複製は<b>非公開（Private）</b>ですが、顧問先の資料・請求書PDF・自分の帳簿データは、非公開であってもリポジトリにアップロード（コミット）しないのが原則です。今日の作業で作るレビュー結果のファイルも、<b>アップロードせず手元に置くだけ</b>にします。自分のリポジトリ名の横に「Public」と表示されている場合は、上の引っ越し手順で非公開コピーに切り替えてください。
       </div>
+
+      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">💡 何が変わったか知りたいときは、取り込みのあとClaudeに「今回の更新で何が変わった？」と聞いてください（キットに更新履歴.mdがある版では、そこに一覧が載っています）。</p>
 
       <div class="check" onclick="toggle(this,event)">
         <input type="checkbox" data-step="1">
