@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>畠山式税理士AIコミュニティ｜第9回 AIが申告書を作る日まで、申告の「まわり」を全部任せる</title>
+<style>
+  :root{
+    --bg:#f5f7fa;
+    --card:#ffffff;
+    --ink:#1f2d3d;
+    --sub:#5b6b7e;
+    --line:#e6ebf1;
+    --brand:#2864f0;
+    --brand-soft:#eaf0ff;
+    --green:#00a86b;
+    --green-soft:#e6f7f0;
+    --amber:#f5a623;
+    --amber-soft:#fff6e6;
+    --red:#e5484d;
+    --red-soft:#fdeced;
+    --radius:16px;
+    --shadow:0 4px 20px rgba(31,45,61,.06);
+    --shadow-lg:0 10px 40px rgba(31,45,61,.10);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic UI","Meiryo",system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.8;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--brand);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* ===== 進捗バー（上部固定） ===== */
+  .progress-bar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:10px 20px;
+    display:flex;align-items:center;gap:14px;
+    flex-wrap:wrap;
+  }
+  .progress-bar .logo{font-weight:800;font-size:15px;letter-spacing:.02em}
+  .progress-bar .logo span{color:var(--brand)}
+  .progress-track{
+    flex:1;min-width:160px;height:10px;border-radius:99px;
+    background:var(--line);overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;width:0%;border-radius:99px;
+    background:linear-gradient(90deg,var(--brand),var(--green));
+    transition:width .5s cubic-bezier(.2,.8,.2,1);
+  }
+  .progress-count{font-weight:800;font-size:14px;white-space:nowrap}
+  .progress-count b{color:var(--brand);font-size:18px}
+
+  /* ===== レイアウト ===== */
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px;
+    display:grid;grid-template-columns:240px 1fr;gap:32px;align-items:start}
+  @media(max-width:880px){.wrap{grid-template-columns:1fr;gap:0}}
+
+  /* ===== サイドバー ===== */
+  .side{position:sticky;top:64px;padding:24px 0}
+  @media(max-width:880px){.side{display:none}}
+  .side h4{font-size:12px;color:var(--sub);text-transform:uppercase;letter-spacing:.08em;margin:0 0 10px}
+  .side nav a{display:block;padding:8px 12px;border-radius:10px;color:var(--ink);font-size:14px;font-weight:600;margin-bottom:2px}
+  .side nav a:hover{background:var(--brand-soft);text-decoration:none}
+  .side .note{margin-top:24px;font-size:12px;color:var(--sub);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+
+  /* ===== ヒーロー ===== */
+  .hero{padding:48px 0 24px}
+  .badge{display:inline-block;background:var(--brand-soft);color:var(--brand);font-weight:800;font-size:13px;padding:6px 14px;border-radius:99px;margin-bottom:16px}
+  .hero h1{font-size:34px;line-height:1.35;margin:0 0 14px;letter-spacing:-.01em}
+  .hero h1 em{font-style:normal;color:var(--brand)}
+  .hero p.lead{font-size:16px;color:var(--sub);margin:0 0 24px}
+  .goal{
+    background:linear-gradient(135deg,#eaf0ff,#e6f7f0);
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 24px;box-shadow:var(--shadow);
+  }
+  .goal h3{margin:0 0 10px;font-size:17px}
+  .goal ul{margin:0;padding-left:22px}
+  .goal li{margin:6px 0}
+  .goal .out{margin-top:14px;font-weight:800;color:var(--green);font-size:15px}
+
+  /* ===== イラスト ===== */
+  .illus{width:100%;height:auto;border-radius:14px;border:1px solid var(--line);margin:14px 0 6px;display:block;background:#fff}
+  .illus.hero-illus{margin:0 0 20px;box-shadow:var(--shadow)}
+  .illus-cap{font-size:12.5px;color:var(--sub);text-align:center;margin:2px 0 10px}
+
+  /* ===== ステップカード ===== */
+  .step{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:28px;margin:24px 0;scroll-margin-top:80px;
+    transition:box-shadow .3s, border-color .3s;
+  }
+  .step.done{border-color:var(--green);box-shadow:0 0 0 2px var(--green-soft),var(--shadow)}
+  .step-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:6px}
+  .step-num{
+    flex:none;width:48px;height:48px;border-radius:14px;
+    background:var(--brand);color:#fff;font-weight:800;font-size:18px;
+    display:flex;align-items:center;justify-content:center;flex-direction:column;line-height:1;
+  }
+  .step.done .step-num{background:var(--green)}
+  .step-num small{font-size:9px;font-weight:600;opacity:.85;margin-top:2px}
+  .step-title{flex:1}
+  .step-title h2{margin:0;font-size:22px}
+  .step-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  .tag{font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--bg);color:var(--sub);border:1px solid var(--line)}
+  .tag.time{background:var(--amber-soft);color:#a86c00;border-color:transparent}
+  .tag.type{background:var(--brand-soft);color:var(--brand);border-color:transparent}
+
+  /* ===== 情報ボックス ===== */
+  .box{border-radius:12px;padding:14px 16px;margin:16px 0;font-size:14.5px}
+  .box .box-h{font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+  .box.tip{background:var(--amber-soft)}
+  .box.safe{background:var(--red-soft)}
+  .box.howto{background:var(--brand-soft)}
+  .box ul,.box ol{margin:6px 0;padding-left:22px}
+  .box li{margin:4px 0}
+
+  /* ===== コピペボックス ===== */
+  .copy{position:relative;margin:16px 0}
+  .copy-label{font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .copy pre{
+    margin:0;background:#0f1b2d;color:#e7eefc;border-radius:12px;
+    padding:16px 16px;overflow:auto;max-height:240px;font-size:13.5px;line-height:1.7;
+    font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;white-space:pre-wrap;
+  }
+  .copy-btn{
+    position:absolute;top:30px;right:10px;
+    background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);
+    border-radius:8px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s;
+  }
+  .copy-btn:hover{background:rgba(255,255,255,.25)}
+  .copy-btn.copied{background:var(--green);border-color:var(--green)}
+
+  /* ===== details ===== */
+  details{border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden;background:var(--card)}
+  details summary{cursor:pointer;padding:12px 16px;font-weight:700;font-size:14.5px;list-style:none;display:flex;align-items:center;gap:8px;background:var(--bg)}
+  details summary::-webkit-details-marker{display:none}
+  details summary::before{content:"▶";font-size:10px;color:var(--sub);transition:transform .2s}
+  details[open] summary::before{transform:rotate(90deg)}
+  details .body{padding:14px 18px;font-size:14.5px}
+  details .body ul,details .body ol{padding-left:22px;margin:8px 0}
+  details .body li{margin:6px 0}
+
+  /* ===== 観点テーブル ===== */
+  table.kanten{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0}
+  table.kanten th,table.kanten td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.7}
+  table.kanten th{color:var(--sub);font-size:12.5px;white-space:nowrap;background:var(--bg)}
+  table.kanten td b{color:var(--brand)}
+
+  /* ===== 完了チェック ===== */
+  .check{
+    display:flex;align-items:center;gap:12px;margin-top:18px;
+    background:var(--green-soft);border:1px dashed var(--green);
+    border-radius:12px;padding:14px 16px;cursor:pointer;user-select:none;
+  }
+  .check input{width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .check label{font-weight:800;color:#0a7d54;cursor:pointer;font-size:15px}
+
+  /* ===== 追いつきチェック（ステップ0） ===== */
+  .step.catchup{border-color:var(--amber)}
+  .step.catchup .step-num{background:var(--amber)}
+  .step.catchup.ok{border-color:var(--green)}
+  .step.catchup.ok .step-num{background:var(--green)}
+  .catchup-banner{display:none;align-items:center;gap:10px;background:var(--green-soft);border:1.5px solid var(--green);border-radius:12px;padding:10px 14px;margin-bottom:14px;font-size:13.5px;font-weight:700;color:#0a7d54}
+  .step.catchup.ok .catchup-banner{display:flex}
+  .check.mini{margin-top:12px;padding:11px 14px}
+  .check.mini label{font-size:14px}
+  .judge{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0}
+  .judge th,.judge td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.7}
+  .judge th{color:var(--sub);font-size:12.5px;white-space:nowrap;background:var(--bg)}
+
+  /* ===== 完了済みカードのグレーアウト ===== */
+  .step.done > *:not(.check):not(.done-banner){opacity:.45;filter:grayscale(.55);transition:opacity .25s,filter .25s}
+  .done-banner{display:none;align-items:center;gap:10px;background:var(--green-soft);border:1.5px solid var(--green);border-radius:12px;padding:10px 14px;margin-bottom:14px;font-size:13.5px;font-weight:700;color:#0a7d54}
+  .step.done .done-banner{display:flex}
+
+  /* ===== 修了 ===== */
+  .finish{
+    background:linear-gradient(135deg,var(--brand),#5b8cff);color:#fff;
+    border-radius:var(--radius);padding:36px 28px;text-align:center;margin:32px 0 64px;
+    box-shadow:var(--shadow-lg);
+  }
+  .finish h2{margin:0 0 10px;font-size:26px}
+  .finish p{margin:0 0 18px;opacity:.95}
+  .finish .cta{display:inline-block;background:#fff;color:var(--brand);font-weight:800;padding:12px 28px;border-radius:99px}
+  .finish.celebrate{animation:pop .6s}
+  @keyframes pop{0%{transform:scale(.96)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
+  .finish.locked{background:linear-gradient(135deg,#8a97ad,#a5b0c2);box-shadow:var(--shadow)}
+  .finish.locked .cta{color:#5b6b7e}
+
+  /* ===== 紙吹雪 ===== */
+  .confetti-piece{position:fixed;top:-16px;width:10px;height:14px;z-index:200;pointer-events:none;animation:confetti-fall linear forwards}
+  @keyframes confetti-fall{to{transform:translateY(105vh) rotate(720deg);opacity:.9}}
+
+  hr.soft{border:none;border-top:1px solid var(--line);margin:22px 0}
+  .hana{font-size:13.5px;color:var(--sub);background:var(--bg);border-radius:12px;padding:10px 14px;margin-top:14px;border-left:3px solid var(--brand)}
+  .hana b{color:var(--brand)}
+
+  /* ===== コース全体ナビ ===== */
+  .course-nav{
+    background:var(--card);border-bottom:1px solid var(--line);
+    padding:12px 20px;
+  }
+  .course-nav-inner{
+    max-width:1080px;margin:0 auto;
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  }
+  .course-nav-label{font-size:12px;font-weight:800;color:var(--sub);margin-right:4px;white-space:nowrap}
+  .course-pill{
+    display:inline-flex;align-items:center;gap:4px;
+    font-size:13px;font-weight:700;padding:6px 12px;border-radius:99px;
+    border:1px solid var(--line);background:var(--bg);color:var(--ink);
+    white-space:nowrap;
+  }
+  .course-pill:hover{background:var(--brand-soft);text-decoration:none}
+  .course-pill.current{background:var(--brand);border-color:var(--brand);color:#fff}
+  .course-pill.current:hover{background:var(--brand)}
+  .course-pill.soon{
+    background:var(--bg);color:#aab4c0;border-color:var(--line);
+    cursor:default;pointer-events:none;
+  }
+  .course-pill.soon::after{content:"準備中";font-size:10px;font-weight:800;margin-left:2px}
+
+  /* ===== 投稿フォーム ===== */
+  .post-field{margin:12px 0}
+  .post-field label{display:block;font-size:13px;font-weight:700;color:var(--sub);margin-bottom:6px}
+  .post-field input[type=text],.post-field textarea{
+    width:100%;border:1px solid var(--line);border-radius:10px;
+    padding:10px 12px;font-size:14.5px;font-family:inherit;color:var(--ink);
+    background:var(--bg);resize:vertical;
+  }
+  .post-field textarea{min-height:120px;line-height:1.7}
+  .post-submit{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--brand);color:#fff;font-weight:800;font-size:15px;
+    border:none;border-radius:99px;padding:12px 28px;cursor:pointer;transition:.2s;
+  }
+  .post-submit:hover{background:#1d4fd1}
+  .post-submit:disabled{background:var(--sub);cursor:wait}
+  .post-status{font-size:13.5px;font-weight:700;margin-top:10px}
+  .post-status.ok{color:var(--green)}
+  .post-status.err{color:var(--red)}
+  .board-link{
+    display:inline-flex;align-items:center;gap:6px;margin-top:14px;
+    font-size:13.5px;font-weight:700;color:var(--brand);
+  }
+</style>
+</head>
+<body>
+
+<!-- 進捗バー -->
+<div class="progress-bar">
+  <div class="logo">畠山式税理士AI<span>コミュニティ</span></div>
+  <div class="progress-track"><div class="progress-fill" id="fill"></div></div>
+  <div class="progress-count"><b id="cnt">0</b>/6 クリアで修了</div>
+</div>
+
+<!-- コース全体ナビ -->
+<div class="course-nav">
+  <div class="course-nav-inner">
+    <a class="course-pill" href="map.html" style="background:var(--green-soft);border-color:transparent;color:var(--green);font-weight:800">🗺 コース全体</a>
+    <a class="course-pill" href="index.html">第1回</a>
+    <a class="course-pill" href="vol03.html">第3回</a>
+    <a class="course-pill" href="vol05.html">第5回</a>
+    <a class="course-pill" href="vol07.html">第7回</a>
+    <a class="course-pill current" href="vol09.html">第9回</a>
+    <a class="course-pill soon" href="update01.html">アプデ①</a>
+    <a class="course-pill soon" href="update02.html">アプデ②</a>
+    <a class="course-pill" href="glossary.html" style="margin-left:auto;background:var(--amber-soft);border-color:transparent;color:#a86c00">📖 用語集</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <!-- サイドバー -->
+  <aside class="side">
+    <h4>このページ</h4>
+    <nav>
+      <a href="#hero">🎯 ゴール</a>
+      <a href="#t0">🧭 追いつき実力テスト（まず最初に）</a>
+      <a href="#t1">① 最新キットを受け取る</a>
+      <a href="#t2">② 申告書PDFを1本にまとめる</a>
+      <a href="#t3">③ 内訳書のドラフトを作らせる</a>
+      <a href="#t4">④ 申告書をセルフレビューさせる</a>
+      <a href="#t5">⑤ e-Tax・eLTAXを棚卸しする</a>
+      <a href="#map-now">🗺 税務AI自動化の現在地マップ</a>
+      <a href="#quiz">🧠 確認テスト（修了条件）</a>
+      <a href="#post">✍️ 恩送りメモを投稿（修了条件）</a>
+      <a href="#faq">❓ よくあるつまずき</a>
+      <a href="#finish">🎉 修了</a>
+    </nav>
+    <h4 style="margin-top:24px">こまったら</h4>
+    <nav>
+      <a href="glossary.html">📖 用語集（横文字はここ）</a>
+    </nav>
+    <div class="note">
+      <b>第9回の前提</b><br>
+      第3回（自動記帳）・第5回（帳簿レビュー）・第7回（月次ダッシュボード）の上に積み上がる回です。<br>
+      最初の15分は<a href="#t0">🧭 追いつき実力テスト</a>。コピペ文1本で現在地が分かります🌸<br>
+      今日はPDFとブラウザが主役なので、<b>会計ソフトにつなげない方でも大半のステップを進められます</b>。
+    </div>
+  </aside>
+
+  <!-- メイン -->
+  <main>
+    <!-- ヒーロー -->
+    <section class="hero" id="hero">
+      <span class="badge">第9回 / 全シリーズ</span>
+      <h1>AIが申告書を作る日まで、<br><em>申告の「まわり」を全部任せる</em></h1>
+      <p class="lead">起票は自動（第3回）、チェックも自動（第5回）、月次は自動で届く（第7回）。第9回のテーマは<b>税務申告のAI自動化</b>です。目指す世界ははっきりしています。<b>AIが申告書を作り、人がチェックして署名する</b>。ただ2026年8月時点では、申告ソフト側の入口（API）がまだ無く、申告書そのものはAIに作らせられません。だから今日は、その日が来たら即つながるように、申告書の<b>前</b>（内訳書などのデータ整理）と<b>後</b>（PDFの整理・提出前レビュー・提出後の管理）を先に固めます。ここが固まっているかどうかで、APIが来た日のスタートダッシュがまるで違います。</p>
+
+      <img class="illus hero-illus" src="img/vol09/hero.webp" alt="申告書を持つ税理士のまわりで、書類整理・チェック・見張りをするロボットたちのイラスト" loading="lazy">
+
+      <div class="goal">
+        <h3>🎯 この課題を終えると…</h3>
+        <ul>
+          <li>バラバラの申告書PDF一式を、<b>正しい順番の1本に自動で結合・リネーム</b>できます</li>
+          <li>期末データから<b>勘定科目内訳明細書のドラフト</b>をAIに作らせられます</li>
+          <li>提出前の申告書を、<b>チェックリストでAIにセルフレビュー</b>させられます（AIは見張り役）</li>
+          <li>e-Tax・eLTAXの<b>メッセージボックスの棚卸し</b>をAIと一緒に回せます</li>
+          <li>最後に<b>確認テスト</b>（AIが先生役・70点以上で合格）を受け、<b>恩送りメモを投稿</b>すると修了です🏅</li>
+        </ul>
+        <div class="out">⏱ 目安：合計 約100〜120分　／　💪 難易度：中級（第7回までを終えた方向け）</div>
+        <p style="margin:12px 0 0;font-size:14px">👉 その前に、<a href="#t0"><b>🧭 追いつき実力テスト（15〜20分）</b></a>で今日の出発点を確かめましょう。つまずいていても大丈夫、戻り道を用意しています。</p>
+      </div>
+
+      <img class="illus" src="img/vol09/flow.webp" alt="今日の流れ：申告書PDFをまとめる、内訳書ドラフト、セルフレビュー、メッセージボックス棚卸し、の4ステップ図" loading="lazy">
+    </section>
+
+    <!-- ===== 追いつきチェック（ステップ0） ===== -->
+    <section class="step catchup" id="t0">
+      <div class="catchup-banner">✅ テスト完了！結果票を貼ったら、このままステップ①へ進んでください🌸</div>
+      <div class="step-head">
+        <div class="step-num">0<small>まず</small></div>
+        <div class="step-title">
+          <h2>追いつき実力テスト：第7回に追いつけているか 🧭</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約15〜20分</span>
+            <span class="tag type">🧭 全員やってください</span>
+          </div>
+        </div>
+      </div>
+
+      <p>第7回は月次ダッシュボード、第8回はその実践サポート回でした。今日はその内容が身についているかに加えて、<b>「自分の顧問先で使ってみたか」まで点検</b>します。学んだだけで止まっていても大丈夫。その場合は<b>「今夜15分でできる、はじめの一歩」がフィードバックで出る</b>ようになっています。やることは2つだけ。<b>下のコピペ文を貼る → 出てきた「結果票」をDiscordの当日スレッドに貼る</b>。これで完了です。</p>
+
+      <div class="copy">
+        <div class="copy-label">📋 コピペ文：追いつき実力テスト（これ1本だけ）</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>今日の講義の前に「追いつき実力テスト」をします。あなたは試験官役です。
+修正・登録は一切しないで、点検とテストだけしてください。
+
+A. ダッシュボードの型（第7回）
+   .claude/skills/ に月次ダッシュボードのスキル
+   （monthly-dashboard など）はありますか？
+   あるかないかだけ判定してください。
+B. 成果物（第7回）
+   「顧問先ダッシュボード」フォルダ（または相当のフォルダ）に、
+   ダッシュボードのHTMLや素材ファイルはありますか？
+   あるかないかだけ判定してください。
+C. 会計ソフト接続（第1回・第3回）
+   freeeまたはMF会計のMCPは、いま接続されていますか？
+   接続できていれば事業所名を確認したうえで、
+   画面には「接続OK」とだけ書いてください。
+D. ミニ実力テスト（第7回・第8回の内容・3問）
+   次の3テーマから、選択式（A/B/C）の問題を1問ずつ、
+   合計3問を順番に出して、私の答えを採点してください。
+   1問目: できあがったダッシュボードの数字を、会計ソフトの画面と
+     「1ヶ所突き合わせる」理由
+   2問目: 複数の顧問先を扱うとき、作業の前に「事業所名の確認」を
+     絶対に飛ばしてはいけない理由
+   3問目: 自動で動かしてよい範囲（読み取り・ファイル生成）と、
+     人が必ずやること（数字の確認・見せる判断）の線引き
+E. 実務への落とし込み（第8回のあとの行動チェック）
+   次の2つを私に質問して、正直に答えてもらってください。
+   1問目: 配布データではなく「自分の顧問先（または自事務所）」の
+     月次ダッシュボードを、1回でも作ってみましたか？
+   2問目: ダッシュボードの中身（指標・グラフ・色など）を、
+     自分仕様に1ヶ所でも直しましたか？
+   あわせて、いま開いているフォルダに実践の痕跡
+   （顧問先フォルダ・自分用に直したスキルなど）があるかも見て、
+   答えと合わせて判定してください。
+   判定: ◎ 自分の顧問先で作り、自分仕様に育てている
+        ○ どちらか片方はやった
+        △ まだ配布データのまま
+
+最後に、次の形式の「結果票」だけをコードブロックで出してください。
+事業所名・取引先名・金額・APIキーの値は絶対に入れないでください。
+
+【追いつき実力テスト 結果票】
+A ダッシュボードの型: あり ／ なし
+B 成果物: あり ／ なし
+C 会計ソフト接続: OK(freee／MF) ／ 要対応
+D ミニテスト: ◯/3問 正解
+E 実務への落とし込み: ◎ ／ ○ ／ △
+総合: 🟢 追いつきOK ／ 🟡 あと少し ／ 🔴 今日はキャッチアップ
+
+総合の判定基準：
+Dが2問以上正解=🟢。Dが1問正解=🟡。それ以外=🔴。
+（A・B・C・Eは総合判定に入れません。第9回はPDFとブラウザが主役なので、
+接続が要対応でも今日の内容はほぼ進められます）
+
+Eが○または△だった場合は、結果票の下に【はじめの一歩メモ】を
+コードブロックで出してください。説教や一般論ではなく、
+私の環境（使っている会計ソフト・フォルダの中身）を踏まえた
+「今夜15分でできる宿題」を2つまで。
+どのファイルを開いて・何を貼って・何ができたら完了かまで、
+1つ3行以内で具体的に書いてください。
+例:「自事務所の先月分で月次ダッシュボードを1枚作ってみる」
+   「ダッシュボードのグラフ色を事務所カラーに変えてみる」
+このメモにも事業所名・取引先名・金額は入れないでください。
+
+要対応があれば「どれを・どの順で・何分くらいで直せるか」だけ教えてください。
+実際に直すのは、私がOKと言ってからにしてください。</pre>
+      </div>
+
+      <div class="box howto">
+        <div class="box-h">📣 結果票が出たら：Discordの当日スレッドに貼ってください</div>
+        <p style="margin:6px 0 10px"><b>👉 当日スレッドのリンクは配信時にご案内します（Discordの #課題 チャンネルをご覧ください）</b></p>
+        <ul>
+          <li>貼るのは<b>結果票のコードブロックだけ</b>（ミニテストのやり取りや点検の途中ログは貼らない）。<b>【はじめの一歩メモ】が出た方は、それも一緒に貼ってOK</b>です</li>
+          <li>結果票もメモも事業所名・金額が入らない設計なので、そのまま貼って大丈夫です</li>
+          <li>🟡🔴や「E △」でもそのまま貼ってOK。<b>どこで止まっているかの共有が、次の教材を良くします</b>🌸</li>
+        </ul>
+      </div>
+
+      <div class="check mini" onclick="toggleCatchup(this,event)">
+        <input type="checkbox" data-catchup="1">
+        <label>✅ テストを実行して、結果票が出せた</label>
+      </div>
+
+      <details>
+        <summary>🛟 第7回・第8回に出られなかった方へ（戻り道）</summary>
+        <div class="body">
+          <ul>
+            <li><b>第7回に出ていない</b> → <a href="vol07.html">第7回課題ページ</a>がそのまま自習用に使えます。ただし<b>今日の内容は第7回が未了でも進められる</b>ので、まず第9回をやってから戻ってもOKです</li>
+            <li><b>ミニテスト（D）で落とした</b> → 1問目・2問目は<a href="vol07.html#t3">第7回ステップ③</a>と<a href="vol07.html#t4">ステップ④の安全メモ</a>、3問目は<a href="vol07.html#t5">第7回ステップ⑤</a>が該当箇所です。今日の内容には支障ないので、そのまま進んでOKです</li>
+            <li><b>MCPがつながっていない（C）</b> → Claude Codeに「<b>MCPの接続状態を確認して、再認証の手順を案内して</b>」と伝えるのがいちばん早いです。今日はステップ③以外は接続なしで進められます</li>
+            <li><b>まだ自分の業務で試せていない（E）</b> → 落ち込まなくて大丈夫、ここからが本番です。テストが出してくれた<b>【はじめの一歩メモ】の宿題を今夜1つだけ</b>やってみてください</li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="check mini" onclick="toggleCatchup(this,event)">
+        <input type="checkbox" data-catchup="2">
+        <label>✅ 結果票をDiscordの当日スレッドに貼った</label>
+      </div>
+
+      <!-- 判定 -->
+      <h3 style="margin:30px 0 6px;font-size:18px">🧭 結果票から、今日の進み方を決める</h3>
+      <table class="judge">
+        <tr><th>結果票</th><th>今日の進み方</th></tr>
+        <tr><td><b>🟢 追いつきOK</b></td><td>そのままステップ①へ。今日の主役はステップ④のセルフレビューと、ステップ⑤の棚卸しです</td></tr>
+        <tr><td><b>🟡 あと少し</b></td><td>そのまま進めてOK。第9回はPDFが主役なので、第7回の完成度は問いません</td></tr>
+        <tr><td><b>🔴 今日はキャッチアップ</b></td><td>今日のステップ②（PDF結合）だけは体験してから帰るのがおすすめです。ブラウザとPDFだけでできて、効果が一番分かりやすいステップです</td></tr>
+        <tr><td><b>C（接続）が要対応</b></td><td>ステップ③だけ、試算表・仕訳帳の<b>CSVエクスポート</b>で代替してください（やり方は各ステップに補足あり）。②④⑤は接続不要です</td></tr>
+        <tr><td><b>会計ソフトが freee／MF 以外</b></td><td>今日は<b>ほぼ全部できます</b>。②④⑤は会計ソフトを使いません。③もCSVが出せれば同じです</td></tr>
+      </table>
+
+      <div class="box safe">
+        <div class="box-h">🔒 テストのときの安全メモ</div>
+        <ul>
+          <li>テストのコピペ文には「<b>修正・登録は一切しない</b>」の一文が入っています。消さないでください</li>
+          <li>APIキー・トークンの<b>値そのもの</b>は画面に出させないでください（「入っている／空です」だけで十分です）</li>
+          <li>Discordに貼るのは<b>結果票と【はじめの一歩メモ】だけ</b>。ミニテストのやり取りには事業所名が混ざることがあります</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== ステップ1 ===== -->
+    <section class="step" id="t1">
+      <div class="done-banner">✅ 完了済み（チェックを外すと戻せます）</div>
+      <div class="step-head">
+        <div class="step-num">1<small>/ 5</small></div>
+        <div class="step-title">
+          <h2>配布キットを最新版にする 📦</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約5分</span>
+            <span class="tag type">🤝 準備ステップ</span>
+          </div>
+        </div>
+      </div>
+
+      <p>いつもの習慣です。<a href="https://github.com/fromk0326-boop/haifuyou" target="_blank" rel="noopener">配布用リポジトリ（haifuyou）</a>から最新の教材を取り込みます。<b>第9回はこのページのコピペ文だけで完結する</b>ので、キットが最新でなくても先へ進めますが、更新の取り込みは毎回の頭で済ませておくのがおすすめです。</p>
+
+      <div class="copy">
+        <div class="copy-label">📋 貼るだけで最新化：教材の更新を安全に取り込んでもらう</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>配布用リポジトリ https://github.com/fromk0326-boop/haifuyou から
+最新の教材を取り込んでください。
+
+お願いしたいこと：
+1. 取り込みの前に、このフォルダにある私の変更をすべて
+   コミットして保存する
+2. 上書きではなくマージで取り込む
+   （私が編集したファイルを勝手に消したり元に戻したりしない）
+3. 同じファイルを私と配布側の両方が変更していた場合は、
+   両方の中身を見せて、どちらを残すか1件ずつ私に確認する
+4. 終わったら「新しく増えたファイル」「更新されたファイル」
+   「私の変更がそのまま残ったファイル」を一覧で教えてください</pre>
+      </div>
+
+      <div class="box howto">
+        <div class="box-h">📋 はじめての方（まだ受け取っていない方）</div>
+        GitHubアカウント作成 → 非公開コピー作成 → 開き方まで、<a href="index.html#bonus">第1回課題ページの🎁セクション</a>の手順で受け取ってください（約10分）。ZIPで受け取っている方は、上書き展開で自分の編集が消えないよう<a href="vol05.html#t1">第5回ステップ①の⚠️</a>を先に読んでください。
+      </div>
+
+      <div class="check" onclick="toggle(this,event)">
+        <input type="checkbox" data-step="1">
+        <label>✅ 手元の haifuyou フォルダが最新版になっている</label>
+      </div>
+    </section>
+
+    <!-- ===== ステップ2 ===== -->
+    <section class="step" id="t2">
+      <div class="done-banner">✅ 完了済み（チェックを外すと戻せます）</div>
+      <div class="step-head">
+        <div class="step-num">2<small>/ 5</small></div>
+        <div class="step-title">
+          <h2>申告書PDF一式を、正しい順番の1本にまとめる 📚</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約20分</span>
+            <span class="tag type">🎁 掴み・全員できます</span>
+          </div>
+        </div>
+      </div>
+
+      <img class="illus" src="img/vol09/step_bundle.webp" alt="バラバラの申告書PDFが仕分けされて1冊にまとまっていくイラスト" loading="lazy">
+
+      <p>最初のステップは、申告が終わったあとの「あの地味な作業」です。決算書・法人税の別表・地方税・消費税・受信通知……申告書まわりのPDFはバラバラに出力されて、ファイル名も「印刷.pdf」「output(3).pdf」だったりします。これを<b>AIに中身で分類させて、正しい順番の1本に結合・リネーム</b>させます。会計ソフトも接続も不要。<b>手元の申告済みPDFを1社分</b>用意するだけです。</p>
+
+      <div class="copy">
+        <div class="copy-label">📋 デスクトップアプリに貼るだけ：申告書PDFの分類・結合・リネーム</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>申告書PDFの整理をお願いします。元のファイルの修正・削除はしないでください。
+
+対象フォルダ: （ここに申告書PDFが入ったフォルダのパスを貼る）
+1社・1事業年度分の申告関係PDFが入っています。
+
+1. 各PDFの中身を開いて確認して、次の5種類に分類してください。
+   A 決算書（貸借対照表・損益計算書・株主資本等変動計算書・個別注記表）
+   B 法人税・地方法人税の申告書（別表）
+   C 地方税の申告書（都道府県民税・事業税／市町村民税）
+   D 消費税の申告書
+   E 電子申告の受信通知（メール詳細）
+   どれにも当てはまらないPDFは「その他」として、理由付きで一覧に
+   してください。ファイル名ではなく中身で判定してください。
+2. 分類結果を表（ファイル名／分類／判定の根拠）で見せてください。
+   私が「OK」と言うまで、結合はしないでください。
+3. OKと言ったら、A→B→C→D→E の順で1本のPDFに結合して、
+   「申告済み_申告書一式_（事業年度）_（法人名）.pdf」という名前で
+   同じフォルダに保存してください。事業年度と法人名はPDFの中身から
+   読み取って、読み取れなければ私に聞いてください。
+4. 元のPDFは1つも消さず、そのまま残してください。</pre>
+      </div>
+
+      <div class="box tip">
+        <div class="box-h">💡 素材のPDFはどれを使う？</div>
+        <ul>
+          <li><b>直近に申告した1社分</b>がベストです。過去の年度でもOK</li>
+          <li>申告書PDFが手元にない方は、<b>自事務所（自分）の申告書</b>や、決算書＋受信通知だけの2種類でも分類→結合の流れは体験できます</li>
+          <li>並び順は畠山事務所の実運用と同じ「<b>決算書→法人税→地方税→消費税→受信通知</b>」です。事務所の並び順ルールがある方は、プロンプトの順番を書き換えてください</li>
+        </ul>
+      </div>
+
+      <div class="box safe">
+        <div class="box-h">🔒 安全メモ</div>
+        申告書PDFは顧問先の機密そのものです。<b>作業はローカルのフォルダだけで完結</b>させ、GitHubのリポジトリにアップロードしない（非公開でも）・Discordに貼らない、を徹底してください。
+      </div>
+
+      <details>
+        <summary>🛠 迷ったとき・トラブル</summary>
+        <div class="body">
+          <ul>
+            <li><b>パスワード付きPDFが混ざっている</b> → パスワードの解除は自分の手でやってから渡してください（パスワードをAIに教えるのはNGです）</li>
+            <li><b>スキャンPDFで中身が読み取れない</b> → 「読み取れなかったファイルは、1ページ目の見た目の特徴を教えて」と頼むと、表紙の様式から一緒に分類できます</li>
+            <li><b>2社分・2年度分が混ざっていた</b> → 「法人名と事業年度ごとにグループ分けして、それぞれ1本ずつにして」でOKです</li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="check" onclick="toggle(this,event)">
+        <input type="checkbox" data-step="2">
+        <label>✅ 申告書一式が「正しい順番の1本のPDF」になった</label>
+      </div>
+    </section>
+
+    <!-- ===== ステップ3 ===== -->
+    <section class="step" id="t3">
+      <div class="done-banner">✅ 完了済み（チェックを外すと戻せます）</div>
+      <div class="step-head">
+        <div class="step-num">3<small>/ 5</small></div>
+        <div class="step-title">
+          <h2>勘定科目内訳明細書のドラフトを作らせる 🧾</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約25分</span>
+            <span class="tag type">🔌 申告の「前」を任せる</span>
+          </div>
+        </div>
+      </div>
+
+      <img class="illus" src="img/vol09/step_uchiwake.webp" alt="試算表から内訳明細書のドラフトに数字が流し込まれるイラスト" loading="lazy">
+
+      <p>次は申告の「前」の工程です。決算で地味に時間を食う<b>勘定科目内訳明細書</b>。あの転記作業の材料集めを、期末データからAIにやらせます。ポイントは<b>「内訳の合計」と「B/Sの残高」を必ず並べて、差額ゼロを確認する</b>こと。合計が合わない内訳書は、内訳書ではありません。</p>
+
+      <div class="copy">
+        <div class="copy-label">📋 デスクトップアプリに貼るだけ：内訳書ドラフトの生成</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>freee MCPを使います。最初に、いま接続されている事業所名を確認して見せてください。
+私が「その事業所でOK」と言ってから、次に進んでください。
+
+OKと言ったら、直前の決算期（私が別の期を指定したらその期）の期末データから、
+勘定科目内訳明細書のドラフト作りを手伝ってください。
+
+1. 期末時点の貸借対照表の試算表を取得する
+2. 次の科目について、内訳の材料を残高・仕訳から集める
+   - 預貯金（口座別の期末残高）
+   - 売掛金・未収入金（相手先別。データから分かる範囲で）
+   - 買掛金・未払金・未払費用（相手先別。同上）
+   - 借入金（借入先別）
+   - 役員報酬・役員借入金（役員分）
+3. 「内訳書ドラフト_（事業年度）.md」に、内訳明細書の様式に近い表で
+   整理して保存する。各表の下に「内訳合計」と「試算表のB/S残高」を
+   並べて、差額があれば差額の金額も表示してください。
+   全項目で差額ゼロが、このステップのゴールです
+4. 相手先名がデータから分からないものは「（要確認）」と書いてください。
+   それらしい名前や金額で埋めるのは禁止です
+
+大事なルール：
+- 数字の取得と整理だけしてください。修正・登録は一切しないでください
+- これはあくまでドラフトです。最終的な内訳書は私が申告ソフトで仕上げます</pre>
+      </div>
+
+      <div class="box tip">
+        <div class="box-h">💡 MF会計の方・つなげない方は</div>
+        <ul>
+          <li><b>MF会計の方</b>：1行目を「MF会計（マネーフォワード クラウド会計）のMCPを使います」に変えるだけです</li>
+          <li><b>会計ソフトにつなげない方</b>：期末の<b>残高試算表と総勘定元帳（または仕訳帳）のCSV</b>をエクスポートして、「このCSVを読み込んで、同じように内訳書ドラフトを作って」に置き換えれば同じ流れです（どの会計ソフトでもOK）</li>
+        </ul>
+      </div>
+
+      <div class="box howto">
+        <div class="box-h">✅ 差額が出たら：帳尻合わせは絶対にさせない</div>
+        差額が出たときに「合うように調整して」と頼むのはNGです。正しい聞き方は「<b>どの明細が内訳に入っていない？　差額の原因を1円まで特定して</b>」。原因はたいてい、補助科目のないその他残高・マイナス残高・期ズレのどれかです。<b>原因が分かってから、直すのは会計データ側（あなたの仕事）</b>。この習慣が決算の精度をそのまま底上げします。
+      </div>
+
+      <div class="box safe">
+        <div class="box-h">🔒 安全メモ</div>
+        内訳書ドラフトには相手先名と金額がそのまま入ります。ステップ②と同じく、<b>ローカルに置くだけ</b>。リポジトリ・Discord・掲示板には出さないでください。
+      </div>
+
+      <div class="check" onclick="toggle(this,event)">
+        <input type="checkbox" data-step="3">
+        <label>✅ 内訳書ドラフトができて、B/S残高との差額ゼロを確認できた</label>
+      </div>
+    </section>
+
+    <!-- ===== ステップ4 ===== -->
+    <section class="step" id="t4">
+      <div class="done-banner">✅ 完了済み（チェックを外すと戻せます）</div>
+      <div class="step-head">
+        <div class="step-num">4<small>/ 5</small></div>
+        <div class="step-title">
+          <h2>提出前の申告書を、AIにセルフレビューさせる 🔍</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約25分</span>
+            <span class="tag type">🚀 本番・今日の主役</span>
+          </div>
+        </div>
+      </div>
+
+      <img class="illus" src="img/vol09/step_review.webp" alt="申告書をチェックリストで照合して付箋を貼るロボットのイラスト" loading="lazy">
+
+      <p>ここが第9回の本丸です。第5回で「帳簿のレビュー」をAIに任せましたが、今日は<b>完成した申告書そのもの</b>を見張らせます。大事なのは役割分担。<b>AIは作り直しも修正もしない「見張り役」</b>で、チェックリストどおりに突き合わせて、事実だけを報告させます。不一致が正しいこともあるので、<b>判定するのは税理士のあなた</b>です。素材はステップ②で作った結合PDFがそのまま使えます。そしてこのチェックリストは、将来AIが申告書を作るようになったとき、そのまま<b>「AIの成果物を人がチェックする台本」</b>になります。今日作る型は、その日への先行投資です。</p>
+
+      <div class="copy">
+        <div class="copy-label">📋 デスクトップアプリに貼るだけ：申告書セルフレビュー</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>完成した法人税の申告書一式を、提出前のセルフレビューとしてチェックしてください。
+あなたの役割は「見張り役」です。申告書を直したり作り替えたりはしません。
+
+材料：
+- 申告書一式のPDF: （ステップ②で作った結合PDFのパスを貼る）
+- 期末の残高試算表: （ステップ③で取得済みのデータ、またはCSVのパス）
+
+次のチェックリストを上から順に確認して、1項目ずつ
+「一致 ／ 不一致 ／ PDFから読み取れず」で判定してください。
+
+1. 決算書の当期純利益 と 別表四の一番上の「当期利益」は一致しているか
+2. 別表四の留保欄の合計 と 別表五(一)の当期の増減は整合しているか
+3. 別表五(二)の納税充当金の繰入額 と 決算書の未払法人税等の計上は
+   整合しているか
+4. 住民税の均等割は12ヶ月分か
+   （設立初年度・事業年度変更の場合は、月数の按分が正しいか）
+5. 中間納付（法人税・地方税・消費税）は、各申告書に反映されているか
+6. 消費税申告書の課税売上高 と 決算書の売上高は大きく食い違っていないか
+   （食い違う場合は、考えられる理由の候補を挙げるだけにする。
+   非課税売上・輸出・税込税抜の違いなど。正誤の判定はしない）
+7. 受信通知の税額 と 各申告書の税額は一致しているか
+
+最後に、次の形式の「セルフレビュー結果票」だけをコードブロックで
+出してください。金額・法人名は絶対に入れないでください。
+
+【申告書セルフレビュー結果票】
+1 当期純利益⇔別表四: 一致 ／ 不一致 ／ 読み取れず
+2 別表四⇔別表五(一): 一致 ／ 不一致 ／ 読み取れず
+3 納税充当金⇔未払法人税等: 一致 ／ 不一致 ／ 読み取れず
+4 均等割の月数: OK ／ 要確認 ／ 読み取れず
+5 中間納付の反映: OK ／ 要確認 ／ 対象なし
+6 消費税⇔決算書の売上: OK ／ 要確認 ／ 対象なし
+7 受信通知⇔申告書の税額: 一致 ／ 不一致 ／ 読み取れず
+不一致・要確認: ◯件
+
+不一致・要確認になった項目は、結果票の下に
+「どの書類のどこを見て確認すべきか」だけを添えてください。
+直し方や正しい数字の断定はしないでください。
+
+大事なルール：
+- 「不一致＝間違い」とは限りません。判定と修正は私（税理士）の仕事です。
+  あなたは事実の指摘と、確認ポイントの提示までにしてください
+- 読み取れない項目を、推測で「一致」にするのは禁止です。
+  正直に「読み取れず」と書いてください</pre>
+      </div>
+
+      <div class="box tip">
+        <div class="box-h">💡 第5回のレビューが、ここで効いてきます</div>
+        チェック6（消費税と売上の整合）で食い違いが出にくい帳簿は、第5回でやった<b>消費税区分レビュー</b>を月次で回してきた帳簿です。帳簿の側を月次できれいにしておく（第5回）→ 申告書の側は最後に検算するだけ（今日）、という2段構えがいちばんラクな型です。
+      </div>
+
+      <div class="box howto">
+        <div class="box-h">✅ できたら必ず：「読み取れず」を放置しない</div>
+        結果票に「読み取れず」が並んだ場合、多くはスキャン画質か、そもそも<b>その書類が結合PDFに入っていない</b>のが原因です。「どのページを見て読み取れなかったのか教えて」と聞くと切り分けられます。<b>全項目が「一致／OK」になった状態を、提出前の合格ラインにする</b>のがこの型の使い方です。
+      </div>
+
+      <div class="box safe">
+        <div class="box-h">🔒 安全メモ</div>
+        <ul>
+          <li>Discordに貼ってよいのは<b>金額の入らない結果票だけ</b>です（そのための様式にしてあります）</li>
+          <li>このチェックリストは「よくある転記・反映ミス」を拾う網です。<b>合格＝申告内容が正しい、ではありません</b>。税務判断のレビューの代わりにはならない点だけ、忘れないでください</li>
+        </ul>
+      </div>
+
+      <details>
+        <summary>🛠 迷ったとき・トラブル</summary>
+        <div class="body">
+          <ul>
+            <li><b>チェック項目を足したい</b> → 事務所のチェックリストがある方は、そのまま項目を追記してください。「事業税の損金算入時期」「繰越欠損金の残高」など、自分がよく確認する観点を足すほど強くなります</li>
+            <li><b>個人の確定申告でも使える？</b> → 使えます。「法人税の申告書」を「所得税の確定申告書」に変えて、チェック項目を「決算書の所得⇔申告書の事業所得」「予定納税の反映」などに置き換えてください</li>
+            <li><b>毎回このプロンプトを貼るのが面倒</b> → 第5回でやったのと同じ要領で「申告書セルフレビュー」スキルにできます。「このチェックの流れをスキルにして。説明は『申告書の提出前チェック。修正・税務判断はしない』で」と頼めばOKです</li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="check" onclick="toggle(this,event)">
+        <input type="checkbox" data-step="4">
+        <label>✅ セルフレビュー結果票が出て、不一致・要確認の項目を自分の目で確認した</label>
+      </div>
+    </section>
+
+    <!-- ===== ステップ5 ===== -->
+    <section class="step" id="t5" style="border-color:var(--amber)">
+      <div class="done-banner">✅ 完了済み（チェックを外すと戻せます）</div>
+      <div class="step-head">
+        <div class="step-num" style="background:var(--amber)">5<small>/ 5</small></div>
+        <div class="step-title">
+          <h2>e-Tax・eLTAXのメッセージボックスを棚卸しする 📮</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約25分</span>
+            <span class="tag type">📮 申告の「後」を任せる</span>
+          </div>
+        </div>
+      </div>
+
+      <img class="illus" src="img/vol09/step_junkai.webp" alt="e-TaxとeLTAXのポストをロボットが見回りして手紙を仕分けるイラスト。鍵は人間が持っている" loading="lazy">
+
+      <p>最後は申告の「後」、提出後の管理です。e-TaxとeLTAXのメッセージボックス、正直なところ<b>開くのが億劫で溜まっていませんか</b>。ここをAIとの分業で片づけます。分担はシンプル。<b>ログインは人間（暗証番号はAIに渡さない）、開いたあとの読み取り・整理・仕分けはAI</b>。今日は「スクリーンショットを貼るだけ」の一番かんたんな型でやります。</p>
+
+      <div class="copy">
+        <div class="copy-label">📋 デスクトップアプリに貼るだけ：メッセージボックスの棚卸し</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>e-Taxのメッセージボックスの棚卸しを手伝ってください。
+
+前提の確認：
+- ログインは私が自分でやります。利用者識別番号・暗証番号は
+  あなたには教えませんし、入力もお願いしません
+- あなたにお願いするのは、画面の読み取りと整理だけです
+
+これから、メッセージボックスの一覧画面のスクリーンショットを
+順番に貼っていきます（複数ページあることもあります）。
+
+1. 貼った画像からメッセージを1件ずつ読み取って、
+   「日付／手続き名・表題／種別（受信通知・お知らせ・その他）／
+   既読・未読」の表に整理してください
+2. 読み取りにくい行は、推測で埋めずに「（判読できず）」として、
+   その行だけ拡大スクショを私に頼んでください
+3. 全ページ貼り終わったら「メッセージボックス棚卸し_YYYYMM.md」に
+   保存して、先頭に次のまとめを付けてください
+   - 未読の件数と内訳
+   - 対応が必要そうなもの（例: 納付関係、税務署からのお知らせ、
+     還付関係）のピックアップ
+4. 「対応が必要そう」はあくまで仮の仕分けです。最終判断は私がします</pre>
+      </div>
+
+      <div class="box tip">
+        <div class="box-h">💡 eLTAXも、まったく同じ型で回せます</div>
+        <ul>
+          <li>eLTAX（PCdesk WEB版）のメッセージ（申告受付通知など）も、<b>同じプロンプトの「e-Tax」を「eLTAX」に変えるだけ</b>です。国税と地方税、両方のポストを同じ表に載せると抜けがなくなります</li>
+          <li>顧問先が複数ある方は、<b>1社ずつログインし直して</b>、ファイル名を「メッセージボックス棚卸し_会社名_YYYYMM.md」に分けてください。ここでも取り違えが最大の敵です</li>
+          <li>ブラウザ連携（Chrome拡張など）を使っている方は、スクショの代わりに「いま開いているメッセージボックスの一覧を読み取って」でもOKです。その場合も<b>ログインと画面遷移は自分の手</b>で行ってください</li>
+        </ul>
+      </div>
+
+      <details>
+        <summary>🚀 発展（紹介）：畠山事務所の「毎週金曜、勝手に届く」運用</summary>
+        <div class="body">
+          <p style="margin:0 0 10px">今日やった棚卸しの完全自動版として、畠山事務所では<b>毎週金曜の朝、顧問先全社のe-Taxメッセージボックスを自動で巡回して、新着だけをまとめたレポートがメールで届く</b>仕組みが動いています。講義で実演したのはこれです。</p>
+          <ul>
+            <li>ログイン情報は<b>パスワード管理ツールに保管して、AIのチャットやファイルには一切書かない</b>設計です。ここを崩すと全部が台無しになります</li>
+            <li>自動巡回がやるのは「読み取ってレポートする」まで。<b>メッセージを開いて対応するのは人</b>です</li>
+            <li>いきなりここを目指す必要はありません。まずは<b>月1回、今日の型で棚卸しする習慣</b>ができれば、溜まったメッセージボックスとはもうお別れです</li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="box safe">
+        <div class="box-h">🔒 いちばん大事な安全メモ：暗証番号とスクショの扱い</div>
+        <ul>
+          <li><b>利用者識別番号・暗証番号をAIに教えない・入力させない・ファイルやメモに書かせない</b>。今日の型はそもそも渡さなくても回るように作ってあります</li>
+          <li>メッセージボックスの画面には<b>税額や識別番号が写り込みます</b>。スクショを貼るのは自分のClaudeだけ。Discord・掲示板に貼ってよいのは「未読◯件を棚卸しした」という<b>体験談だけ</b>です</li>
+        </ul>
+      </div>
+
+      <div class="check" onclick="toggle(this,event)">
+        <input type="checkbox" data-step="5">
+        <label>✅ e-Tax（できればeLTAXも）の棚卸しレポートができた</label>
+      </div>
+    </section>
+
+    <!-- ===== 現在地マップ ===== -->
+    <section class="step" id="map-now" style="border-color:var(--brand)">
+      <div class="step-head">
+        <div class="step-num">🗺<small>読む</small></div>
+        <div class="step-title">
+          <h2>税務AI自動化の現在地マップ（2026年8月時点）</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約5分</span>
+            <span class="tag type">📖 読むだけでOK</span>
+          </div>
+        </div>
+      </div>
+
+      <p>最後に、今日の内容を地図に置いておきます。ゴールは<b>「AIが申告書を作り、人がチェックして署名する」</b>体制。そこに向けた<b>2026年8月時点の現在地</b>はこうです。</p>
+
+      <table class="kanten">
+        <tr><th>ゾーン</th><th>具体例</th><th>状態</th></tr>
+        <tr><td><b>✅ 今すぐ任せられる<br>（今日やった範囲）</b></td><td>申告書PDFの分類・結合・リネーム／内訳書ドラフト／申告書の突き合わせレビュー／e-Tax・eLTAXの棚卸し／帳簿側の消費税区分レビュー（第5回）／源泉所得税の納付書の集計（下の❓FAQ参照）</td><td>コピペ文だけで再現可能。今日の内容です</td></tr>
+        <tr><td><b>🔜 もうすぐ解放される<br>（本丸・API待ち）</b></td><td><b>申告書の作成そのもの</b>。freeeの申告機能のAPI公開が予定されていて、会計データ→申告書の作成→電子申告が<b>APIでつながる</b>と、いよいよ「AIが作って、人がチェックする」体制に入れます</td><td><b>次回・第10回で、つながった状態の自動化を実演する予定です</b>。今日固めた前後の型（内訳書・セルフレビュー・提出管理）が、そのまま受け皿になります</td></tr>
+        <tr><td><b>🙋 AIが作る時代でも、<br>人がやること</b></td><td>税務判断（役員給与・交際費・グレーゾーンの判定）／AIが作った申告書の最終チェックと署名／送信ボタンを押すこと／暗証番号の管理</td><td>作り手がAIに代わっても、チェックと署名の責任は税理士のもの。むしろ<b>「AIの成果物を速く正確にチェックする力」</b>が、これからの腕の見せどころです</td></tr>
+      </table>
+
+      <div class="hana">🌸 <b>今日の合言葉：</b>AIが申告書を作る日まで、申告の「まわり」を全部任せる。前（内訳書）・後（結合・レビュー・ポストの見張り）が消えるだけでも申告シーズンの景色は変わるし、ここが固まっている事務所ほど、APIが来た日に一気につなげられます。</div>
+    </section>
+
+    <!-- ===== 確認テスト ===== -->
+    <section class="step" id="quiz" style="border-color:var(--brand)">
+      <div class="step-head">
+        <div class="step-num">🧠<small>必須</small></div>
+        <div class="step-title">
+          <h2>確認テストを受ける（合格すると恩送りメモが出ます）</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約10分</span>
+            <span class="tag type">🏅 修了条件 その1</span>
+          </div>
+        </div>
+      </div>
+
+      <p>ステップ①〜⑤が終わったら、<b>Claude Code に先生役をお願いして</b>、今日の理解チェックを受けてください。<b>70点以上で合格</b>（何回でも再挑戦OK）。合格すると、Claudeが今日の体験を<b>1問ずつインタビュー</b>してくれて、<b>その答えがそのまま「恩送りメモ」になります</b>。</p>
+
+      <div class="copy">
+        <div class="copy-label">📋 デスクトップアプリに貼るだけ：確認テスト＆恩送りメモ生成</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>第9回の課題（申告書PDFの分類・結合・リネーム／勘定科目内訳明細書の
+ドラフト生成と差額ゼロ確認／申告書のセルフレビュー／e-Tax・eLTAXの
+メッセージボックス棚卸し）の理解チェックをお願いします。
+合格するまで、恩送りメモは出さないでください。
+
+【テストの進め方】
+1. この課題の内容から、選択式（A/B/C）のクイズを2問 → 自由記述
+   （自分の言葉で説明する問題）を1問、1問ずつ順番に出して。
+   「AIに任せてよい範囲（分類・整理・突き合わせ・読み取り）と、
+   人が必ずやること（税務判断・最終確認・送信・暗証番号の管理）の
+   線引き」に関する問題を必ず1問入れて。
+2. 全部答え終わったら100点満点で採点して、点数と理由を短く伝えて。
+3. 70点以上で合格 → インタビューへ。70点未満なら、間違えた所をやさしく
+   解説してから、別の問題でもう一度出して（何回でもOK・責めないで）。
+4. 選択肢に「お任せ」は付けないで（自分で考えて答えるテストのため）。
+
+【合格したら：インタビュー】
+恩送りメモの中身は、あなた（AI）が想像で書かないでください。
+私の体験を聞き出して、私が話した言葉だけで作ります。
+次の5問を、1問ずつ・自由入力で聞いてください
+（選択式にしない・まとめて聞かない）。
+
+Q1. 今日いちばん時間がかかった／詰まったのはどこ？
+    そのとき画面には何と出ていた？
+    （エラー文・ボタン名・画面の名前は、思い出せる範囲でそのまま）
+Q2. それはどうやって抜けた？（自分でやったこと、Claudeに何と頼んだか）
+Q3. セルフレビューや棚卸しをやってみて「へえ」と思ったことは？
+    （不一致の発見でも、未読の多さでも、AIの読み取り精度でもOK。
+    顧問先名・具体的な金額は言わずに、「◯◯が思ったより多かった」の
+    ように抽象化して答えます）
+Q4. あなたの事務所のセルフレビューに足した（足したい）チェック項目は何？
+    なぜそれを足そうと思った？
+Q5. この課題ページで分かりづらかった所・直してほしい所はありましたか？
+    （1行でもOK・思いつかなければ『特になし』でOK）
+
+インタビューのルール：
+- 答えが短くても責めないで。ただし一言だけの答えには、1回だけ
+  「たとえばどんな場面？」と具体化を促して。それでも出てこなければ、
+  そのまま次へ進んで。
+- 「思い出せない」「特にない」と言われたら、思い出す手がかりとして、
+  この課題で実際に起きがちな場面を3つほど挙げて「近いものはある？」と
+  聞いてOK。ただし当てはまらなければ「なし」のまま進めて。
+  私が言っていないことを、あなたが代わりに書かないで。
+- 私の答えを、立派な文章に書き換えないで。言い回しは私のまま、
+  誤字と重複だけ直す程度にして。
+
+【恩送りメモの出力】
+インタビューが終わったら、「恩送りメモ」という見出しで、チャットから
+そのままコピペできる1つのコードブロックとして出力して。
+・1行目は必ず「確認テスト：◯点（◯回目で合格）」にする
+・続けて、私がQ1〜Q4で話した内容を、話した順に体験談としてまとめる
+・最後に、Q5の答えを「💬 課題ページへの改善案：」の行として原文のまま
+  入れる（『特になし』なら省略OK）
+・長さは私が話した分だけでいい。8行に届かなくてもOK。足りないからといって、
+  私が言っていない体験・感想・エラー文を足さないで。盛るくらいなら短い方がいい
+・私が挙げたエラー文・ボタン名・画面の名前は、要約で削らずそのまま残して
+※ 顧問先名・取引先名・具体的な金額・事業所名・利用者識別番号・
+暗証番号・個人情報・APIキーなどの秘密情報は、メモに絶対に入れないで
+（「◯◯な明細で」のように抽象化して）。
+
+最後に「このメモをコピーして、課題ページの『恩送りメモを投稿して修了』に
+貼れば修了です🎉」と締めて。</pre>
+      </div>
+    </section>
+
+    <!-- ===== 恩送り掲示板 ===== -->
+    <section class="step" id="post" style="border-color:var(--green)">
+      <div class="done-banner">🏅 投稿ありがとうございました！この課題は修了です。下の修了バッジをご覧ください🎉</div>
+      <div class="step-head">
+        <div class="step-num" style="background:var(--green)">✍️<small>必須</small></div>
+        <div class="step-title">
+          <h2>恩送りメモを投稿して修了 🏅</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約3分</span>
+            <span class="tag type">🏅 修了条件 その2</span>
+          </div>
+        </div>
+      </div>
+
+      <p>確認テストの最後にClaudeが出してくれた「<b>恩送りメモ</b>」を、そのまま下に貼って投稿してください。<b>投稿すると修了バッジが解放されます</b>🎉 第9回のメモには<b>あなたの事務所のチェック項目の工夫</b>が入っています。それが集まって、みんなの「申告前チェックリスト」が育ちます。</p>
+
+      <div class="post-field">
+        <label for="postName">お名前・ニックネーム（任意）</label>
+        <input type="text" id="postName" placeholder="例：たけだ">
+      </div>
+      <div class="post-field">
+        <label for="postMemo">恩送りメモ（確認テストで出たメモをそのまま貼ってOK）</label>
+        <textarea id="postMemo" placeholder="例：受信通知の突合で不一致が見つかった／未読が思ったより溜まっていた／繰越欠損金のチェックを足した　など"></textarea>
+      </div>
+      <button class="post-submit" id="postBtn" onclick="submitPost()">🎁 恩送りメモを投稿して修了する</button>
+      <div class="post-status" id="postStatus"></div>
+
+      <div class="box safe">
+        <div class="box-h">🔒 安全メモ</div>
+        投稿内容は他の受講生・運営も閲覧できる公開掲示板に表示されます。<b>顧問先名・取引先名・具体的な金額・事業所名・利用者識別番号・APIトークンなどの秘密情報、個人情報は記載しない</b>ようお願いいたします（確認テストのプロンプトに抽象化の指示を入れてありますが、投稿前にもう一度ご自身の目で確認してください）。
+      </div>
+
+      <a class="board-link" href="board.html" target="_blank" rel="noopener">📋 みんなの投稿を見る（掲示板を開く）→</a>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <h2>❓ よくあるつまずき</h2>
+      <details>
+        <summary>JDL・TKCなどインストール型の申告ソフトを使っています。AIで入力までできる？</summary>
+        <div class="body">申告ソフトへの直接入力は、まだ現実的ではありません。ただし<b>「転記用シート」を作らせる</b>工夫が効きます。決算データから、申告ソフトの入力画面の並び順に合わせた転記用の表をAIに作らせて、画面と並べて手入力する方式です。畠山事務所でもインストール型ソフトへの入力はこの「OCR→転記シート→手入力」のブリッジで回しています。手が覚えている入力作業が、迷いのない写経に変わるだけでかなり速くなります。会計ソフト別の連携可否は、アップデート会①（第11回）でもマップにして扱う予定です。</div>
+      </details>
+      <details>
+        <summary>源泉所得税の納付書（徴収高計算書）も自動化できる？</summary>
+        <div class="body">集計までは今日と同じ型でできます。給与・報酬のデータから<b>「人員・支給額・税額」の記載数字を半期分自動集計</b>させて、e-Taxへの入力と送信は人がやる、という分担です。納期特例なら年2回（7/10・1/20）。次の納期特例の時期に、質疑回で実際の集計プロンプトを扱う予定です。</div>
+      </details>
+      <details>
+        <summary>内訳書ドラフトの相手先が「（要確認）」だらけになった</summary>
+        <div class="body">仕訳に取引先の情報が入っていない帳簿だと、AIは相手先を特定できません（勝手に埋めさせないのが正しい設計です）。効くのは<b>補助科目・取引先タグを普段の記帳から付けておく</b>こと。第3回でやった「ルールを育てる」の延長で、来期の内訳書は最初からほぼ埋まった状態になります。今期分は「（要確認）」を人が埋めれば、それでも転記だけよりずっと速いはずです。</div>
+      </details>
+      <details>
+        <summary>受信通知のPDFってどこで手に入る？</summary>
+        <div class="body">e-Taxソフト（WEB版含む）のメッセージボックスで受信通知（メール詳細）を開き、<b>PDF保存や印刷→PDF</b>で書き出せます。電子申告した際に保存し忘れていた場合も、メッセージボックスに残っていれば取得できます。ステップ⑤の棚卸しのついでに、未保存の受信通知を保存する運用にすると一石二鳥です。</div>
+      </details>
+      <details>
+        <summary>e-Taxのスクショを貼るのがなんとなく不安</summary>
+        <div class="body">感覚として正しいです。整理すると、<b>自分のPCのClaudeに見せる（ローカルの作業）</b>と、<b>Discordや掲示板など人の見える場所に貼る（公開）</b>はまったく別の行為です。前者は顧問先のPDFを開いて作業するのと同じ扱い、後者は禁止。あわせて、暗証番号だけは「見せる」のもNGです（ログイン画面のスクショを貼らない・入力欄が写った画面を貼らない）。</div>
+      </details>
+      <details>
+        <summary>セルフレビューが全項目「一致」でした。もう安心していい？</summary>
+        <div class="body">今日のチェックリストが保証するのは「<b>転記・反映のよくあるミスがない</b>」ことまでです。役員給与の損金算入、交際費の判定、届出の要否といった<b>税務判断の正しさは別のレイヤー</b>で、そこはあなたの専門性の領域です。逆に言えば、事務的な突き合わせをAIに任せたぶん、判断のレビューに時間を使えるようになった、が今日の正しい成果です。</div>
+      </details>
+      <details>
+        <summary>途中で「使用上限に達しました」と表示された</summary>
+        <div class="body">故障ではありません。Claudeの有料プランには一定時間あたりの利用上限があり、PDFの読み取りのような重い処理では出やすくなります。<b>時間を置くと自動で復活します</b>ので、休憩を挟むか、続きは後日に進めてください（課題は当日中に終わらせる必要はありません）。</div>
+      </details>
+    </section>
+
+    <!-- 修了 -->
+    <section class="finish locked" id="finish">
+      <h2 id="finishMsg">🏅 修了バッジ：申告のまわりを固める人</h2>
+      <p id="finishSub">5つのチェック＋恩送りメモの投稿がそろうと、ここで修了バッジが解放されます。</p>
+      <a href="#hero" class="cta">↑ 上に戻って進める</a>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // 恩送り掲示板への投稿
+  const BOARD_API = 'https://script.google.com/macros/s/AKfycbzhsHqZgC4KO_i9fMNZDY2CBbJx-0YSVNJfrPpd5M35EcjAq1iSPY_rHOUkzEBPU6gUhg/exec';
+  function submitPost(){
+    const name = document.getElementById('postName').value.trim();
+    const memo = document.getElementById('postMemo').value.trim();
+    const btn = document.getElementById('postBtn');
+    const status = document.getElementById('postStatus');
+    if(!memo){
+      status.textContent = '恩送りメモを入力してください。';
+      status.className = 'post-status err';
+      return;
+    }
+    btn.disabled = true;
+    status.textContent = '送信中…';
+    status.className = 'post-status';
+    fetch(BOARD_API, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify({name: name || '匿名', memo: '【第9回】' + memo})
+    }).then(()=>{
+      status.textContent = '投稿ありがとうございます！🌸 掲示板に反映されます。修了バッジをご覧ください🏅';
+      status.className = 'post-status ok';
+      document.getElementById('postMemo').value = '';
+      btn.disabled = false;
+      localStorage.setItem(PKEY,'1');
+      render();
+    }).catch(()=>{
+      status.textContent = '送信に失敗しました。通信環境をご確認のうえ、もう一度お試しください。';
+      status.className = 'post-status err';
+      btn.disabled = false;
+    });
+  }
+
+  // コピーボタン
+  function copyCode(btn){
+    const pre = btn.parentElement.querySelector('pre');
+    navigator.clipboard.writeText(pre.innerText).then(()=>{
+      btn.textContent='コピー済み✓';btn.classList.add('copied');
+      setTimeout(()=>{btn.textContent='コピー';btn.classList.remove('copied')},1600);
+    });
+  }
+
+  // チェックの進捗（5ステップ＋恩送り投稿＝6条件で修了）
+  const KEY='bootcamp9_progress';
+  const PKEY='bootcamp9_posted';
+  const STEP_TOTAL=5, TOTAL=6;
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
+  function save(s){localStorage.setItem(KEY,JSON.stringify(s))}
+  function isPosted(){return localStorage.getItem(PKEY)==='1'}
+
+  // 紙吹雪（修了の瞬間だけ）
+  function burst(){
+    const colors=['#2864f0','#00a86b','#f5a623','#e5484d','#7c3aed'];
+    for(let i=0;i<70;i++){
+      const p=document.createElement('div');
+      p.className='confetti-piece';
+      p.style.left=Math.random()*100+'vw';
+      p.style.background=colors[i%colors.length];
+      p.style.animationDuration=(2.2+Math.random()*1.8)+'s';
+      p.style.animationDelay=(Math.random()*.6)+'s';
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(),5000);
+    }
+  }
+
+  let prevAllDone=null;
+  function render(){
+    const s=load();
+    let done=0;
+    document.querySelectorAll('input[data-step]').forEach(cb=>{
+      const n=cb.dataset.step;
+      cb.checked=!!s[n];
+      cb.closest('.step').classList.toggle('done',!!s[n]);
+      if(s[n])done++;
+    });
+    const posted=isPosted();
+    document.getElementById('post').classList.toggle('done',posted);
+    const units=done+(posted?1:0);
+    document.getElementById('cnt').textContent=units;
+    document.getElementById('fill').style.width=(units/TOTAL*100)+'%';
+    const allDone=(done===STEP_TOTAL&&posted);
+    const fin=document.getElementById('finish');
+    const msg=document.getElementById('finishMsg');
+    const sub=document.getElementById('finishSub');
+    if(allDone){
+      fin.classList.remove('locked');
+      fin.classList.add('celebrate');
+      msg.textContent='🎉 第9回 修了おめでとうございます！「申告のまわりを固める人」になりました🌸';
+      sub.textContent='今日固めた「まわり」は、AIが申告書を作る時代の受け皿です。次回はいよいよ、申告APIでつながる自動化を見に行きます。';
+    }else{
+      fin.classList.add('locked');
+      fin.classList.remove('celebrate');
+      msg.textContent='🏅 修了バッジ：申告のまわりを固める人';
+      sub.textContent = done===STEP_TOTAL
+        ? 'あとは確認テストに合格して、恩送りメモを投稿するだけです🎁'
+        : '5つのチェック＋恩送りメモの投稿がそろうと、ここで修了バッジが解放されます。';
+    }
+    if(prevAllDone===false && allDone) burst();
+    prevAllDone=allDone;
+  }
+
+  function toggle(el,e){
+    if(e.target.tagName!=='INPUT'){
+      const cb=el.querySelector('input');cb.checked=!cb.checked;
+    }
+    const s=load();
+    el.querySelectorAll('input[data-step]').forEach(cb=>{s[cb.dataset.step]=cb.checked});
+    save(s);render();
+  }
+  document.querySelectorAll('input[data-step]').forEach(cb=>{
+    cb.addEventListener('change',()=>{
+      const s=load();s[cb.dataset.step]=cb.checked;save(s);render();
+    });
+  });
+
+  // 追いつきチェック（ステップ0）は修了条件に含めず、別キーで保存する
+  const CKEY='bootcamp9_catchup';
+  function loadCatchup(){try{return JSON.parse(localStorage.getItem(CKEY))||{}}catch(e){return {}}}
+  function renderCatchup(){
+    const c=loadCatchup();
+    let n=0;
+    document.querySelectorAll('input[data-catchup]').forEach(cb=>{
+      cb.checked=!!c[cb.dataset.catchup];
+      if(cb.checked)n++;
+    });
+    document.getElementById('t0').classList.toggle('ok',n===2);
+  }
+  function toggleCatchup(el,e){
+    if(e.target.tagName!=='INPUT'){
+      const cb=el.querySelector('input');cb.checked=!cb.checked;
+    }
+    const c=loadCatchup();
+    el.querySelectorAll('input[data-catchup]').forEach(cb=>{c[cb.dataset.catchup]=cb.checked});
+    localStorage.setItem(CKEY,JSON.stringify(c));renderCatchup();
+  }
+  document.querySelectorAll('input[data-catchup]').forEach(cb=>{
+    cb.addEventListener('change',()=>{
+      const c=loadCatchup();c[cb.dataset.catchup]=cb.checked;
+      localStorage.setItem(CKEY,JSON.stringify(c));renderCatchup();
+    });
+  });
+
+  render();
+  renderCatchup();
+</script>
+<script>window.BOOTCAMP_PAGE='vol09';</script>
+<script src="progress-tracker.js"></script>
+</body>
+</html>
