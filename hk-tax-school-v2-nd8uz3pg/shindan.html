@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<!--
+  現在地診断ページ（正本）
+  リンクは公開リポ（hk-tax-school-v2-nd8uz3pg）のファイル名に合わせている:
+    第1回=index.html / 第3回=vol03.html / 第5回=vol05.html / 第7回=vol07.html / map.html
+  正本フォルダ内ではリンク先が存在しないため飛べないが、公開時はこのままコピーでOK。
+-->
+<title>畠山式税理士AIコミュニティ｜現在地診断（30秒）</title>
+<style>
+  :root{
+    --brand:#2864f0;
+    --brand-soft:#e8effe;
+    --amber:#f0a028;
+    --amber-soft:#fdf3e0;
+    --green:#1ea564;
+    --green-soft:#e3f6ec;
+    --ink:#1c2330;
+    --sub:#5a6474;
+    --line:#e3e7ee;
+    --bg:#f6f8fb;
+    --card:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic UI","Meiryo",system-ui,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.75;font-size:15.5px;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:28px 16px 80px}
+  .head{text-align:center;margin-bottom:22px}
+  .badge{
+    display:inline-block;background:var(--brand-soft);color:var(--brand);
+    font-size:14px;font-weight:700;padding:4px 14px;border-radius:999px;margin-bottom:10px;
+  }
+  h1{font-size:24px;font-weight:800;letter-spacing:.02em}
+  .lead{color:var(--sub);font-size:14.5px;margin-top:8px}
+
+  /* プログレス */
+  .progress{display:flex;gap:6px;justify-content:center;margin:18px 0 22px}
+  .pdot{width:34px;height:6px;border-radius:3px;background:var(--line);transition:background .25s}
+  .pdot.on{background:var(--brand)}
+
+  /* 質問カード */
+  .qcard{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:26px 22px;box-shadow:0 2px 10px rgba(28,35,48,.05);
+  }
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);margin-bottom:6px}
+  .qtext{font-size:19px;font-weight:800;margin-bottom:6px}
+  .qhint{font-size:14px;color:var(--sub);margin-bottom:18px}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{
+    display:block;width:100%;text-align:left;cursor:pointer;
+    background:#fff;border:1.5px solid var(--line);border-radius:12px;
+    padding:14px 16px;font-size:15.5px;font-family:inherit;color:var(--ink);
+    transition:border-color .15s, background .15s;
+  }
+  .opt:hover{border-color:var(--brand);background:var(--brand-soft)}
+  .opt b{font-weight:800}
+  .opt .sub{display:block;font-size:13.5px;color:var(--sub);margin-top:2px}
+  .backrow{margin-top:16px;text-align:center}
+  .backbtn{
+    background:none;border:none;color:var(--sub);font-size:14px;cursor:pointer;
+    font-family:inherit;text-decoration:underline;
+  }
+
+  /* 結果カード */
+  .rcard{
+    background:var(--card);border:1.5px solid var(--brand);border-radius:16px;
+    padding:26px 22px;box-shadow:0 2px 14px rgba(40,100,240,.10);
+  }
+  .rhead{text-align:center;margin-bottom:18px}
+  .rlabel{
+    display:inline-block;background:var(--brand);color:#fff;font-size:14px;font-weight:700;
+    padding:4px 16px;border-radius:999px;margin-bottom:10px;
+  }
+  .rtitle{font-size:21px;font-weight:800}
+  .rnote{font-size:14.5px;color:var(--sub);margin-top:8px;text-align:left}
+  .rsteps{margin-top:18px}
+  .rsteps h3{font-size:15px;font-weight:800;color:var(--brand);margin-bottom:10px}
+  .stepitem{
+    display:flex;gap:12px;align-items:flex-start;
+    background:var(--bg);border:1px solid var(--line);border-radius:12px;
+    padding:13px 14px;margin-bottom:9px;
+  }
+  .stepitem .no{
+    flex:0 0 26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;
+    font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:2px;
+  }
+  .stepitem .body{font-size:14.5px}
+  .stepitem .body a{color:var(--brand);font-weight:700}
+  .stepitem .time{display:inline-block;background:var(--amber-soft);color:#a86c00;font-size:12.5px;font-weight:700;border-radius:999px;padding:1px 10px;margin-left:6px;white-space:nowrap}
+  .rgoal{
+    margin-top:16px;background:var(--green-soft);border-radius:12px;
+    padding:13px 16px;font-size:14.5px;
+  }
+  .rgoal b{color:var(--green)}
+
+  /* 質問テンプレ・結果シェア */
+  .ask{
+    margin-top:16px;background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:14px 16px;
+  }
+  .ask p{font-size:14px;color:var(--sub);margin-bottom:8px}
+  .share{
+    margin-top:16px;background:var(--brand-soft);border-radius:12px;padding:14px 16px;
+  }
+  .share p{font-size:14px;color:var(--ink);margin-bottom:8px}
+  .share p b{color:var(--brand)}
+  .askbox{
+    background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;
+    font-size:14px;color:var(--ink);
+  }
+  .copybtn{
+    margin-top:8px;background:var(--brand);color:#fff;border:none;border-radius:8px;
+    padding:8px 18px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;
+  }
+  .copybtn:active{opacity:.8}
+
+  .retry{margin-top:20px;text-align:center}
+  .retry button{
+    background:none;border:1.5px solid var(--line);border-radius:999px;color:var(--sub);
+    padding:8px 22px;font-size:14px;cursor:pointer;font-family:inherit;
+  }
+  .maplink{text-align:center;margin-top:14px;font-size:14px}
+  .maplink a{color:var(--brand);font-weight:700}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <span class="badge">畠山式税理士AIコミュニティ</span>
+    <h1>🧭 現在地診断（30秒）</h1>
+    <p class="lead">最大5問に答えるだけで、いま自分がどこにいて、次に何をやればいいかが分かります。<br>途中で止まっていた方も大丈夫。ここから戻るのが公式ルートです。</p>
+  </div>
+
+  <div class="progress" id="progress"></div>
+
+  <div id="stage"></div>
+
+  <div class="maplink">🗺 <a href="map.html">コース全体マップを見る</a></div>
+
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    id:"q1",
+    num:"質問 1 / 5",
+    text:"Claude Codeは、ご自分のPCで動いていますか？",
+    hint:"起動して、日本語で頼みごとができる状態なら「はい」です。",
+    opts:[
+      {label:"<b>はい</b>、動いています", next:"q2"},
+      {label:"<b>いいえ</b>、導入で止まっています／まだ入れていません",
+       sub:"エラーで進めなくなった方もこちら", result:"r1"}
+    ]
+  },
+  {
+    id:"q2",
+    num:"質問 2 / 5",
+    text:"会計ソフト（freeeまたはMF）とMCP接続して、AIが伝票を起票するのを1回でも体験しましたか？",
+    hint:"第1回のゴール「自動起票デビュー」ができたか、です。",
+    opts:[
+      {label:"<b>はい</b>、体験しました", next:"q3"},
+      {label:"<b>いいえ</b>、接続がまだ／うまくいきませんでした", result:"r2"}
+    ]
+  },
+  {
+    id:"q3",
+    num:"質問 3 / 5",
+    text:"未処理明細の自動登録か、請求書のOCR起票を「ご自分の環境」で回しましたか？",
+    hint:"第3回のゴール「自動記帳デビュー」ができたか、です。",
+    opts:[
+      {label:"<b>はい</b>、回しました", next:"q4"},
+      {label:"<b>いいえ</b>、まだです", result:"r3"}
+    ]
+  },
+  {
+    id:"q4",
+    num:"質問 4 / 5",
+    text:"仕訳帳や消費税区分の「AIレビュー」を試しましたか？",
+    hint:"第5回のゴール「起票して終わりでなく、AIにチェックさせる」ができたか、です。",
+    opts:[
+      {label:"<b>はい</b>、試しました", next:"q5"},
+      {label:"<b>いいえ</b>、まだです", result:"r4"}
+    ]
+  },
+  {
+    id:"q5",
+    num:"質問 5 / 5",
+    text:"月次ダッシュボード（試算表をAPIで取得→HTML化）を作りましたか？",
+    hint:"第7回で扱った内容です。",
+    opts:[
+      {label:"<b>はい</b>、作りました", result:"r6"},
+      {label:"<b>いいえ</b>、まだです", result:"r5"}
+    ]
+  }
+];
+
+const RESULTS = {
+  r1:{
+    title:"現在地：第1回（環境づくり）",
+    note:"いちばん大事な最初の山です。ここさえ越えれば、あとの回は同じ型の繰り返しなので一気に楽になります。環境構築は詰まって当たり前の場所なので、遠慮なく質問してください。",
+    steps:[
+      {html:'第1回の <a href="index.html#t3">③ Claude Code導入</a> を、動画を見ながらもう一度', time:"30〜60分"},
+      {html:'続けて <a href="index.html#t4">④ freee MCP接続 → 自動起票</a> まで進めて「自動起票デビュー」', time:"30分"}
+    ],
+    goal:"ここまでできれば <b>第3回にそのまま合流できます</b>。",
+    ask:"第1回のClaude Code導入の途中で止まっています。［エラー画面のスクショ or 状況］こんな状態です。次に何をすればいいでしょうか？"
+  },
+  r2:{
+    title:"現在地：第1回の仕上げ（MCP接続）",
+    note:"Claude Codeが動いているなら、残るは会計ソフトとの接続だけです。接続は手順どおりに進めれば必ずつながります。うまくいかない場合の大半は設定ファイルの場所の問題なので、質問すればすぐ解決します。",
+    steps:[
+      {html:'第1回の <a href="index.html#t4">④ freee MCP接続 → 自動起票</a> を進める（MF会計の方は <a href="vol03.html#t2">第3回の② MCP連携</a> へ）', time:"30〜45分"},
+      {html:'AIが伝票を1枚起票したら「自動起票デビュー」達成です'}
+    ],
+    goal:"ここまでできれば <b>第3回にそのまま合流できます</b>。",
+    ask:"MCP接続のところで止まっています。会計ソフトは［freee／MF］で、［エラー内容 or 状況］こんな状態です。確認すべき点を教えてください。"
+  },
+  r3:{
+    title:"現在地：第3回（自動記帳の本丸）",
+    note:"環境はできています。あとは「自分の環境で回す」体験だけです。第3回は自動記帳のいちばんおいしい回なので、ここを回せると一気に景色が変わります。",
+    steps:[
+      {html:'<a href="vol03.html#t3">③ 勘定科目ルールの2段階構造</a> で考え方をつかむ', time:"20分"},
+      {html:'<a href="vol03.html#t4">④ 未処理明細の登録</a> か <a href="vol03.html#t5">⑤ 請求書OCR起票</a> のどちらか1つを自分の環境で', time:"30〜40分"}
+    ],
+    goal:"どちらか1つ回せれば <b>第5回冒頭の「追いつき実力テスト」から合流できます</b>。",
+    ask:"第3回の未処理明細の登録に挑戦中です。［詰まっている箇所］で止まっています。次の一手を教えてください。"
+  },
+  r4:{
+    title:"現在地：第5回（AIレビュー）",
+    note:"記帳の自動化はできています。次は「起票して終わり」から「AIにチェックさせる」への一歩です。第5回の冒頭に、まさにこの位置の方のための追いつき実力テストが用意してあります。",
+    steps:[
+      {html:'<a href="vol05.html#t0">🧭 追いつき実力テスト</a> で出発点を確認', time:"15分"},
+      {html:'<a href="vol05.html#t3">③ 仕訳帳をAIレビュー</a> を1回試す', time:"30分"}
+    ],
+    goal:"レビューを1回体験すれば <b>第7回冒頭の「追いつき実力テスト」から最新回に合流できます</b>。",
+    ask:"第5回のAIレビューから再開します。［試した内容 or 詰まった箇所］の状態です。アドバイスをお願いします。"
+  },
+  r5:{
+    title:"現在地：第7回（月次ダッシュボード）",
+    note:"最新回のすぐ手前まで来ています。第7回の冒頭に第6回のキャッチアップを兼ねた追いつき実力テストがあるので、そこから入れば大丈夫です。",
+    steps:[
+      {html:'<a href="vol07.html#t0">🧭 追いつき実力テスト（第6回のキャッチアップ）</a> から', time:"15分"},
+      {html:'<a href="vol07.html#t3">③ 1社分のダッシュボードを作る</a> まで進めば合流完了', time:"40分"}
+    ],
+    goal:"1社分できれば <b>最新回に完全に追いつきです</b>。量産と自動化は講義でゆっくり回収できます。",
+    ask:"第7回のダッシュボード作成に挑戦中です。［詰まっている箇所］で止まっています。次の一手を教えてください。"
+  },
+  r6:{
+    title:"現在地：最新回に追いついています🎉",
+    note:"完走ペースです。ここから先は「自分の事務所に合わせて型を育てる」フェーズ。ぜひその知見をコミュニティに共有してください。あなたの1枚のスクショが、他の方の「自分もやってみよう」の引き金になります。",
+    steps:[
+      {html:'<a href="vol07.html#t4">④ 顧問先ごとに量産する型にする</a> → <a href="vol07.html#t5">⑤ 毎月自動で回す</a> へ', time:"60分"},
+      {html:'できたものをスクショ1枚＋ひとことで恩送りメモへ'}
+    ],
+    goal:"次回講義は <b>そのまま最前列で大丈夫です</b>。",
+    ask:"最新回まで追いつきました。次にやると良い応用があれば教えてください。いま事務所で困っているのは［テーマ］です。"
+  }
+};
+
+const stage = document.getElementById("stage");
+const progress = document.getElementById("progress");
+let history = [];
+
+function renderProgress(step){
+  progress.innerHTML = "";
+  for(let i=0;i<5;i++){
+    const d = document.createElement("div");
+    d.className = "pdot" + (i<step ? " on" : "");
+    progress.appendChild(d);
+  }
+}
+
+function showQuestion(qid){
+  const q = QUESTIONS.find(x=>x.id===qid);
+  renderProgress(QUESTIONS.findIndex(x=>x.id===qid)+1);
+  let optsHtml = q.opts.map((o,i)=>{
+    const sub = o.sub ? `<span class="sub">${o.sub}</span>` : "";
+    return `<button class="opt" data-i="${i}">${o.label}${sub}</button>`;
+  }).join("");
+  stage.innerHTML = `
+    <div class="qcard">
+      <div class="qnum">${q.num}</div>
+      <div class="qtext">${q.text}</div>
+      <div class="qhint">${q.hint}</div>
+      <div class="opts">${optsHtml}</div>
+      ${history.length ? '<div class="backrow"><button class="backbtn" id="back">← ひとつ前に戻る</button></div>' : ""}
+    </div>`;
+  stage.querySelectorAll(".opt").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const o = q.opts[Number(btn.dataset.i)];
+      history.push(qid);
+      if(o.result){ showResult(o.result); } else { showQuestion(o.next); }
+    });
+  });
+  const back = document.getElementById("back");
+  if(back) back.addEventListener("click",goBack);
+}
+
+function showResult(rid){
+  const r = RESULTS[rid];
+  renderProgress(5);
+  const steps = r.steps.map((s,i)=>`
+    <div class="stepitem">
+      <div class="no">${i+1}</div>
+      <div class="body">${s.html}${s.time ? `<span class="time">目安 ${s.time}</span>` : ""}</div>
+    </div>`).join("");
+  stage.innerHTML = `
+    <div class="rcard">
+      <div class="rhead">
+        <span class="rlabel">診断結果</span>
+        <div class="rtitle">${r.title}</div>
+      </div>
+      <p class="rnote">${r.note}</p>
+      <div class="rsteps">
+        <h3>▼ 次にやること（この順で）</h3>
+        ${steps}
+      </div>
+      <div class="rgoal">🏁 ${r.goal}</div>
+      <div class="share">
+        <p>📣 <b>診断できたら、結果をスレッドに貼ってください。</b><br>貼るだけで再スタートの宣言になります。どの位置からの宣言も大歓迎です。</p>
+        <button class="copybtn" id="sharebtn">診断結果をコピー（Discordに貼る用）</button>
+      </div>
+      <div class="ask">
+        <p>💬 進めていて詰まったら、この文をコピーして質問スレッドに貼ってください。［　］だけ埋めればOKです。</p>
+        <div class="askbox" id="asktext">${r.ask}</div>
+        <button class="copybtn" id="copybtn">質問文をコピー</button>
+      </div>
+      <div class="retry"><button id="retry">← 最初から診断し直す</button></div>
+    </div>`;
+  document.getElementById("copybtn").addEventListener("click",()=>{
+    navigator.clipboard.writeText(document.getElementById("asktext").textContent).then(()=>{
+      document.getElementById("copybtn").textContent = "コピーしました✔";
+    });
+  });
+  document.getElementById("sharebtn").addEventListener("click",()=>{
+    const plain = s => s.replace(/<[^>]+>/g,"");
+    const lines = [
+      "🧭 現在地診断をやりました！",
+      "**" + plain(r.title) + "**",
+      "▼ これからやること"
+    ];
+    r.steps.forEach((s,i)=>{
+      lines.push(`${i+1}. ${plain(s.html)}${s.time ? `（目安 ${s.time}）` : ""}`);
+    });
+    lines.push("ひとこと: ");
+    navigator.clipboard.writeText(lines.join("\n")).then(()=>{
+      document.getElementById("sharebtn").textContent = "コピーしました✔ そのままスレッドへ";
+    });
+  });
+  document.getElementById("retry").addEventListener("click",()=>{ history=[]; showQuestion("q1"); });
+}
+
+function goBack(){
+  const prev = history.pop();
+  if(prev) showQuestion(prev); else showQuestion("q1");
+}
+
+showQuestion("q1");
+</script>
+</body>
+</html>
