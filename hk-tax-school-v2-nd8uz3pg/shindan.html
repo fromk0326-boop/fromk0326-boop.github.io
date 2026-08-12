@@ -325,8 +325,8 @@ function showResult(rid){
       </div>
       <div class="rgoal">🏁 ${r.goal}</div>
       <div class="share">
-        <p>📣 <b>診断できたら、結果をスレッドに貼ってください。</b><br>貼るだけで再スタートの宣言になります。どの位置からの宣言も大歓迎です。</p>
-        <button class="copybtn" id="sharebtn">診断結果をコピー（Discordに貼る用）</button>
+        <p>📝 診断結果はコピーして手元にメモしておけます。Discordでシェアしたい方はそのまま貼れる形式です（シェアは任意です）。</p>
+        <button class="copybtn" id="sharebtn">診断結果をコピー</button>
       </div>
       <div class="ask">
         <p>💬 進めていて詰まったら、この文をコピーして質問スレッドに貼ってください。［　］だけ埋めればOKです。</p>
@@ -352,7 +352,7 @@ function showResult(rid){
     });
     lines.push("ひとこと: ");
     navigator.clipboard.writeText(lines.join("\n")).then(()=>{
-      document.getElementById("sharebtn").textContent = "コピーしました✔ そのままスレッドへ";
+      document.getElementById("sharebtn").textContent = "コピーしました✔";
     });
   });
   document.getElementById("retry").addEventListener("click",()=>{ history=[]; showQuestion("q1"); });
