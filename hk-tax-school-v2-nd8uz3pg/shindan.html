@@ -324,10 +324,6 @@ function showResult(rid){
         ${steps}
       </div>
       <div class="rgoal">🏁 ${r.goal}</div>
-      <div class="share">
-        <p>📝 診断結果はコピーして手元にメモしておけます。Discordでシェアしたい方はそのまま貼れる形式です（シェアは任意です）。</p>
-        <button class="copybtn" id="sharebtn">診断結果をコピー</button>
-      </div>
       <div class="ask">
         <p>💬 進めていて詰まったら、この文をコピーして質問スレッドに貼ってください。［　］だけ埋めればOKです。</p>
         <div class="askbox" id="asktext">${r.ask}</div>
@@ -338,21 +334,6 @@ function showResult(rid){
   document.getElementById("copybtn").addEventListener("click",()=>{
     navigator.clipboard.writeText(document.getElementById("asktext").textContent).then(()=>{
       document.getElementById("copybtn").textContent = "コピーしました✔";
-    });
-  });
-  document.getElementById("sharebtn").addEventListener("click",()=>{
-    const plain = s => s.replace(/<[^>]+>/g,"");
-    const lines = [
-      "🧭 現在地診断をやりました！",
-      "**" + plain(r.title) + "**",
-      "▼ これからやること"
-    ];
-    r.steps.forEach((s,i)=>{
-      lines.push(`${i+1}. ${plain(s.html)}${s.time ? `（目安 ${s.time}）` : ""}`);
-    });
-    lines.push("ひとこと: ");
-    navigator.clipboard.writeText(lines.join("\n")).then(()=>{
-      document.getElementById("sharebtn").textContent = "コピーしました✔";
     });
   });
   document.getElementById("retry").addEventListener("click",()=>{ history=[]; showQuestion("q1"); });
