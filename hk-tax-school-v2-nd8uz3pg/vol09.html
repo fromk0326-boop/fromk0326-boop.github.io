@@ -1171,19 +1171,19 @@ freee-mcpの更新: 済み ／ 未
 
       <p>API公開から4日間のXの反応を、畠山事務所で3つの検索語・約30ポストから整理しました。結論を先に言うと、<b>語られているのはほぼ「これから何ができそうか」で、実際に動かして成果を出した報告は2件だけ</b>です。アイデアは4類型に分かれ、関心は「申告書のセルフレビュー・突合」に集中しています。今日のステップ②③は、まさにその最多ゾーンを先に体験した形になります。</p>
 
-      <p>まず、freeeの中の人の発言から。freeeの最高AI責任者・横路りゅうさん（@yokoji）は8/28に、税務のようにシビアな領域で<b>APIとMCPを同時に開放している例は国内でもまだかなり珍しい</b>、という趣旨を投稿しています（4万インプレッション）。freee-mcpのリポジトリには帳票の項目マッピング資料も公開されていて、どの別表のどの欄がどのキーかを追える状態です。一方で、freee-mcp担当の青山翔平さん（@shohei_freee）は「税務申告の知見は無いので、使い方は税理士界隈にお任せ」という姿勢。<b>ユースケースを最初に形にした人が、業界の標準形をつくれる状況</b>です。</p>
+      <p>まず、freeeの中の人の発言から。freeeの最高AI責任者・<a href="https://x.com/yokoji/status/2093228752490947039" target="_blank" rel="noopener">横路りゅうさん（@yokoji）</a>は8/28に、税務のようにシビアな領域で<b>APIとMCPを同時に開放している例は国内でもまだかなり珍しい</b>、という趣旨を投稿しています（4万インプレッション）。freee-mcpのリポジトリには<a href="https://github.com/freee/freee-mcp/blob/main/skills/freee-api-skill/tax-return-references/index.md" target="_blank" rel="noopener">帳票の項目マッピング資料</a>（全56帳票。<a href="https://x.com/koshi71/status/2093596817820942380" target="_blank" rel="noopener">辻本岬史さんの紹介ポスト</a>）も公開されていて、どの別表のどの欄がどのキーかを追える状態です。一方で、freee-mcp担当の<a href="https://x.com/shohei_freee/status/2094225436612206866" target="_blank" rel="noopener">青山翔平さん（@shohei_freee）</a>は「税務申告の知見は無いので、使い方は税理士界隈にお任せ」という姿勢。<b>ユースケースを最初に形にした人が、業界の標準形をつくれる状況</b>です。</p>
 
       <h3 style="margin:22px 0 6px;font-size:17px">活用法① 申告書のセルフレビュー・突合の自動化（最多）</h3>
       <table class="kanten">
         <tr><th>発信者</th><th>内容</th></tr>
-        <tr><td>畠山謙人<br><span style="color:var(--sub);font-size:12.5px">@kandmybike</span></td><td>Claude Codeにつないで申告済み案件を<b>52観点でレビュー</b>。別表・決算書を前期・前々期までAPIで取り、<b>PDFを1ページも開かずにレビュー調書の生成まで完走</b>（今日のステップ③の元ネタ）</td></tr>
-        <tr><td>辻本岬史<br><span style="color:var(--sub);font-size:12.5px">@koshi71</span></td><td>freee会計⇔申告書側の決算書、前期の別表五(一)期末⇔当期首、前期⇔当期の申告書、会計⇔申告の異常値を<b>自分たちのチェックロジック</b>で見る構想。これまではfreeeが用意した検算機能を使うしかなかったが、APIで取れれば自前で組める、という視点</td></tr>
-        <tr><td>ぽぽぽ<br><span style="color:var(--sub);font-size:12.5px">@Vbboooooooooo</span></td><td>決算書・法人申告書・内訳書・概況書・年調データの数値突合と、前期との申告書突合。「この機械的なチェックが地味に時間がかかる」という実務の声</td></tr>
-        <tr><td>村上ゆういち<br><span style="color:var(--sub);font-size:12.5px">@Jeanscpa</span></td><td>これまでは申告書PDFをダウンロードしてAIにアップしていた。<b>そのPDF往復の手間が消える</b>。ただし評価は辛口（「そのくらいかな」）</td></tr>
+        <tr><td>畠山謙人<br><span style="color:var(--sub);font-size:12.5px">@kandmybike</span><br><a href="https://x.com/kandmybike/status/2093523179126063182" target="_blank" rel="noopener" style="font-size:12.5px">元ポスト ↗</a></td><td>Claude Codeにつないで申告済み案件を<b>52観点でレビュー</b>。別表・決算書を前期・前々期までAPIで取り、<b>PDFを1ページも開かずにレビュー調書の生成まで完走</b>（今日のステップ③の元ネタ）</td></tr>
+        <tr><td>辻本岬史<br><span style="color:var(--sub);font-size:12.5px">@koshi71</span><br><a href="https://x.com/koshi71/status/2093596593983512593" target="_blank" rel="noopener" style="font-size:12.5px">元ポスト ↗</a></td><td>freee会計⇔申告書側の決算書、前期の別表五(一)期末⇔当期首、前期⇔当期の申告書、会計⇔申告の異常値を<b>自分たちのチェックロジック</b>で見る構想。これまではfreeeが用意した検算機能を使うしかなかったが、APIで取れれば自前で組める、という視点</td></tr>
+        <tr><td>ぽぽぽ<br><span style="color:var(--sub);font-size:12.5px">@Vbboooooooooo</span><br><a href="https://x.com/Vbboooooooooo/status/2093541885205995583" target="_blank" rel="noopener" style="font-size:12.5px">元ポスト ↗</a></td><td>決算書・法人申告書・内訳書・概況書・年調データの数値突合と、前期との申告書突合。「この機械的なチェックが地味に時間がかかる」という実務の声</td></tr>
+        <tr><td>村上ゆういち<br><span style="color:var(--sub);font-size:12.5px">@Jeanscpa</span><br><a href="https://x.com/Jeanscpa/status/2093558684773457968" target="_blank" rel="noopener" style="font-size:12.5px">元ポスト ↗</a></td><td>これまでは申告書PDFをダウンロードしてAIにアップしていた。<b>そのPDF往復の手間が消える</b>。ただし評価は辛口（「そのくらいかな」）</td></tr>
       </table>
 
       <h3 style="margin:22px 0 6px;font-size:17px">活用法② 顧問先を横断した先回り管理（解像度がいちばん高い）</h3>
-      <p style="margin:0 0 6px">freee200%税理士の廣島元彦さん（@NGjZL78snQmNyJf）が公開した「できそうなこと」5案。いずれも<b>1社ずつの申告作業ではなく、全顧問先を並べて初めて価値が出る</b>使い方です。</p>
+      <p style="margin:0 0 6px">freee200%税理士の<a href="https://x.com/NGjZL78snQmNyJf/status/2094245316749136053" target="_blank" rel="noopener">廣島元彦さん（@NGjZL78snQmNyJf）</a>が公開した「できそうなこと」5案。いずれも<b>1社ずつの申告作業ではなく、全顧問先を並べて初めて価値が出る</b>使い方です。</p>
       <table class="kanten">
         <tr><th>アイデア</th><th>中身</th></tr>
         <tr><td><b>① 繰越欠損金の失効アラート</b></td><td>発生事業年度別の残高が別表七から取れる。全法人を並べれば「今期で切れる欠損金」を先回りで潰せる</td></tr>
@@ -1196,19 +1196,19 @@ freee-mcpの更新: 済み ／ 未
 
       <h3 style="margin:22px 0 6px;font-size:17px">活用法③④ 過去年度の一括取得／PDF往復の手作業を消す</h3>
       <ul>
-        <li><b>③ 過去数年分の申告書データを一気に取る</b>：奈良×freee税理士の葵さん（@aoitax_azuki）が挙げた、<b>税理士変更やスポット対応で過去数年分をまとめて取得する</b>使い方。顧問先を引き継いだ直後の初期把握（前任者の処理内容・繰越項目の確認）に効きます。申告一覧の prev_tax_return_id をたどれば、今日のステップ②の延長でそのままできます</li>
+        <li><b>③ 過去数年分の申告書データを一気に取る</b>：奈良×freee税理士の<a href="https://x.com/aoitax_azuki/status/2093280682462282224" target="_blank" rel="noopener">葵さん（@aoitax_azuki）</a>が挙げた、<b>税理士変更やスポット対応で過去数年分をまとめて取得する</b>使い方。顧問先を引き継いだ直後の初期把握（前任者の処理内容・繰越項目の確認）に効きます。申告一覧の prev_tax_return_id をたどれば、今日のステップ②の延長でそのままできます</li>
         <li><b>④ PDF往復の手作業を消す</b>：これまでのAI活用は「freee申告で作成→PDFダウンロード→AIにアップ→読ませる」の往復が前提でした。APIはこの往復ごと消せます。逆に言うと、<b>第9回までにPDF往復の工夫を積み上げてきた人ほど、置き換えの効果が具体的に見える</b>はずです</li>
       </ul>
 
       <h3 style="margin:22px 0 6px;font-size:17px">懐疑・限界の声（何がまだできないか）</h3>
       <table class="kanten">
         <tr><th>発信者</th><th>指摘</th></tr>
-        <tr><td>村上ゆういち<br><span style="color:var(--sub);font-size:12.5px">@Jeanscpa</span></td><td>読み取りには対応しているが<b>書き込みの権限が無い</b>。請求書発行・取引登録・自動経理登録もできない点を含めて、freee-mcp全体に批判的</td></tr>
-        <tr><td>米世毅<br><span style="color:var(--sub);font-size:12.5px">@TakeshiYonese</span></td><td>待ち焦がれた申告書のAPI開放で<b>「第一歩」</b>。今後「入力も」という要望は当然出てくる</td></tr>
-        <tr><td>M.Fukahori<br><span style="color:var(--sub);font-size:12.5px">@FukahoriTax</span></td><td>各帳票と値を<b>XMLで返すだけ</b>で、型化された何かではなかった（＝解釈は自前で書く必要がある。今日の「確信が持てない項目は読み取れずにする」ルールはこのため）</td></tr>
-        <tr><td>エイマエダケイタ<br><span style="color:var(--sub);font-size:12.5px">@keitazeirishi</span></td><td><b>電子申告未対応の帳票は見られない</b>。MCPでも動くが、APIを確認してシステム化する方がよさそう</td></tr>
-        <tr><td>葵<br><span style="color:var(--sub);font-size:12.5px">@aoitax_azuki</span></td><td>freee会計を使っていればfreee申告にほぼ数字が飛ぶので、<b>法人税APIは使う気がない</b>（＝既存連携で足りている層は動かない）</td></tr>
-        <tr><td>浦口豪太<br><span style="color:var(--sub);font-size:12.5px">@uraguchigotax</span></td><td>組織再編やグループ法人には非対応だから中小企業向け。そもそも<b>日本の中小企業の90%はAI申告の土台にすら上がっていない</b></td></tr>
+        <tr><td>村上ゆういち<br><span style="color:var(--sub);font-size:12.5px">@Jeanscpa</span><br><a href="https://x.com/Jeanscpa/status/2093233726880936189" target="_blank" rel="noopener" style="font-size:12.5px">元ポスト① ↗</a><br><a href="https://x.com/Jeanscpa/status/2093506690541060136" target="_blank" rel="noopener" style="font-size:12.5px">元ポスト② ↗</a></td><td>読み取りには対応しているが<b>書き込みの権限が無い</b>。請求書発行・取引登録・自動経理登録もできない点を含めて、freee-mcp全体に批判的</td></tr>
+        <tr><td>米世毅<br><span style="color:var(--sub);font-size:12.5px">@TakeshiYonese</span><br><a href="https://x.com/TakeshiYonese/status/2093228286734426443" target="_blank" rel="noopener" style="font-size:12.5px">元ポスト ↗</a></td><td>待ち焦がれた申告書のAPI開放で<b>「第一歩」</b>。今後「入力も」という要望は当然出てくる</td></tr>
+        <tr><td>M.Fukahori<br><span style="color:var(--sub);font-size:12.5px">@FukahoriTax</span><br><a href="https://x.com/FukahoriTax/status/2093301763332022408" target="_blank" rel="noopener" style="font-size:12.5px">元ポスト ↗</a></td><td>各帳票と値を<b>XMLで返すだけ</b>で、型化された何かではなかった（＝解釈は自前で書く必要がある。今日の「確信が持てない項目は読み取れずにする」ルールはこのため）</td></tr>
+        <tr><td>エイマエダケイタ<br><span style="color:var(--sub);font-size:12.5px">@keitazeirishi</span><br><a href="https://x.com/keitazeirishi/status/2094194287730995286" target="_blank" rel="noopener" style="font-size:12.5px">元ポスト ↗</a></td><td><b>電子申告未対応の帳票は見られない</b>。MCPでも動くが、APIを確認してシステム化する方がよさそう</td></tr>
+        <tr><td>葵<br><span style="color:var(--sub);font-size:12.5px">@aoitax_azuki</span><br><a href="https://x.com/aoitax_azuki/status/2093280682462282224" target="_blank" rel="noopener" style="font-size:12.5px">元ポスト ↗</a></td><td>freee会計を使っていればfreee申告にほぼ数字が飛ぶので、<b>法人税APIは使う気がない</b>（＝既存連携で足りている層は動かない）</td></tr>
+        <tr><td>浦口豪太<br><span style="color:var(--sub);font-size:12.5px">@uraguchigotax</span><br><a href="https://x.com/uraguchigotax/status/2093250324295467358" target="_blank" rel="noopener" style="font-size:12.5px">元ポスト ↗</a></td><td>組織再編やグループ法人には非対応だから中小企業向け。そもそも<b>日本の中小企業の90%はAI申告の土台にすら上がっていない</b></td></tr>
       </table>
 
       <div class="box tip">
@@ -1219,7 +1219,7 @@ freee-mcpの更新: 済み ／ 未
           <li><b>「書き込めないから使えない」への答えは、チェック専用と割り切ること</b>。限界（読み取りのみ・XML・電子申告未対応帳票・消費税と個人は対象外）を正直に書いたうえでの実装レポートは、まだ誰も出していません。恩送りメモやXの投稿で最初に出す価値があります</li>
         </ul>
       </div>
-      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">出典: X検索「freee申告 API」「freee申告 法人税API」「freee-mcp 申告」（2026-09-01時点・最新順・約30ポスト）。引用は要旨。発信者名は投稿時の表示名です。</p>
+      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">出典: X検索「freee申告 API」「freee申告 法人税API」「freee-mcp 申告」（2026-09-01時点・最新順・約30ポスト）。引用は要旨。発信者名は投稿時の表示名です。各行の「元ポスト」リンクからXの原文に飛べます。</p>
     </section>
 
     <!-- ===== 確認テスト ===== -->
