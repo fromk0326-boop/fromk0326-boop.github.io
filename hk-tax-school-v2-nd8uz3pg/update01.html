@@ -159,6 +159,29 @@
   .st.soon{background:var(--amber-soft);color:#a86c00}
   .st.dev{background:var(--bg);color:var(--sub);border:1px solid var(--line)}
 
+  /* ===== タイムライン ===== */
+  .tl{margin:14px 0 4px;padding-left:20px;border-left:2px solid var(--line)}
+  .tl-item{position:relative;padding:0 0 14px 14px}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-item::before{
+    content:"";position:absolute;left:-27px;top:6px;
+    width:10px;height:10px;border-radius:99px;
+    background:var(--line);border:2px solid var(--card);
+  }
+  .tl-item.done::before{background:var(--green)}
+  .tl-item.next::before{background:var(--brand)}
+  .tl-when{font-size:12.5px;font-weight:800;color:var(--sub);letter-spacing:.02em}
+  .tl-item.done .tl-when{color:#0a7d54}
+  .tl-item.next .tl-when{color:var(--brand)}
+  .tl-what{font-size:14.5px;line-height:1.7}
+  .tl-what b{color:var(--brand)}
+  .tl-note{font-size:12.5px;color:var(--sub)}
+  .tl-here{
+    margin:2px 0 14px -34px;padding:5px 12px;
+    background:var(--brand);color:#fff;border-radius:99px;
+    font-size:12.5px;font-weight:800;display:inline-block;
+  }
+
   /* ===== 完了チェック ===== */
   .check{
     display:flex;align-items:center;gap:12px;margin-top:18px;
@@ -301,12 +324,12 @@
     <section class="hero" id="hero">
       <span class="badge">アプデ① / 全シリーズ　🆕 2026-09-08 更新</span>
       <h1>会計ソフトが、いっせいに<br><em>「AIエージェント」を出してきた。</em></h1>
-      <p class="lead">2026年の夏から秋にかけて、<b>freee・マネーフォワード・TKC・弥生</b>が相次いで会計事務所向けのAIエージェントを発表しました。「もう会計ソフトがやってくれるなら、自分でClaude Codeを組む意味はある？」という質問が届いています。結論から言うと<b>意味はあります。ただし役割が変わります</b>。このアプデ回では、①各社が何をどこまで出したのかを1枚の表にして、②ブートキャンプの10回で自分たちが何を積み上げてきたのかを棚卸しして、③その2つを重ねて<b>「自分の事務所の次の一手」</b>を決めます。手順を新しく覚える回ではなく、<b>地図を配る回</b>です。</p>
+      <p class="lead">2026年の夏から秋にかけて、<b>freee・マネーフォワード・TKC・弥生</b>が相次いで会計事務所向けのAIエージェントを発表しました。「もう会計ソフトがやってくれるなら、自分でClaude Codeを組む意味はある？」という質問が届いています。結論から言うと<b>意味はあります。ただし役割が変わります</b>。この回では、①各社が<b>いつ・何ができて・何ができないのか</b>を整理し、②ブートキャンプ10回の積み上げを棚卸しして、③その2つを重ねて<b>自分の事務所の次の一手</b>を決めます。<b>地図を配る回</b>です。</p>
 
       <div class="goal">
         <h3>🎯 この回を終えると…</h3>
         <ul>
-          <li>freee・MF・TKC・弥生の<b>AIエージェントが「誰向けに・何を・いつから」</b>やってくれるのかを、自分の言葉で説明できます</li>
+          <li>freee・MF・TKC・弥生のエージェントが<b>いつ来て・何ができて・何ができないのか</b>を、自分の言葉で説明できます</li>
           <li><b>会計ソフトのエージェント</b>・<b>Chrome拡張</b>・<b>Claude Code</b>という<b>3層の使い分け</b>が言えるようになります（ソフトの中は何を任せて、外は何を自分で組むか）</li>
           <li>ブートキャンプ第1回〜第10回の積み上げを1枚で見返して、<b>自分が今どこまで来ていて、どこが抜けているか</b>が分かります</li>
           <li>Claudeと一緒に<b>自分の事務所の棚卸しと「次の一手3つ」</b>を出せます</li>
@@ -330,68 +353,98 @@
         </div>
       </div>
 
-      <p>まず全体像です。<b>2026年9〜10月に、主要4社が事務所向け・企業向けのAIエージェントを立ち上げます</b>。すでに使えるものが1つ、9月末から順次が2つ、β版が1つ、時期非公開が1つ。名前が似ていて混乱しやすいので、<b>「誰向けか」で分けて</b>並べます。</p>
+      <p>2026年の夏から秋にかけて、<b>主要4社がいっせいにAIエージェントを出してきました</b>。まず「いつ・何が来るか」を時系列で押さえます。</p>
 
-      <h3 style="margin:22px 0 6px;font-size:17px">A. 会計事務所向け（＝みなさんが使う側）</h3>
+      <h3 style="margin:24px 0 10px;font-size:17px">🗓 リリースのタイムライン</h3>
+      <div class="tl">
+        <div class="tl-item done">
+          <div class="tl-when">2026-06-24</div>
+          <div class="tl-what"><b>TKC</b>　OMSエージェントを一部事務所へ先行提供</div>
+        </div>
+        <div class="tl-item done">
+          <div class="tl-when">2026-08-07</div>
+          <div class="tl-what"><b>弥生</b>　記帳代行AI β版スタート<span class="tl-note">（無料・申込は9/14まで）</span></div>
+        </div>
+        <div class="tl-item done">
+          <div class="tl-when">2026-08-25</div>
+          <div class="tl-what"><b>freee</b>　Agent Hub を Advisor Day で案内</div>
+        </div>
+        <div class="tl-item done">
+          <div class="tl-when">2026-08-28</div>
+          <div class="tl-what"><b>freee</b>　月次チェック・申告書チェック<span class="tl-note">（無償・今日から使える）</span></div>
+        </div>
+        <div class="tl-here">▼ いまここ（2026-09-09）</div>
+        <div class="tl-item next">
+          <div class="tl-when">2026-09-15</div>
+          <div class="tl-what"><b>freee</b>　記帳・ルール整備エージェント<span class="tl-note">（有償）</span></div>
+        </div>
+        <div class="tl-item next">
+          <div class="tl-when">2026年9月〜</div>
+          <div class="tl-what"><b>TKC</b>　OMSエージェントの対象拡大／FXエージェント（顧問先向け）</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-when">2026年10月ごろ</div>
+          <div class="tl-what"><b>弥生</b>　記帳代行AI 正式版</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-when">2027年1月</div>
+          <div class="tl-what"><b>TKC</b>　全会員事務所へ提供</div>
+        </div>
+      </div>
+      <p style="margin:10px 0 0;font-size:13px;color:var(--sub)">※ マネーフォワード AI Cowork（顧問先向け）は先行受付中で、提供時期は未公表です。</p>
+
+      <h3 style="margin:30px 0 8px;font-size:17px">⭕ できること　❌ できないこと</h3>
+      <p style="margin:0 0 4px;font-size:13.5px;color:var(--sub)">A. 会計事務所向け（＝みなさんが使う側）</p>
       <div class="scrollx">
       <table class="kanten">
-        <tr><th>提供</th><th>名前</th><th>できること</th><th>時期</th></tr>
+        <tr><th>機能</th><th>⭕ できる</th><th>❌ できない</th></tr>
         <tr>
-          <td><b>freee</b></td>
-          <td><b>顧問先管理<br>AIエージェント</b><br><span style="color:var(--sub);font-size:12.5px">無償で使える2つ</span></td>
-          <td><b>月次チェックエージェント</b>（BS・PLと消費税区分別表を見て、残高のずれや二重記帳の可能性を指摘し、対応案まで出す）／<b>申告書チェックエージェント</b>（freee申告の法人税申告書類と、freee会計のBS・PLを横断点検して、記載漏れ・数値差異を根拠つきで一覧にする）</td>
-          <td><span class="st now">提供中・無償</span><br><span style="font-size:12.5px;color:var(--sub)">2026-08-28リリース</span></td>
+          <td><b>freee</b><br>月次チェック<br>申告書チェック<br><span class="st now">無償・提供中</span></td>
+          <td>BS・PLと消費税区分を横断点検して残高ずれを指摘。申告書とBS・PLを突合して記載漏れを根拠つきで一覧化</td>
+          <td>freeeの外のデータは見ない。修正を確定するのは人。他社ソフトの顧問先には使えない</td>
         </tr>
         <tr>
-          <td><b>freee</b></td>
-          <td><b>顧問先管理<br>AIエージェント</b><br><span style="color:var(--sub);font-size:12.5px">有償の2つ</span></td>
-          <td><b>記帳エージェント</b>（証憑・明細から自動記帳と自動紐付け。AI推測確度の低いものだけ人の確認・修正へ誘導し、二重記帳リスクも下げる）／<b>ルール整備エージェント</b>（記帳が終わったあとに稼働し、記帳結果をもとに<b>次回以降使えるルールの候補を提案</b>。承認するだけでルールが育つ。記帳エージェント内で提供）</td>
-          <td><span class="st soon">2026-09-15〜</span><br><span style="font-size:12.5px;color:var(--sub)">有償<br>アドバイザー制度加入者は<br>初月50%割引</span></td>
+          <td><b>freee</b><br>記帳<br>ルール整備<br><span class="st soon">9/15・有償</span></td>
+          <td>証憑・明細から自動記帳し、確度の低いものだけ人へ回す。記帳結果から次回以降のルール候補を提案</td>
+          <td>ルールの承認は人。アドバイザー制度への加入が前提（初月50%割引）</td>
         </tr>
         <tr>
-          <td><b>freee</b></td>
-          <td><b>freee Agent Hub</b><br><span style="color:var(--sub);font-size:12.5px">デスクトップアプリ</span></td>
-          <td><b>チャットで会話しながら、ノーコードで自分用のカスタムエージェントを作れる</b>のが柱。事務所独自の業務ルールに合わせて組める（例：「毎月1日に事務所規定でルール提案して」）。もうひとつの柱が<b>顧問先ごとの完全分離</b>で、ログイン情報・作業履歴・ファイルを顧問先ごとの「個室」に閉じ込め、情報の取り違え事故を構造的に防ぐ設計</td>
-          <td><span class="st now">リリース</span><br><span style="font-size:12.5px;color:var(--sub)">2026-08-25 Advisor Dayで案内<br>初月50%割引<br>（従量課金分は対象外）</span></td>
+          <td><b>freee</b><br>Agent Hub<br><span class="st now">リリース</span></td>
+          <td>チャットしながらノーコードで自分用エージェントを作れる。顧問先ごとに情報を完全分離して取り違えを防ぐ</td>
+          <td>顧問先をまたぐ実行、Google等の外部連携は「今後提供予定」</td>
         </tr>
         <tr>
-          <td><b>TKC</b></td>
-          <td><b>OMSエージェント</b><br><span style="color:var(--sub);font-size:12.5px">OMSクラウド</span></td>
-          <td><b>OMSに溜まったデータを自然言語で検索・抽出</b>する基本機能と、<b>議事録スキル</b>（応対履歴を指定レイアウトに要約して所内共有）。巡回監査の効率化、所内ナレッジの再利用、関与先からの問い合わせへの回答ドラフト作成に使う想定。相続税の<b>預金移動表スキル</b>は一部事務所にパイロット提供</td>
-          <td><span class="st soon">先行提供中</span><br><span style="font-size:12.5px;color:var(--sub)">2026-06-24 一部事務所へ先行<br>2026年9月〜 対象拡大<br><b style="color:var(--brand)">2027年1月 全会員事務所</b></span></td>
+          <td><b>TKC</b><br>OMSエージェント<br><span class="st soon">先行提供中</span></td>
+          <td>OMSに溜まったデータを自然言語で検索・要約。議事録スキルで応対履歴を所定レイアウトに要約</td>
+          <td>参照先はOMS内のデータに限定（Platform Native AI）。全事務所に行き渡るのは2027年1月</td>
         </tr>
         <tr>
-          <td><b>弥生</b></td>
-          <td><b>弥生の記帳代行AI<br>（β版）</b><br><span style="color:var(--sub);font-size:12.5px">弥生PAP会員向け</span></td>
-          <td>領収書・請求書などの証憑を<b>自動で分類してから仕訳を生成</b>（数分レベル）。重複チェック付き。弥生会計AEへ連携。正式版は<b>従来の記帳代行と比べて20%以上のコストダウン</b>を見込むと発表</td>
-          <td><span class="st now">β提供中</span><br><span style="font-size:12.5px;color:var(--sub)">2026-08-07開始・無料<br>申込は9/14まで<br>正式版は10月頃</span></td>
+          <td><b>弥生</b><br>記帳代行AI<br><span class="st now">β提供中</span></td>
+          <td>証憑を自動分類してから仕訳を生成（数分）。重複チェック付きで弥生会計AEへ連携</td>
+          <td>まだβ版。PAP会員・固定IPなどの申込条件あり。正式版は10月ごろ</td>
         </tr>
       </table>
       </div>
-      <p style="margin:2px 0 0;font-size:13px;color:var(--sub)">※ 弥生のβ版は申込条件があります（PAP会員・グローバルIPアドレスの固定など）。参加を考える方は必ず公式の募集要項をご確認ください。</p>
-      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ TKCの先行提供は<b>手を挙げた順ではありません</b>。TKC側が対象事務所を選び、担当SCGから個別に案内する方式です。選定の目安として、CDB（関与先DB）への関与先情報の登録、SPS（スケジューラ）・DRS（業務日報）・WSC・FMS（報酬管理）の利用、FXクラウドの導入社数が挙げられています。先行提供期間中（2026年6月〜9月末）のトークン料金はTKCが負担し、利用状況のモニタリングが行われます。</p>
+      <p style="margin:6px 0 0;font-size:13px;color:var(--sub)">※ TKCの先行提供は<b>手を挙げた順ではありません</b>。CDBへの関与先登録、SPS・DRS・WSC・FMSの利用、FXクラウドの導入社数などを目安にTKC側が対象を選びます。<b>データが溜まっている事務所からです</b>。</p>
 
-      <h3 style="margin:26px 0 6px;font-size:17px">B. 事業者（＝顧問先）向け</h3>
+      <p style="margin:22px 0 4px;font-size:13.5px;color:var(--sub)">B. 事業者（＝顧問先）向け</p>
       <div class="scrollx">
       <table class="kanten">
-        <tr><th>提供</th><th>名前</th><th>できること</th><th>時期</th></tr>
+        <tr><th>機能</th><th>⭕ できる</th><th>❌ できない</th></tr>
         <tr>
-          <td><b>マネー<br>フォワード</b></td>
-          <td><b>AI Cowork</b></td>
-          <td>複数のエージェントが連携してバックオフィス業務を進める構想。<b>締切から逆算した業務の提案</b>、社内からの問い合わせに答える社内ヘルプデスク、そして<b>権限とログのガバナンス機能</b>が前面に出ています。中堅・大手企業を想定</td>
-          <td><span class="st soon">近日提供</span><br><span style="font-size:12.5px;color:var(--sub)">先行受付中</span></td>
+          <td><b>マネーフォワード</b><br>AI Cowork<br><span class="st soon">近日提供</span></td>
+          <td>複数エージェントが連携してバックオフィスを進める構想。締切からの逆算提案、社内ヘルプデスク、権限とログの管理</td>
+          <td>提供時期は未公表。中堅・大手企業を想定した設計</td>
         </tr>
         <tr>
-          <td><b>TKC</b></td>
-          <td><b>FXエージェント</b><br><span style="color:var(--sub);font-size:12.5px">FXクラウドシリーズ</span></td>
-          <td>仕訳の自動化、インターネットバンキング連携、<b>Web掲載インボイスの自動回収</b>、要注意仕訳の抽出、経営計画・資金繰りの支援</td>
-          <td><span class="st soon">2026年9月〜予定</span><br><span style="font-size:12.5px;color:var(--sub)">OMSエージェントの<br>拡大提供とあわせて</span></td>
+          <td><b>TKC</b><br>FXエージェント<br><span class="st soon">2026年9月〜</span></td>
+          <td>仕訳の自動化、ネットバンキング連携、Web掲載インボイスの自動回収、要注意仕訳の抽出、資金繰り支援</td>
+          <td>FXクラウドシリーズの利用が前提</td>
         </tr>
         <tr>
-          <td><b>freee</b></td>
-          <td><b>AIアシスタント</b></td>
-          <td>従業員が使う入口側。従業員向けに8種（出張申請・経費精算・支払依頼・勤怠・稟議・工数・見積・受注報告）、管理者向けに8種（データ変換・申請チェック・レポート・予算管理・前払費用・取引先登録・入社登録・データ作成）</td>
-          <td><span class="st now">提供中</span></td>
+          <td><b>freee</b><br>AIアシスタント<br><span class="st now">提供中</span></td>
+          <td>従業員向け8種（経費精算・勤怠・稟議ほか）、管理者向け8種（レポート・予算管理・取引先登録ほか）</td>
+          <td>あくまでfreee内の入口。事務所側の記帳・チェックとは別物</td>
         </tr>
       </table>
       </div>
@@ -399,11 +452,11 @@
       <div class="box tip">
         <div class="box-h">💡 畠山の読み解き（ここだけ覚えて帰ってもOK）</div>
         <ul>
-          <li><b>今日ノーリスクで触れるのは、freeeの無償2つ（月次チェック・申告書チェック）と弥生のβ版</b>。記帳・ルール整備は9/15から有償、Agent Hubはアドバイザー制度加入が前提、TKCは順番待ちです。ニュースの熱量と、明日の実務で使える量には差があります。<b>まず無償の2つを1社で回してみる</b>のが、いちばん安い試し方です</li>
-          <li><b>どの会社のエージェントも「そのソフトの中の業務」に閉じています</b>。TKCは<b>AIが参照するデータをOMSに蓄積されたデータに限定する設計</b>だと明言しています（Platform Native AI）。正確性と機密性のためで、設計としては妥当です。freeeも中心はfreee会計・freee申告のデータで、Agent Hubの<b>顧問先横断の実行やGoogle等の外部連携は「今後提供予定」</b>と注記されています。<b>顧問先ごとにソフトがバラバラな事務所ほど、ソフト任せでは全体が揃いません</b></li>
-          <li><b>「AIの前に、データ」です</b>。TKCが先行提供の対象を「データが蓄積されている事務所から」にしているのは、そのまま自分の事務所にも当てはまります。日報も応対履歴も紙とメールの中にしかない事務所は、どのベンダーのエージェントが来ても出力が出ません。<b>この順番は逆にできません</b></li>
-          <li><b>全社が「人が最後に確認する」を明記しています</b>。freeeのヘルプにも、AIエージェントの結果は税理士などの専門家による判断に代わるものではない、という趣旨が書かれています。<b>チェックと署名の責任は動いていません</b>（第9回でやった話とまったく同じです）</li>
-          <li><b>各社が力を入れているのは「記帳」と「チェック」</b>。つまり、ブートキャンプの第3回・第5回でやった領域です。ここは今後ソフト標準に寄っていきます。freeeの<b>ルール整備エージェント</b>にいたっては、記帳結果からルール候補をAIが提案して人が承認する、という形まで来ました。<b>第3回でやった「自動登録ルールを育てる」がそのまま標準機能になった</b>と考えてください。一方で<b>第7回（顧問先ごとのダッシュボード）・第9回（申告のまわり）のような「事務所ごとに形が違う仕事」は、標準機能になりにくい</b>ままです</li>
+          <li><b>今日ノーリスクで触れるのは、freeeの無償2つと弥生のβ版だけ</b>です。記帳・ルール整備は9/15から有償、TKCは順番待ち。<b>ニュースの熱量と、明日の実務で使える量は違います</b></li>
+          <li><b>どの会社も「そのソフトの中」に閉じています</b>。TKCはAIの参照先をOMS内に限ると明言（Platform Native AI）、freeeも外部連携は「今後提供予定」。<b>顧問先ごとにソフトが違う事務所ほど、ソフト任せでは全体が揃いません</b></li>
+          <li><b>「AIの前に、データ」です</b>。TKCが対象を「データが溜まっている事務所から」にしているのは、そのまま自分の事務所にも当てはまります。<b>この順番は逆にできません</b></li>
+          <li><b>各社が取りに来ているのは「記帳」と「チェック」</b>＝第3回・第5回の領域です。freeeのルール整備エージェントは、<b>第3回でやった「自動登録ルールを育てる」がそのまま標準機能になった</b>もの。一方で第7回・第9回のような<b>事務所ごとに形が違う仕事は標準化されにくい</b>ままです</li>
+          <li><b>全社が「最後は人が確認する」を明記</b>しています。チェックと署名の責任は動いていません</li>
         </ul>
       </div>
 
@@ -447,36 +500,31 @@
 
       <div class="scrollx">
       <table class="kanten">
-        <tr><th>回</th><th>テーマ</th><th>到達点（できるようになったこと）</th><th>配布物</th></tr>
+        <tr><th>回</th><th>この回で作った状態</th><th>配布物</th></tr>
         <tr>
           <td><b><a href="index.html">第1回</a></b><br><span style="font-size:12.5px;color:var(--sub)">🏅自動起票デビュー</span></td>
-          <td><b>freee × Claude Code<br>自動起票デビュー</b></td>
-          <td>① freeeアカウントを作る ② 口座・カードを連携する ③ Claude Codeを自分のPCに入れる ④ freee MCPでつないで、初めての自動起票<br><b>＝「AIが会計ソフトを触れる」状態を作った回</b></td>
+          <td><b>「AIが会計ソフトを触れる」状態</b><br>freeeで口座・カードを連携し、Claude Codeを自分のPCに入れて、freee MCPでつないで初めての自動起票まで</td>
           <td>🎁 AI事務所テンプレート一式<br><span style="font-size:12.5px;color:var(--sub)">CLAUDE.md・ルール・hooks・メモリ雛形</span></td>
         </tr>
         <tr>
           <td><b><a href="vol03.html">第3回</a></b><br><span style="font-size:12.5px;color:var(--sub)">🏅自動記帳デビュー</span></td>
-          <td><b>未処理明細の登録<br>× OCR起票</b></td>
-          <td>① 環境チェック ② 会計ソフトとMCP連携（freee／MF両対応） ③ <b>勘定科目ルールの2段階構造</b>（全社共通ルール＋顧問先ごとルール） ④ 未処理明細をまとめて登録 ⑤ 請求書をOCRして起票<br><b>＝「毎月の作業をAIに渡せる」状態を作った回</b></td>
+          <td><b>「毎月の作業をAIに渡せる」状態</b><br>勘定科目ルールを2段階（全社共通＋顧問先ごと）で設計し、未処理明細の一括登録と請求書のOCR起票まで</td>
           <td>🎁 ナンピ（配布キット）<br>🎁 MF一括選択Chrome拡張</td>
         </tr>
         <tr>
           <td><b><a href="vol05.html">第5回</a></b><br><span style="font-size:12.5px;color:var(--sub)">🏅レビューまで任せる人</span></td>
-          <td><b>記帳自動化を<br>「レビューできる仕組み」に育てる</b></td>
-          <td>① 配布キットを最新化 ② 自動記帳を型で回す ③ <b>仕訳帳のAIレビュー</b> ④ <b>消費税区分のAIレビュー</b> ⑤ <b>レビュー観点をスキルに育てる</b><br><b>＝「AIの仕事をAIに見張らせる」状態を作った回</b></td>
+          <td><b>「AIの仕事をAIに見張らせる」状態</b><br>仕訳帳と消費税区分をAIにレビューさせ、レビュー観点をスキルとして事務所に貯めるところまで</td>
           <td>🎁 レビュー観点表<br>🎁 スキル化の指示文</td>
         </tr>
         <tr>
           <td><b><a href="vol07.html">第7回</a></b><br><span style="font-size:12.5px;color:var(--sub)">🏅月次を届ける人</span></td>
-          <td><b>月次が締まったら、<br>ダッシュボードが自動で届く</b></td>
-          <td>② 月次データをAPIで取る ③ 1社分のダッシュボードを作る ④ <b>顧問先ごとに量産する型</b> ⑤ 毎月自動で回す（スケジュール実行）<br><b>＝「内部の効率化」から「顧問先に届ける価値」へ出た回</b></td>
+          <td><b>「顧問先に届ける」状態</b><br>月次データをAPIで取り、顧問先ごとのダッシュボードを量産して、毎月自動で回すところまで</td>
           <td>🎁 ダッシュボード生成の型</td>
         </tr>
         <tr>
           <td><b><a href="vol09.html">第9回</a></b><br><span style="font-size:12.5px;color:var(--sub)">🏅申告のまわりを固める人</span></td>
-          <td><b>AIが申告書を作る日まで、<br>申告の「まわり」を全部任せる</b></td>
-          <td>② 申告書PDFの結合・リネーム ③ 勘定科目内訳明細書のドラフト ④ 提出前のAIレビュー ⑤ e-Tax・eLTAXの棚卸し<br><b>🔄 第10回（9/2）で②③を「freee申告 法人税API」版に差し替え</b>（8/28のAPI一般公開を受けて、PDFを開かずに前年比較つきセルフレビューへ）<br><b>＝「チェックする側の型」を先に固めた回</b></td>
-          <td>🗺 税務AI自動化の現在地マップ<br>🐦 XリサーチまとめS</td>
+          <td><b>「チェックする側の型」を先に固めた状態</b><br>申告書PDFの結合・内訳明細のドラフト・提出前レビュー・e-Tax棚卸し。第10回で法人税APIを使った前年比較つきレビューに差し替え済み</td>
+          <td>🗺 税務AI自動化の現在地マップ<br>🐦 Xリサーチまとめ</td>
         </tr>
       </table>
       </div>
@@ -630,39 +678,35 @@
 
       <div class="scrollx">
       <table class="kanten">
-        <tr><th>領域</th><th>会計ソフトのエージェント</th><th>Claude Code（このブートキャンプ）</th><th>これからの構え</th></tr>
+        <tr><th>領域</th><th>ソフトのエージェント</th><th>Claude Code</th></tr>
         <tr>
           <td><b>記帳・OCR起票</b></td>
-          <td><b>◎ 得意</b>。各社が今いちばん力を入れている。自社データの中で完結する</td>
-          <td>○ できる。ソフトをまたげる・ルールを自分で設計できる</td>
-          <td><b>ソフト標準に寄せていく</b>。ただしルール設計を理解している人が強い</td>
+          <td><b>◎</b> 各社がいちばん力を入れている</td>
+          <td>○ ソフトをまたげる／ルールを自分で設計できる</td>
         </tr>
         <tr>
           <td><b>チェック・レビュー</b></td>
-          <td><b>○ 出てきた</b>。freeeの月次チェック・申告書チェック、TKCの国税庁チェックリスト照合など。ただし<b>観点は各社が決めたもの</b></td>
-          <td><b>◎ 得意</b>。<b>自分の事務所の観点</b>をスキルに育てられる（第5回）。前期・前々期を並べた比較も自由（第9回・第10回）</td>
-          <td><b>両方使う</b>。標準チェックを土台に、自分の観点を上乗せする</td>
+          <td>○ 出てきた。ただし<b>観点は各社が決めたもの</b></td>
+          <td><b>◎</b> <b>自分の事務所の観点</b>をスキルに育てられる</td>
         </tr>
         <tr>
-          <td><b>顧問先への<br>アウトプット</b></td>
-          <td>△ ソフトの画面・帳票の範囲に限られる</td>
-          <td><b>◎ 得意</b>。ダッシュボード・レポート・Excel一覧表を自由に作って量産・自動配信できる（第7回）</td>
-          <td><b>ここが差別化ポイント</b>。標準機能になりにくい</td>
+          <td><b>顧問先へのアウトプット</b></td>
+          <td>△ ソフトの画面・帳票の範囲まで</td>
+          <td><b>◎</b> ダッシュボード・レポートを量産して自動配信</td>
         </tr>
         <tr>
           <td><b>ソフトをまたぐ仕事</b></td>
           <td>✕ 自社データの中で閉じる</td>
-          <td><b>◎ 得意</b>。freeeもMFもExcelも横断して同じ形にできる</td>
-          <td><b>顧問先のソフトがバラバラな事務所ほど価値が大きい</b></td>
+          <td><b>◎</b> freeeもMFもExcelも横断できる</td>
         </tr>
         <tr>
           <td><b>税務判断・署名</b></td>
-          <td>✕ 各社とも「専門家の判断に代わるものではない」と明記</td>
+          <td>✕ 「専門家の判断に代わるものではない」と明記</td>
           <td>✕ 同じ。AIは案を出すだけ</td>
-          <td><b>変わらず人の仕事</b>。AIの成果物を速く正確にチェックする力が腕の見せどころ</td>
         </tr>
       </table>
       </div>
+      <p style="margin:6px 0 0;font-size:13px;color:var(--sub)">※ 構えはひとつです。<b>下の段（記帳）はソフトに寄せて、上の段（観点と届け方）を自分で育てる</b>。</p>
 
       <h3 style="margin:32px 0 8px;font-size:17px">🧭 畠山が考えている、最終的な着地点</h3>
 
@@ -687,16 +731,14 @@
       <h3 style="margin:28px 0 6px;font-size:17px">クラウド会計の「中」での使い分け</h3>
       <div class="scrollx">
       <table class="kanten">
-        <tr><th>道具</th><th>向いている仕事</th><th>なぜそっちなのか</th></tr>
+        <tr><th>道具</th><th>向いている仕事</th></tr>
         <tr>
           <td><b>Chrome拡張</b><br><span style="color:var(--sub);font-size:12.5px">第4回・第9回</span></td>
-          <td>入力補助（勘定科目の選択など）、帳簿上の<b>マイナス残高のハイライト</b></td>
-          <td>画面を見ながら人が判断する作業だから。<b>拡張で画面に情報を足すのがいちばん速い</b></td>
+          <td>入力補助（勘定科目の選択など）、帳簿上の<b>マイナス残高のハイライト</b><br><span style="color:var(--sub);font-size:13px">画面を見ながら人が判断する作業。画面に情報を足すのがいちばん速い</span></td>
         </tr>
         <tr>
           <td><b>Claude Code</b><br><span style="color:var(--sub);font-size:12.5px">第3回・第5回</span></td>
-          <td>記帳、仕訳チェック、申告書チェック</td>
-          <td>まとまった量を処理する作業だから。<b>ログを残しながら回せる</b>ので、あとから「何をどう判断したか」を追える</td>
+          <td>記帳、仕訳チェック、申告書チェック<br><span style="color:var(--sub);font-size:13px">まとまった量を処理する作業。ログを残しながら回せるので、あとから判断を追える</span></td>
         </tr>
       </table>
       </div>
