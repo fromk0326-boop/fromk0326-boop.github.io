@@ -159,28 +159,35 @@
   .st.soon{background:var(--amber-soft);color:#a86c00}
   .st.dev{background:var(--bg);color:var(--sub);border:1px solid var(--line)}
 
-  /* ===== タイムライン ===== */
-  .tl{margin:14px 0 4px;padding-left:20px;border-left:2px solid var(--line)}
-  .tl-item{position:relative;padding:0 0 14px 14px}
-  .tl-item:last-child{padding-bottom:0}
-  .tl-item::before{
-    content:"";position:absolute;left:-27px;top:6px;
-    width:10px;height:10px;border-radius:99px;
-    background:var(--line);border:2px solid var(--card);
+  /* ===== タイムライン（横軸＝時間 / 縦軸＝提供元） ===== */
+  .gantt{
+    display:grid;
+    grid-template-columns:112px repeat(8,minmax(84px,1fr));
+    gap:8px 4px;
+    align-items:center;
+    min-width:820px;
+    margin:14px 0 6px;
   }
-  .tl-item.done::before{background:var(--green)}
-  .tl-item.next::before{background:var(--brand)}
-  .tl-when{font-size:12.5px;font-weight:800;color:var(--sub);letter-spacing:.02em}
-  .tl-item.done .tl-when{color:#0a7d54}
-  .tl-item.next .tl-when{color:var(--brand)}
-  .tl-what{font-size:14.5px;line-height:1.7}
-  .tl-what b{color:var(--brand)}
-  .tl-note{font-size:12.5px;color:var(--sub)}
-  .tl-here{
-    margin:2px 0 14px -34px;padding:5px 12px;
-    background:var(--brand);color:#fff;border-radius:99px;
-    font-size:12.5px;font-weight:800;display:inline-block;
+  .g-h{
+    font-size:12px;font-weight:800;color:var(--sub);
+    text-align:center;line-height:1.35;align-self:end;
+    padding-bottom:6px;border-bottom:1px solid var(--line);
   }
+  .g-h.g-name{text-align:left}
+  .g-h.now{color:var(--brand);border-bottom:2px solid var(--brand)}
+  .g-h.now span{display:block;font-size:11px}
+  .g-name{grid-column:1;font-size:13.5px;font-weight:800}
+  .g-name small{display:block;font-size:11.5px;font-weight:600;color:var(--sub)}
+  .g-bar{
+    font-size:12.5px;font-weight:700;line-height:1.5;
+    background:var(--brand);color:#fff;
+    border-radius:99px;padding:6px 10px;
+    text-align:center;white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis;
+  }
+  .g-bar.soft{background:var(--brand-soft);color:var(--brand)}
+  .g-bar.cc{background:var(--green)}
+  .g-bar.dash{background:transparent;color:var(--sub);border:1px dashed var(--line);font-weight:600}
 
   /* ===== 完了チェック ===== */
   .check{
@@ -355,43 +362,39 @@
 
       <p>2026年の夏から秋にかけて、<b>主要4社がいっせいにAIエージェントを出してきました</b>。まず「いつ・何が来るか」を時系列で押さえます。</p>
 
-      <h3 style="margin:24px 0 10px;font-size:17px">🗓 リリースのタイムライン</h3>
-      <div class="tl">
-        <div class="tl-item done">
-          <div class="tl-when">2026-06-24</div>
-          <div class="tl-what"><b>TKC</b>　OMSエージェントを一部事務所へ先行提供</div>
-        </div>
-        <div class="tl-item done">
-          <div class="tl-when">2026-08-07</div>
-          <div class="tl-what"><b>弥生</b>　記帳代行AI β版スタート<span class="tl-note">（無料・申込は9/14まで）</span></div>
-        </div>
-        <div class="tl-item done">
-          <div class="tl-when">2026-08-25</div>
-          <div class="tl-what"><b>freee</b>　Agent Hub を Advisor Day で案内</div>
-        </div>
-        <div class="tl-item done">
-          <div class="tl-when">2026-08-28</div>
-          <div class="tl-what"><b>freee</b>　月次チェック・申告書チェック<span class="tl-note">（無償・今日から使える）</span></div>
-        </div>
-        <div class="tl-here">▼ いまここ（2026-09-09）</div>
-        <div class="tl-item next">
-          <div class="tl-when">2026-09-15</div>
-          <div class="tl-what"><b>freee</b>　記帳・ルール整備エージェント<span class="tl-note">（有償）</span></div>
-        </div>
-        <div class="tl-item next">
-          <div class="tl-when">2026年9月〜</div>
-          <div class="tl-what"><b>TKC</b>　OMSエージェントの対象拡大／FXエージェント（顧問先向け）</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-when">2026年10月ごろ</div>
-          <div class="tl-what"><b>弥生</b>　記帳代行AI 正式版</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-when">2027年1月</div>
-          <div class="tl-what"><b>TKC</b>　全会員事務所へ提供</div>
+      <h3 style="margin:24px 0 6px;font-size:17px">🗓 リリースのタイムライン</h3>
+      <p style="margin:0 0 4px;font-size:13.5px;color:var(--sub)">横が時間、縦が提供元です。<b>Claude Codeだけが、最初からずっと使えます。</b></p>
+      <div class="scrollx">
+        <div class="gantt">
+          <div class="g-h g-name">提供元</div>
+          <div class="g-h">2026<br>6月</div>
+          <div class="g-h">7月</div>
+          <div class="g-h">8月</div>
+          <div class="g-h now">9月<span>▼ いま</span></div>
+          <div class="g-h">10月</div>
+          <div class="g-h">11月</div>
+          <div class="g-h">12月</div>
+          <div class="g-h">2027<br>1月</div>
+
+          <div class="g-name" style="grid-row:2">freee<small>事務所向け</small></div>
+          <div class="g-bar" style="grid-row:2;grid-column:4/10">8/28 チェック2つ（無償）　→　9/15 記帳・ルール整備（有償）</div>
+
+          <div class="g-name" style="grid-row:3">TKC<small>事務所向け</small></div>
+          <div class="g-bar soft" style="grid-row:3;grid-column:2/9">6/24 一部事務所へ先行　→　9月〜 対象を拡大</div>
+          <div class="g-bar" style="grid-row:3;grid-column:9/10">全会員へ</div>
+
+          <div class="g-name" style="grid-row:4">弥生<small>事務所向け</small></div>
+          <div class="g-bar soft" style="grid-row:4;grid-column:4/6">8/7 β版</div>
+          <div class="g-bar" style="grid-row:4;grid-column:6/10">10月ごろ 正式版</div>
+
+          <div class="g-name" style="grid-row:5">マネーフォワード<small>顧問先向け</small></div>
+          <div class="g-bar dash" style="grid-row:5;grid-column:5/10">AI Cowork ／ 近日提供予定（時期は未公表）</div>
+
+          <div class="g-name" style="grid-row:6">Claude Code<small>このブートキャンプ</small></div>
+          <div class="g-bar cc" style="grid-row:6;grid-column:2/10">最初からずっと使える（ソフトをまたぐ・事務所ごとの型を育てる）</div>
         </div>
       </div>
-      <p style="margin:10px 0 0;font-size:13px;color:var(--sub)">※ マネーフォワード AI Cowork（顧問先向け）は先行受付中で、提供時期は未公表です。</p>
+      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ freeeは8/25のAdvisor Dayで <b>Agent Hub</b>（ノーコードで自分用エージェントを作れるデスクトップアプリ）もあわせて案内しています。TKCは<b>顧問先向けのFXエージェントも2026年9月〜</b>の予定です。</p>
 
       <h3 style="margin:30px 0 8px;font-size:17px">⭕ できること　❌ できないこと</h3>
       <p style="margin:0 0 4px;font-size:13.5px;color:var(--sub)">A. 会計事務所向け（＝みなさんが使う側）</p>
@@ -399,19 +402,9 @@
       <table class="kanten">
         <tr><th>機能</th><th>⭕ できる</th><th>❌ できない</th></tr>
         <tr>
-          <td><b>freee</b><br>月次チェック<br>申告書チェック<br><span class="st now">無償・提供中</span></td>
-          <td>BS・PLと消費税区分を横断点検して残高ずれを指摘。申告書とBS・PLを突合して記載漏れを根拠つきで一覧化</td>
-          <td>freeeの外のデータは見ない。修正を確定するのは人。他社ソフトの顧問先には使えない</td>
-        </tr>
-        <tr>
-          <td><b>freee</b><br>記帳<br>ルール整備<br><span class="st soon">9/15・有償</span></td>
-          <td>証憑・明細から自動記帳し、確度の低いものだけ人へ回す。記帳結果から次回以降のルール候補を提案</td>
-          <td>ルールの承認は人。アドバイザー制度への加入が前提（初月50%割引）</td>
-        </tr>
-        <tr>
-          <td><b>freee</b><br>Agent Hub<br><span class="st now">リリース</span></td>
-          <td>チャットしながらノーコードで自分用エージェントを作れる。顧問先ごとに情報を完全分離して取り違えを防ぐ</td>
-          <td>顧問先をまたぐ実行、Google等の外部連携は「今後提供予定」</td>
+          <td><b>freee</b><br>顧問先管理<br>エージェント<br>＋ Agent Hub<br><span class="st now">一部は提供中</span></td>
+          <td><b>無償（提供中）</b>　月次チェック＝BS・PLと消費税区分を横断点検して残高ずれを指摘／申告書チェック＝申告書とBS・PLを突合して記載漏れを根拠つきで一覧化<br><b>有償（9/15〜）</b>　記帳＝証憑・明細から自動仕訳し、確度の低いものだけ人へ／ルール整備＝記帳結果から次回以降のルール候補を提案<br><b>Agent Hub</b>　ノーコードで自分用エージェントを作れる。顧問先ごとに情報を完全分離</td>
+          <td>freeeの外のデータは見ない。他社ソフトの顧問先には使えない。<b>顧問先をまたぐ実行とGoogle等の外部連携は「今後提供予定」</b>。修正とルールを確定するのは人。有償分はアドバイザー制度への加入が前提</td>
         </tr>
         <tr>
           <td><b>TKC</b><br>OMSエージェント<br><span class="st soon">先行提供中</span></td>
@@ -433,8 +426,8 @@
         <tr><th>機能</th><th>⭕ できる</th><th>❌ できない</th></tr>
         <tr>
           <td><b>マネーフォワード</b><br>AI Cowork<br><span class="st soon">近日提供</span></td>
-          <td>複数エージェントが連携してバックオフィスを進める構想。締切からの逆算提案、社内ヘルプデスク、権限とログの管理</td>
-          <td>提供時期は未公表。中堅・大手企業を想定した設計</td>
+          <td>「今月の経理業務をまとめて処理して」のような自然言語の指示で、経理・労務・法務にまたがる<b>複数のエージェントが連携</b>して進める。締切から逆算した「今すべき業務」の提案と、権限・ログのガバナンス機能つき</td>
+          <td>提供時期は未公表（先行受付中）。社内ヘルプデスクは「搭載予定」。<b>中堅・大手企業向け</b>の設計で、事務所側の記帳・チェックの道具ではない</td>
         </tr>
         <tr>
           <td><b>TKC</b><br>FXエージェント<br><span class="st soon">2026年9月〜</span></td>
