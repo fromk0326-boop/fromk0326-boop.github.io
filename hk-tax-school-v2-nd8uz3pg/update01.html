@@ -168,6 +168,7 @@
   .lg{color:var(--green)}
   .lk{color:var(--brand)}
   table.mx td b{color:var(--ink)}
+  table.mx tr.sec td{background:var(--bg);color:var(--sub);font-size:12px;font-weight:800;letter-spacing:.04em;padding:7px 12px;min-width:0;white-space:nowrap}
   .st{font-size:12px;font-weight:800;padding:2px 9px;border-radius:99px;white-space:nowrap;display:inline-block}
   .st.now{background:var(--green-soft);color:#0a7d54}
   .st.soon{background:var(--amber-soft);color:#a86c00}
@@ -423,6 +424,7 @@
           <th>弥生</th>
           <th class="cc">Claude<br>Code</th>
         </tr>
+        <tr class="sec"><td colspan="6">会計・税務の作業</td></tr>
         <tr>
           <td><b>記帳</b>（証憑・明細から仕訳を作る）</td>
           <td class="o">◯</td><td class="k">◯</td><td class="k">△</td><td class="o">◯</td><td class="o">◯</td>
@@ -440,6 +442,11 @@
           <td class="o">◯</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="o">◯</td>
         </tr>
         <tr>
+          <td><b>会計ソフトをまたぐ処理</b>（freee＋MF＋Excelを横断）</td>
+          <td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="o">◯</td>
+        </tr>
+        <tr class="sec"><td colspan="6">事務所の運営・管理</td></tr>
+        <tr>
           <td><b>議事録・応対履歴の要約</b></td>
           <td class="x">✕</td><td class="x">✕</td><td class="o">◯</td><td class="x">✕</td><td class="o">◯</td>
         </tr>
@@ -449,10 +456,6 @@
         </tr>
         <tr>
           <td><b>顧問先向けレポート・ダッシュボードの作成と配信</b></td>
-          <td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="o">◯</td>
-        </tr>
-        <tr>
-          <td><b>会計ソフトをまたぐ処理</b>（freee＋MF＋Excelを横断）</td>
           <td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="o">◯</td>
         </tr>
         <tr>
@@ -479,7 +482,7 @@
         <div class="box-h">💡 畠山の読み解き（ここだけ覚えて帰ってもOK）</div>
         <ul>
           <li><b>今日ノーリスクで触れるのは、freeeの無償2つと弥生のβ版だけ</b>です。記帳・ルール整備は9/15から有償、TKCは順番待ち。<b>ニュースの熱量と、明日の実務で使える量は違います</b></li>
-          <li><b>表の下半分に、◯を付けたベンダーが1社もありません</b>。レポートの配信、ソフトをまたぐ処理、e-Taxの巡回、独自ツールの開発。ここは各社の設計上の守備範囲の外なので、<b>当面は自分で埋めるしかない</b>領域です。顧問先ごとにソフトがバラバラな事務所ほど、ここが効いてきます</li>
+          <li><b>各社が押さえに来ているのは、上段（会計・税務の作業）だけ</b>です。下段の事務所運営はTKCの議事録・所内検索を除いてほぼ空白、上段でも「ソフトをまたぐ処理」は全社✕。ここは各社の設計上の守備範囲の外なので、<b>当面は自分で埋めるしかない</b>領域です。顧問先ごとにソフトがバラバラな事務所ほど、ここが効いてきます</li>
           <li><b>「AIの前に、データ」です</b>。TKCが対象を「データが溜まっている事務所から」にしているのは、そのまま自分の事務所にも当てはまります。日報も応対履歴も紙とメールの中にしかない事務所は、どのベンダーが来ても出力が出ません。<b>この順番は逆にできません</b></li>
           <li><b>各社が取りに来ているのは「記帳」と「チェック」</b>＝第3回・第5回の領域です。freeeのルール整備エージェントは、<b>第3回でやった「自動登録ルールを育てる」がそのまま標準機能になった</b>もの。一方で第7回・第9回のような<b>事務所ごとに形が違う仕事は標準化されにくい</b>ままです</li>
         </ul>
