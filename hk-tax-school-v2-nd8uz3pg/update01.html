@@ -168,7 +168,12 @@
   .lg{color:var(--green)}
   .lk{color:var(--brand)}
   table.mx td b{color:var(--ink)}
-  table.mx tr.sec td{background:var(--bg);color:var(--sub);font-size:12px;font-weight:800;letter-spacing:.04em;padding:7px 12px;min-width:0;white-space:nowrap}
+  table.mx tr.sec td,table.mx2 tr.sec td{background:var(--bg);color:var(--sub);font-size:12px;font-weight:800;letter-spacing:.04em;padding:7px 12px;min-width:0;white-space:nowrap}
+  table.mx2 td:first-child{white-space:normal;min-width:190px}
+  table.mx2 td:not(:first-child){white-space:nowrap}
+  table.mx2 td.cc{color:var(--brand);font-weight:700}
+  table.mx2 td.vd{color:var(--ink);font-weight:700}
+  table.mx2 td.ex{color:var(--sub);font-weight:700}
   .st{font-size:12px;font-weight:800;padding:2px 9px;border-radius:99px;white-space:nowrap;display:inline-block}
   .st.now{background:var(--green-soft);color:#0a7d54}
   .st.soon{background:var(--amber-soft);color:#a86c00}
@@ -324,7 +329,7 @@
       <a href="#t1">① 各社AIエージェントの現在地</a>
       <a href="#t2">② ここまでの10回でやってきたこと</a>
       <a href="#t3">③ 自分の事務所の棚卸しをする</a>
-      <a href="#map-now">🗺 立ち位置マップ（会計ソフト vs Claude Code）</a>
+      <a href="#map-now">🗺 立ち位置マップ（3層の使い分け）</a>
       <a href="#quiz">🧠 確認テスト（修了条件）</a>
       <a href="#post">✍️ 恩送りメモを投稿（修了条件）</a>
       <a href="#faq">❓ よくあるつまずき</a>
@@ -410,7 +415,40 @@
           <div class="g-bar cc" style="grid-row:6;grid-column:2/10">最初からずっと使える（ソフトをまたぐ・事務所ごとの型を育てる）</div>
         </div>
       </div>
-      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ freeeは8/25のAdvisor Dayで <b>Agent Hub</b>（ノーコードで自分用エージェントを作れるデスクトップアプリ）もあわせて案内しています。TKCは<b>顧問先向けのFXエージェントも2026年9月〜</b>の予定です。マネーフォワードの<b>AI Cowork</b>は経理だけでなく<b>労務・法務まで</b>カバーする顧問先向けサービスです。</p>
+      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ freeeは <b>Agent Hub</b>（ノーコードで自分用エージェントを作れるデスクトップアプリ）もあわせて案内しています。TKCは<b>顧問先向けのFXエージェント</b>も2026年9月〜の予定です。</p>
+
+      <h3 style="margin:26px 0 6px;font-size:17px">💰 誰が使えて、いくらか</h3>
+      <div class="scrollx">
+      <table class="kanten">
+        <tr><th></th><th>使えるのは</th><th>料金</th></tr>
+        <tr>
+          <td><b>freee</b></td>
+          <td>会計事務所<br><span style="color:var(--sub);font-size:12.5px">freee顧問先管理の利用者</span></td>
+          <td>月次チェック・申告書チェックは<b>無償</b>／記帳・ルール整備は9/15から<b>有償</b><br><span style="color:var(--sub);font-size:12.5px">アドバイザー制度加入者は初月50%オフ（従量課金分は対象外）</span></td>
+        </tr>
+        <tr>
+          <td><b>マネーフォワード</b></td>
+          <td>事業者＝顧問先<br><span style="color:var(--sub);font-size:12.5px">マネーフォワード クラウド利用者</span></td>
+          <td><b>未公表</b><br><span style="color:var(--sub);font-size:12.5px">2026年7月提供開始予定として発表</span></td>
+        </tr>
+        <tr>
+          <td><b>TKC</b></td>
+          <td>TKC会員事務所<br><span style="color:var(--sub);font-size:12.5px">FXエージェントは関与先企業</span></td>
+          <td>システムの機能として提供<br><span style="color:var(--sub);font-size:12.5px">別料金の公表なし</span></td>
+        </tr>
+        <tr>
+          <td><b>弥生</b></td>
+          <td>会計事務所<br><span style="color:var(--sub);font-size:12.5px">弥生PAP会員限定</span></td>
+          <td>β版は<b>無料</b>。申込は<b>9/14まで</b><br><span style="color:var(--sub);font-size:12.5px">正式版は2026年10月ごろ</span></td>
+        </tr>
+        <tr>
+          <td><b>Claude Code</b></td>
+          <td>誰でも<br><span style="color:var(--sub);font-size:12.5px">事務所が自分で契約する</span></td>
+          <td>Claude Pro <b>月20ドル〜</b><br><span style="color:var(--sub);font-size:12.5px">会員資格・順番待ちなし</span></td>
+        </tr>
+      </table>
+      </div>
+      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ <b>会員資格や契約プランで「使えるかどうか」が決まる</b>のが各社のエージェントです。順番が回ってくるまで手が空くわけではないので、その間をどう埋めるかが今日の話です。</p>
 
       <h3 style="margin:30px 0 6px;font-size:17px">⭕❌ どこが、何をやってくれるのか</h3>
       <p style="margin:0 0 6px;font-size:13.5px;color:var(--sub)"><b>◯＝できる　△＝条件つき　✕＝対象外</b>／マークの色は誰の道具か。<b class="lg">緑＝事務所が使う</b>　<b class="lk">青＝顧問先が使う</b></p>
@@ -468,23 +506,23 @@
         </tr>
       </table>
       </div>
-      <div class="box howto" style="margin-top:10px">
-        <div class="box-h">この表の読み方</div>
-        <ul>
-          <li><b>freeeの△</b>　所内検索と独自ツールは<b>Agent Hub</b>で作れますが、顧問先をまたぐ実行と外部連携は「今後提供予定」です</li>
-          <li><b>マネーフォワードの青</b>　AI Coworkは<b>顧問先が自分で使う道具</b>。請求書・経費精算・給与計算・法務まで広いぶん、<b>事務所側の記帳・チェックの道具ではありません</b></li>
-          <li><b>TKCの△（青）</b>　記帳と要注意仕訳は<b>顧問先向けのFXエージェント</b>。事務所側は所内データの検索・要約だけです</li>
-          <li><b>弥生の△</b>　証憑の<b>重複チェックまで</b>。残高や消費税区分のレビューには踏み込みません</li>
-          <li><b>共通</b>　各社とも「専門家の判断に代わるものではない」と明記。<b>最終チェックと署名の責任は動いていません</b></li>
-        </ul>
-      </div>
+      <details style="margin-top:10px">
+        <summary>表の「△」と色の中身をみる</summary>
+        <div class="body">
+          <b>freeeの△</b>　所内検索と独自ツールは Agent Hub で作れますが、顧問先をまたぐ実行と外部連携は「今後提供予定」です。<br>
+          <b>マネーフォワードの青</b>　AI Cowork は<b>顧問先が自分で使う道具</b>。事務所側の記帳・チェックの道具ではありません。<br>
+          <b>TKCの△（青）</b>　記帳と要注意仕訳は顧問先向けのFXエージェント。事務所側は所内データの検索・要約だけです。<br>
+          <b>弥生の△</b>　証憑の重複チェックまで。残高や消費税区分のレビューには踏み込みません。<br>
+          <b>共通</b>　各社とも「専門家の判断に代わるものではない」と明記。<b>最終チェックと署名の責任は動いていません</b>。
+        </div>
+      </details>
       <div class="box tip">
-        <div class="box-h">💡 畠山の読み解き（ここだけ覚えて帰ってもOK）</div>
+        <div class="box-h">💡 畠山の読み解き</div>
         <ul>
-          <li><b>今日ノーリスクで触れるのは、freeeの無償2つと弥生のβ版だけ</b>です。記帳・ルール整備は9/15から有償、TKCは順番待ち。<b>ニュースの熱量と、明日の実務で使える量は違います</b></li>
-          <li><b>各社が押さえに来ているのは、上段のうち「ソフトの中で完結する作業」だけ</b>です。レポートの配信、e-Taxの巡回、ソフトをまたぐ処理は、<b>会計・税務のど真ん中なのに、どのベンダーも◯を付けていません</b>。ここは各社の設計上の守備範囲の外なので、<b>当面は自分で埋めるしかない</b>領域です。顧問先ごとにソフトがバラバラな事務所ほど、ここが効いてきます</li>
-          <li><b>「AIの前に、データ」です</b>。TKCが対象を「データが溜まっている事務所から」にしているのは、そのまま自分の事務所にも当てはまります。日報も応対履歴も紙とメールの中にしかない事務所は、どのベンダーが来ても出力が出ません。<b>この順番は逆にできません</b></li>
-          <li><b>各社が取りに来ているのは「記帳」と「チェック」</b>＝第3回・第5回の領域です。freeeのルール整備エージェントは、<b>第3回でやった「自動登録ルールを育てる」がそのまま標準機能になった</b>もの。一方で第7回・第9回のような<b>事務所ごとに形が違う仕事は標準化されにくい</b>ままです</li>
+          <li><b>今日ノーリスクで触れるのは、freeeの無償2つと弥生のβ版だけ</b>です。ニュースの熱量と、明日の実務で使える量は違います</li>
+          <li><b>各社が押さえに来ているのは「ソフトの中で完結する作業」だけ</b>。レポート配信・e-Tax巡回・ソフトまたぎは<b>会計税務のど真ん中なのに全社が✕</b>です</li>
+          <li><b>「AIの前に、データ」</b>。TKCが対象を「データが溜まっている事務所から」にしているのは、そのまま自分の事務所にも当てはまります</li>
+          <li><b>取りに来ているのは記帳とチェック＝第3回・第5回</b>の領域。第7回・第9回のような<b>事務所ごとに形が違う仕事は標準化されにくい</b>ままです</li>
         </ul>
       </div>
 
@@ -577,7 +615,7 @@
         </ul>
       </div>
 
-      <div class="hana">🌸 <b>はなから一言：</b>抜けている回があっても、順番どおりに戻る必要はないよ。いま困っていることに近い回から戻るのがいちばん早い。記帳が回っていないなら第3回、レビューに不安があるなら第5回、顧問先に何か届けたいなら第7回、申告前の検算を楽にしたいなら第9回だよ🌸</div>
+      <div class="hana">🌸 <b>ひとこと：</b>抜けている回があっても、順番どおりに戻る必要はありません。<b>いま困っていることに近い回から</b>戻るのがいちばん早いです。記帳が回っていないなら第3回、レビューに不安があるなら第5回、顧問先に何か届けたいなら第7回、申告前の検算を楽にしたいなら第9回です🌸</div>
 
       <div class="check" onclick="toggle(this,event)">
         <input type="checkbox" data-step="2">
@@ -694,7 +732,7 @@
       <div class="step-head">
         <div class="step-num">🗺<small>読む</small></div>
         <div class="step-title">
-          <h2>立ち位置マップ：会計ソフトのエージェント vs Claude Code</h2>
+          <h2>立ち位置マップ：ベンダー／拡張機能／Claude Code</h2>
           <div class="step-meta">
             <span class="tag time">⏱ 約5分</span>
             <span class="tag type">📖 読むだけでOK</span>
@@ -702,94 +740,43 @@
         </div>
       </div>
 
-      <p>最後にもう一度、地図の形でまとめておきます。<b>どちらかを選ぶ話ではありません</b>。標準装備は標準装備として使い、その上に自分の事務所の形を乗せる、という重ね方です。</p>
-
-      <div class="scrollx">
-      <table class="kanten">
-        <tr><th>領域</th><th>ソフトのエージェント</th><th>Claude Code</th></tr>
-        <tr>
-          <td><b>記帳・OCR起票</b></td>
-          <td><b>◎</b> 各社がいちばん力を入れている</td>
-          <td>○ ソフトをまたげる／ルールを自分で設計できる</td>
-        </tr>
-        <tr>
-          <td><b>チェック・レビュー</b></td>
-          <td>○ 出てきた。ただし<b>観点は各社が決めたもの</b></td>
-          <td><b>◎</b> <b>自分の事務所の観点</b>をスキルに育てられる</td>
-        </tr>
-        <tr>
-          <td><b>顧問先へのアウトプット</b></td>
-          <td>△ ソフトの画面・帳票の範囲まで</td>
-          <td><b>◎</b> ダッシュボード・レポートを量産して自動配信</td>
-        </tr>
-        <tr>
-          <td><b>ソフトをまたぐ仕事</b></td>
-          <td>✕ 自社データの中で閉じる</td>
-          <td><b>◎</b> freeeもMFもExcelも横断できる</td>
-        </tr>
-        <tr>
-          <td><b>税務判断・署名</b></td>
-          <td>✕ 「専門家の判断に代わるものではない」と明記</td>
-          <td>✕ 同じ。AIは案を出すだけ</td>
-        </tr>
-      </table>
-      </div>
-      <p style="margin:6px 0 0;font-size:13px;color:var(--sub)">※ 構えはひとつです。<b>下の段（記帳）はソフトに寄せて、上の段（観点と届け方）を自分で育てる</b>。</p>
-
-      <h3 style="margin:32px 0 8px;font-size:17px">🧭 畠山が考えている、最終的な着地点</h3>
+      <p>どちらかを選ぶ話ではありません。<b>標準装備は標準装備として使い、その上に自分の事務所の形を乗せる</b>、という重ね方です。</p>
 
       <div class="box howto">
-        <div class="box-h">🎯 原則はひとつです</div>
-        自分が使っている会計ソフトのベンダーが出してくるエージェントのうち、<b>精度が高いものはそれを使う</b>。<b>その他をClaude Codeで補う</b>。<br>
-        どちらが優れているかという話ではありません。精度が出ているところは任せて、残りを自分で埋める。それだけです。
-      </div>
-
-      <p style="margin:18px 0 6px">freeeを使っている事務所なら、こう分かれていくと予想しています。</p>
-      <div class="scrollx">
-      <table class="kanten">
-        <tr><th>これから <b>freee Agent Hub</b> 側に寄っていくと思うもの</th><th><b>Claude Code</b> で補い続けると思うもの</th></tr>
-        <tr>
-          <td>・記帳<br>・仕訳チェック<br>・申告書チェック<br><br><span style="color:var(--sub);font-size:13px">freeeの中で完結する作業です。データも操作もfreeeが全部持っている領域なので、ベンダーがいちばん強い</span></td>
-          <td>・顧問先向けレポートの作成と送信の自動化<br>・自分の事務所に必要なアプリの開発<br>・e-Taxの巡回<br><br><span style="color:var(--sub);font-size:13px">freeeの外に出る作業です。ベンダーのエージェントの守備範囲に入ってきません</span></td>
-        </tr>
-      </table>
-      </div>
-      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ ただし<b>現時点では、記帳・仕訳チェック・申告書チェックも私はClaude Code側で回しています</b>。自分で精度を確かめて、ベンダー側が上回った領域から順に渡していく。この見極めは、一度自分で作ってみた人にしかできません。</p>
-
-      <h3 style="margin:28px 0 6px;font-size:17px">クラウド会計の「中」での使い分け</h3>
-      <div class="scrollx">
-      <table class="kanten">
-        <tr><th>道具</th><th>向いている仕事</th></tr>
-        <tr>
-          <td><b>Chrome拡張</b><br><span style="color:var(--sub);font-size:12.5px">第4回・第9回</span></td>
-          <td>入力補助（勘定科目の選択など）、帳簿上の<b>マイナス残高のハイライト</b><br><span style="color:var(--sub);font-size:13px">画面を見ながら人が判断する作業。画面に情報を足すのがいちばん速い</span></td>
-        </tr>
-        <tr>
-          <td><b>Claude Code</b><br><span style="color:var(--sub);font-size:12.5px">第3回・第5回</span></td>
-          <td>記帳、仕訳チェック、申告書チェック<br><span style="color:var(--sub);font-size:13px">まとまった量を処理する作業。ログを残しながら回せるので、あとから判断を追える</span></td>
-        </tr>
-      </table>
-      </div>
-
-      <h3 style="margin:28px 0 6px;font-size:17px">クラウド会計の「外」での使い分け</h3>
-      <p style="margin:0 0 10px">会計ソフトの外の仕事は、<b>最終アウトプットがExcelになるものが大半</b>です。だから、こう割り切っています。</p>
-      <div class="box howto">
-        <div class="box-h">📊 Excelまわりの分担</div>
-        <ul style="margin:6px 0 0;padding-left:20px">
-          <li>集めた情報をExcelにつなぎ合わせるところまで　→　<b>Claude Code</b></li>
-          <li>各種システムへのExcelインポート　→　<b>手動</b></li>
+        <div class="box-h">🎯 原則：道具を3層に分ける</div>
+        <ul>
+          <li><b>ベンダーのエージェント</b>　会計ソフトの<b>中</b>で完結する共通業務。<b>精度が高いものはそのまま使う</b></li>
+          <li><b>Chrome拡張</b>　画面を見ながら人が判断する場面に、情報を足して<b>補う</b>（第4回・第9回）</li>
+          <li><b>Claude Code</b>　ソフトの<b>外</b>に出る仕事と、ログを残したい処理（第3回・第5回・第7回）</li>
         </ul>
-        <div style="margin-top:10px">インポートまで自動化しようとすると、今は無理が出ます。ここは<b>Computer Use</b>（AIがPCの画面をそのまま操作する仕組み）が実用的になった時点で、Claude Codeからの投入もできるようになると見ています。それまでは<b>最後の一手だけ人がやる</b>。それで十分に速いです。</div>
+        <div style="margin-top:10px">どちらが優れているかという話ではありません。<b>精度が出ているところは任せて、残りを自分で埋める</b>。この地図が自分の中にあると、新機能が出るたびに「これはどこに入るのか」で判断できます。<b>全部に飛びつく必要はありません</b>。</div>
       </div>
+
+      <h3 style="margin:30px 0 6px;font-size:17px">🧭 これから、どうスライドしていくと見ているか</h3>
+      <p style="margin:0 0 6px;font-size:13.5px;color:var(--sub)">freeeを使っている事務所を例に、<b>担い手が動く仕事</b>と<b>動かない仕事</b>を分けたものです。</p>
+      <div class="scrollx">
+      <table class="kanten mx2">
+        <tr><th>仕事</th><th>いま（2026年9月）</th><th>これから（予想）</th></tr>
+        <tr class="sec"><td colspan="3">▼ ベンダーへ渡していく（精度が上回った順に）</td></tr>
+        <tr><td><b>記帳</b></td><td class="cc">Claude Code</td><td class="vd">ベンダーのエージェント</td></tr>
+        <tr><td><b>仕訳チェック・月次レビュー</b></td><td class="cc">Claude Code</td><td class="vd">ベンダー ＋ 自分の観点を足す</td></tr>
+        <tr><td><b>申告書のチェック</b></td><td class="cc">Claude Code</td><td class="vd">ベンダーのエージェント</td></tr>
+        <tr class="sec"><td colspan="3">▼ 画面の上は拡張機能で補う（ここは変わらない）</td></tr>
+        <tr><td><b>勘定科目の入力補助</b></td><td class="ex">Chrome拡張</td><td class="ex">Chrome拡張</td></tr>
+        <tr><td><b>マイナス残高などの気づき表示</b></td><td class="ex">Chrome拡張</td><td class="ex">Chrome拡張</td></tr>
+        <tr class="sec"><td colspan="3">▼ 手元に残る（ソフトの外に出る仕事）</td></tr>
+        <tr><td><b>顧問先向けレポートの作成と配信</b></td><td class="cc">Claude Code</td><td class="cc">Claude Code</td></tr>
+        <tr><td><b>e-Tax・eLTAXの巡回</b></td><td class="cc">Claude Code</td><td class="cc">Claude Code</td></tr>
+        <tr><td><b>会計ソフトをまたぐ処理</b></td><td class="cc">Claude Code</td><td class="cc">Claude Code</td></tr>
+        <tr><td><b>事務所独自のツール開発</b></td><td class="cc">Claude Code</td><td class="cc">Claude Code</td></tr>
+      </table>
+      </div>
+      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ 上の3つも<b>いまは私がClaude Codeで回しています</b>。自分で精度を確かめて、<b>ベンダー側が上回った領域から順に渡す</b>。この見極めは、一度自分で作ってみた人にしかできません。</p>
 
       <div class="box howto" style="margin-top:18px">
-        <div class="box-h">🗺 まとめると、道具は3層です</div>
-        <ul style="margin:6px 0 0;padding-left:20px">
-          <li><b>ベンダーのエージェント</b>　…　会計ソフトの<b>中</b>の共通業務</li>
-          <li><b>Chrome拡張</b>　…　画面上の入力補助と、気づきの表示</li>
-          <li><b>Claude Code</b>　…　会計ソフトの<b>外</b>と、ログを残したい処理</li>
-        </ul>
-        <div style="margin-top:10px">この地図が自分の中にあると、新しい機能が発表されるたびに「これはどこに入るのか」で判断できます。<b>全部に飛びつく必要はありません</b>。</div>
+        <div class="box-h">📊 ソフトの外は、結局Excelに集まります</div>
+        集めた情報をExcelにつなぎ合わせるところまで　→　<b>Claude Code</b>／各種システムへのExcelインポート　→　<b>手動</b>。<br>
+        インポートまで自動化すると今は無理が出ます。ここは<b>Computer Use</b>（AIがPCの画面をそのまま操作する仕組み）が実用的になった時点で渡せると見ています。それまでは<b>最後の一手だけ人がやる</b>。それで十分に速いです。
       </div>
 
       <div class="hana">🌸 <b>今回の合言葉：</b>会計ソフトのエージェントは「標準装備」、Claude Codeは「自分の事務所の武器」。<b>下の段はソフトに寄せて、上の段を自分で育てる</b>。記帳が標準機能になる日が来ても、<b>あなたの事務所のチェックの観点と、顧問先への届け方</b>は、あなたにしか作れない。</div>
