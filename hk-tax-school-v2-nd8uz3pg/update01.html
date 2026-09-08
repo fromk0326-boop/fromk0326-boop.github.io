@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>畠山式税理士AIコミュニティ｜アプデ① ベンダーに任せるもの、自分で持ち続けるもの</title>
+<title>畠山式税理士AIコミュニティ｜アプデ① 会計ソフト側に任せるもの、自分で持ち続けるもの</title>
 <style>
   :root{
     --bg:#f5f7fa;
@@ -73,7 +73,6 @@
   .wrap.side-off .side{display:none}
   .nav-toggle{font:inherit;font-size:13px;font-weight:700;cursor:pointer;background:var(--card);border:1px solid var(--line);color:var(--sub)}
   .nav-toggle[aria-pressed="true"]{background:var(--brand-soft);border-color:transparent;color:var(--brand)}
-  @media(max-width:880px){.nav-toggle{display:none}}
   .side h4{font-size:12px;color:var(--sub);text-transform:uppercase;letter-spacing:.08em;margin:0 0 10px}
   .side nav a{display:block;padding:8px 12px;border-radius:10px;color:var(--ink);font-size:14px;font-weight:600;margin-bottom:2px}
   .side nav a:hover{background:var(--brand-soft);text-decoration:none}
@@ -179,6 +178,8 @@
   table.mx2 td.cc{color:var(--brand);font-weight:700}
   table.mx2 td.vd{color:var(--ink);font-weight:700}
   table.mx2 td.ex{color:var(--sub);font-weight:700}
+  table.role td:nth-child(2){white-space:nowrap;color:var(--brand);font-weight:700}
+  table.role td:last-child{white-space:normal;min-width:280px}
   .st{font-size:12px;font-weight:800;padding:2px 9px;border-radius:99px;white-space:nowrap;display:inline-block}
   .st.now{background:var(--green-soft);color:#0a7d54}
   .st.soon{background:var(--amber-soft);color:#a86c00}
@@ -332,7 +333,7 @@
     <nav>
       <a href="#hero">🎯 ゴール</a>
       <a href="#t1">① 各社AIエージェントの現在地</a>
-      <a href="#gap" style="color:var(--brand);font-weight:700">⚖ ベンダーに任せる理由（本題）</a>
+      <a href="#gap" style="color:var(--brand);font-weight:700">⚖ 会計ソフト側に任せる理由（本題）</a>
       <a href="#t2">② ここまでの10回でやってきたこと</a>
       <a href="#t3">③ 自分の事務所の棚卸しをする</a>
       <a href="#map-now">🗺 立ち位置マップ（3層の使い分け）</a>
@@ -357,15 +358,16 @@
     <!-- ヒーロー -->
     <section class="hero" id="hero">
       <span class="badge">アプデ① / 全シリーズ　🆕 2026-09-08 更新</span>
-      <h1>◯×だけなら、Claude Codeが勝つ。<br><em>それでも、ベンダーに任せる理由がある。</em></h1>
-      <p class="lead">2026年の夏から秋にかけて、<b>freee・マネーフォワード・TKC・弥生</b>が相次いで会計事務所向けのAIエージェントを発表しました。機能を◯×で並べると、実は<b>Claude Codeのほうができることは多い</b>です。それでも各社に任せる理由が2つあります。<b>①セキュリティ体制をベンダーごと引き受けてもらえること、②AIが分からない職員にもそのまま配れること</b>。だから「どちらを選ぶか」ではなく、<b>任せる線をどこに引くか</b>が今日のテーマです。①各社の現在地を整理し、②ブートキャンプ10回の積み上げを棚卸しして、③その2つを重ねて<b>自分の事務所の次の一手</b>を決めます。<b>地図を配る回</b>です。</p>
+      <h1>◯×だけなら、Claude Codeが勝つ。<br><em>それでも、会計ソフト側に任せる理由がある。</em></h1>
+      <p class="lead">2026年の夏から秋にかけて、<b>freee・マネーフォワード・TKC・弥生</b>が相次いで会計事務所向けのAIエージェントを発表しました。機能を◯×で並べると、実は<b>Claude Codeのほうができることは多い</b>です。それでも各社に任せる理由が2つあります。<b>①セキュリティ体制を会計ソフト各社に引き受けてもらえること、②AIが分からない職員にもそのまま配れること</b>。だから「どちらを選ぶか」ではなく、<b>任せる線をどこに引くか</b>が今日のテーマです。①各社の現在地を整理し、②ブートキャンプ10回の積み上げを棚卸しして、③その2つを重ねて<b>自分の事務所の次の一手</b>を決めます。<b>地図を配る回</b>です。</p>
 
       <div class="goal">
         <h3>🎯 この回を終えると…</h3>
         <ul>
           <li>freee・MF・TKC・弥生のエージェントが<b>いつ来て・何ができて・何ができないのか</b>を、自分の言葉で説明できます</li>
           <li><b>会計ソフトのエージェント</b>・<b>Chrome拡張</b>・<b>Claude Code</b>という<b>3層の使い分け</b>が言えるようになります（ソフトの中は何を任せて、外は何を自分で組むか）</li>
-          <li><b>ベンダーのエージェントにあって、Claude Codeにないもの</b>＝<b>セキュリティ体制</b>と<b>職員への配りやすさ</b>を、顧問先や所内に説明できます</li>
+          <li><b>会計ソフトのエージェントにあって、Claude Codeにないもの</b>＝<b>セキュリティ体制</b>と<b>職員への配りやすさ</b>を、顧問先や所内に説明できます</li>
+          <li><b>所内での役割分担</b>（幹部はClaude Code／職員は会計ソフトのエージェント）を、根拠つきで説明できます</li>
           <li>ブートキャンプ第1回〜第10回の積み上げを1枚で見返して、<b>自分が今どこまで来ていて、どこが抜けているか</b>が分かります</li>
           <li>Claudeと一緒に<b>自分の事務所の棚卸しと「次の一手3つ」</b>を出せます</li>
           <li>最後に<b>確認テスト</b>（AIが先生役・70点以上で合格）を受け、<b>恩送りメモを投稿</b>すると修了です🏅</li>
@@ -458,7 +460,7 @@
       <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ <b>会員資格で「使えるかどうか」が決まる</b>のが各社のエージェントです。freeeの無償2つも<b>アドバイザー制度加入が前提</b>、弥生は<b>PAP会員限定</b>。順番が回ってくるまで手が空くわけではないので、その間をどう埋めるかが今日の話です。</p>
 
       <h3 style="margin:30px 0 6px;font-size:17px">⭕❌ どこが、何をやってくれるのか</h3>
-      <p style="margin:0 0 6px;font-size:13.5px;color:var(--sub)"><b>◯＝できる　△＝条件つき　✕＝対象外</b>／マークの色は誰の道具か。<b class="lg">緑＝事務所が使う</b>　<b class="lk">青＝顧問先が使う</b><br><b>Claude Code列の「第◯回」は、その業務を扱ったブートキャンプの回にリンクしています。</b>振り返るときはそこから戻ってください。</p>
+      <p style="margin:0 0 6px;font-size:13.5px;color:var(--sub)"><b>◯＝できる　△＝条件つき　✕＝対象外</b>／マークの色は誰の道具か。<b class="lg">緑＝事務所が使う</b>　<b class="lk">青＝顧問先が使う</b><br><b>上の4つが、会計ソフト各社が取りに来ている「ソフトの中」の仕事</b>。その下は<b>ソフトの外に出るので、全社が✕</b>のままです。<br><b>Claude Code列の「第◯回」は、その業務を扱ったブートキャンプの回にリンクしています。</b>振り返るときはそこから戻ってください。</p>
       <div class="scrollx">
       <table class="kanten mx">
         <tr>
@@ -469,7 +471,7 @@
           <th>TKC</th>
           <th>弥生</th>
         </tr>
-        <tr class="sec"><td colspan="6">会計・税務の作業</td></tr>
+        <tr class="sec"><td colspan="6">会計・税務の作業　― 会計ソフトの「中」で完結するもの</td></tr>
         <tr>
           <td><b>記帳</b>（証憑・明細から仕訳を作る）</td>
           <td class="o"><a class="ref" href="vol03.html">◯<span>第3回</span></a></td><td class="o">◯</td><td class="k">◯</td><td class="k">△</td><td class="o">◯</td>
@@ -479,20 +481,21 @@
           <td class="o"><a class="ref" href="vol05.html">◯<span>第5回</span></a></td><td class="o">◯</td><td class="x">✕</td><td class="k">△</td><td class="t">△</td>
         </tr>
         <tr>
-          <td><b>顧問先向けレポート・ダッシュボードの作成と配信</b></td>
-          <td class="o"><a class="ref" href="vol07.html">◯<span>第7回</span></a></td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td>
-        </tr>
-        <tr>
           <td><b>申告書のチェック</b>（申告書とBS・PLの突合）</td>
           <td class="o"><a class="ref" href="vol09.html">◯<span>第9回</span></a></td><td class="o">◯</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td>
         </tr>
         <tr>
-          <td><b>e-Tax・eLTAXの巡回</b></td>
-          <td class="o"><a class="ref" href="vol09.html">◯<span>第9回</span></a></td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td>
-        </tr>
-        <tr>
           <td><b>記帳ルールの整備</b>（次回以降のルールを育てる）</td>
           <td class="o"><a class="ref" href="vol03.html">◯<span>第3回</span></a></td><td class="o">◯</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td>
+        </tr>
+        <tr class="sec"><td colspan="6">会計・税務の作業　― 会計ソフトの「外」に出るもの</td></tr>
+        <tr>
+          <td><b>顧問先向けレポート・ダッシュボードの作成と配信</b></td>
+          <td class="o"><a class="ref" href="vol07.html">◯<span>第7回</span></a></td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td>
+        </tr>
+        <tr>
+          <td><b>e-Tax・eLTAXの巡回</b></td>
+          <td class="o"><a class="ref" href="vol09.html">◯<span>第9回</span></a></td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td>
         </tr>
         <tr>
           <td><b>会計ソフトをまたぐ処理</b>（freee＋MF＋Excelを横断）</td>
@@ -534,25 +537,41 @@
       </div>
 
 
-      <h3 id="gap" style="margin:30px 0 6px;font-size:17px">⚖ 表に出ない、ベンダー側の2つの強み</h3>
-      <p style="margin:0 0 10px;font-size:13.5px;color:var(--sub)">◯の数だけ見ると、Claude Codeがいちばん多く見えます。ただし<b>この表は「何ができるか」しか比べていません</b>。実務では、できること以外に2つ効いてきます。<b>ここが今日いちばん伝えたいところ</b>です。</p>
+      <h3 id="gap" style="margin:30px 0 6px;font-size:17px">⚖ 表に出ない、会計ソフト側の2つの強み</h3>
+      <p style="margin:0 0 10px;font-size:13.5px;color:var(--sub)">◯の数だけ見ると、Claude Codeがいちばん多く見えます。ただし<b>この表は「何ができるか」しか比べていません</b>。実務では、できること以外に2つ効いてきます。<b>ここが今日いちばん伝えたいところ</b>です。<br>※ Claude CodeもAnthropicという<b>ベンダーの製品</b>です。違いは会社ではなく、<b>会計ソフトの中に閉じているか、外にも出られるか</b>。このページでは freee・マネーフォワード・TKC・弥生のエージェントを<b>「会計ソフト側」</b>と呼びます。</p>
 
       <div class="box safe">
-        <div class="box-h">🛡 ① セキュリティ体制を、ベンダーごと引き受けてもらえる</div>
+        <div class="box-h">🛡 ① セキュリティ体制を、会計ソフト各社が引き受けてくれる</div>
         各社とも、データの扱いと承認・記録の仕組みを自社で用意しています。マネーフォワードは<b>ガードレール・Draft &amp; Approve（AIは下書きまで、確定は必ず人）・AI監査ログ</b>を掲げ、freeeは顧問先ごとにログイン情報と作業履歴を分離、TKCはAIが参照するデータをOMS内に限定すると明言しています。<br>
-        つまり顧問先から「そのAI、どこで何を見ているんですか」と聞かれたとき、<b>ベンダーの公表資料をそのまま示せます</b>。自作のコードだと、<b>説明も、何かあったときの責任も自分に残ります</b>。これは機能の差ではなく、<b>誰が引き受けるかの差</b>です。
+        つまり顧問先から「そのAI、どこで何を見ているんですか」と聞かれたとき、<b>各社の公表資料をそのまま示せます</b>。自作のコードだと、<b>説明も、何かあったときの責任も自分に残ります</b>。これは機能の差ではなく、<b>誰が引き受けるかの差</b>です。
       </div>
 
       <div class="box safe">
         <div class="box-h">👥 ② AIが分からない職員にも、そのまま配れる</div>
-        ベンダーのエージェントは<b>ボタンを押せば動く形</b>で届きます。AIの知識がない職員にも、明日から配れます。<br>
+        会計ソフトのエージェントは<b>ボタンを押せば動く形</b>で届きます。AIの知識がない職員にも、明日から配れます。<br>
         Claude Codeは何でもできる代わりに、<b>作った人が中身を分かっている前提</b>の道具です。所内に広げるには、手順書と、教える人が要ります。<b>「自分ひとりだと速い」と「事務所で回る」は別の話</b>です。
       </div>
 
       <div class="box tip">
-        <div class="box-h">💡 だから、線はこう引きます</div>
-        <b>職員に配る仕事はベンダーへ。自分が握っておく仕事はClaude Codeで。</b><br>
-        できることの多さだけで選ぶと、判断を間違えます。<b>説明責任を誰が持つか</b>と<b>誰が動かすか</b>。この2つで先に振り分けると、<a href="#map-now">3層の使い分け</a>がそのまま<b>「誰がやるか」の分担表</b>になります。
+        <div class="box-h">💡 だから、事務所の中でこう分かれていくと見ています</div>
+        できることの多さだけで選ぶと、判断を間違えます。<b>説明責任を誰が持つか</b>と<b>誰が動かすか</b>。この2つで振り分けると、道具は人によって分かれます。
+        <div class="scrollx" style="margin:10px 0 0">
+        <table class="kanten role">
+          <tr><th>誰が</th><th>使う道具</th><th>担う仕事</th></tr>
+          <tr>
+            <td><b>所長・幹部</b></td>
+            <td><b>Claude Code</b></td>
+            <td>どこまでAIに任せるかを決める／事務所の型（レビュー観点・出力の形）を作る／<b>会計ソフトの外に出る仕事</b>を組む</td>
+          </tr>
+          <tr>
+            <td><b>職員のみなさん</b></td>
+            <td><b>会計ソフトのエージェント</b></td>
+            <td>記帳・仕訳チェックなど、<b>毎月同じ手順で回る仕事</b>。ボタンを押せば動くので、AIの知識がなくても扱えます</td>
+          </tr>
+        </table>
+        </div>
+        <div style="margin-top:10px">各社のエージェントが<b>記帳とチェックに機能を絞っている</b>のは、そこが事務所でいちばん人数を張っている工程だからです。だから<b>職員に配る道具</b>としてよくできています。一方、<b>任せる線を引く仕事</b>は、その前提を分かっている人にしかできません。<b>Claude Codeは、事務所を設計する側の道具</b>になっていきます。<br>
+        この分け方で見ると、<a href="#map-now">3層の使い分け</a>がそのまま<b>「誰がやるか」の分担表</b>になります。</div>
       </div>
       <details>
         <summary>「じゃあClaude Codeを覚えた意味はあった？」への回答</summary>
@@ -760,7 +779,7 @@
       <div class="step-head">
         <div class="step-num">🗺<small>読む</small></div>
         <div class="step-title">
-          <h2>立ち位置マップ：ベンダー／拡張機能／Claude Code</h2>
+          <h2>立ち位置マップ：会計ソフト／拡張機能／Claude Code</h2>
           <div class="step-meta">
             <span class="tag time">⏱ 約5分</span>
             <span class="tag type">📖 読むだけでOK</span>
@@ -773,7 +792,7 @@
       <div class="box howto">
         <div class="box-h">🎯 原則：道具を3層に分ける</div>
         <ul>
-          <li><b>ベンダーのエージェント</b>　会計ソフトの<b>中</b>で完結する共通業務。<b>精度が高いものはそのまま使う</b></li>
+          <li><b>会計ソフトのエージェント</b>　会計ソフトの<b>中</b>で完結する共通業務。<b>精度が高いものはそのまま使う</b></li>
           <li><b>Chrome拡張</b>　画面を見ながら人が判断する場面に、情報を足して<b>補う</b>（第4回・第9回）</li>
           <li><b>Claude Code</b>　ソフトの<b>外</b>に出る仕事と、ログを残したい処理（第3回・第5回・第7回）</li>
         </ul>
@@ -785,10 +804,10 @@
       <div class="scrollx">
       <table class="kanten mx2">
         <tr><th>仕事</th><th>いま（2026年9月）</th><th>これから（予想）</th></tr>
-        <tr class="sec"><td colspan="3">▼ ベンダーへ渡していく（精度が上回った順に）</td></tr>
-        <tr><td><b>記帳</b></td><td class="cc">Claude Code</td><td class="vd">ベンダーのエージェント</td></tr>
-        <tr><td><b>仕訳チェック・月次レビュー</b></td><td class="cc">Claude Code</td><td class="vd">ベンダー ＋ 自分の観点を足す</td></tr>
-        <tr><td><b>申告書のチェック</b></td><td class="cc">Claude Code</td><td class="vd">ベンダーのエージェント</td></tr>
+        <tr class="sec"><td colspan="3">▼ 会計ソフト側へ渡していく（精度が上回った順に）</td></tr>
+        <tr><td><b>記帳</b></td><td class="cc">Claude Code</td><td class="vd">会計ソフトのエージェント</td></tr>
+        <tr><td><b>仕訳チェック・月次レビュー</b></td><td class="cc">Claude Code</td><td class="vd">会計ソフト側 ＋ 自分の観点</td></tr>
+        <tr><td><b>申告書のチェック</b></td><td class="cc">Claude Code</td><td class="vd">会計ソフトのエージェント</td></tr>
         <tr class="sec"><td colspan="3">▼ 画面の上は拡張機能で補う（ここは変わらない）</td></tr>
         <tr><td><b>勘定科目の入力補助</b></td><td class="ex">Chrome拡張</td><td class="ex">Chrome拡張</td></tr>
         <tr><td><b>マイナス残高などの気づき表示</b></td><td class="ex">Chrome拡張</td><td class="ex">Chrome拡張</td></tr>
@@ -799,7 +818,7 @@
         <tr><td><b>事務所独自のツール開発</b></td><td class="cc">Claude Code</td><td class="cc">Claude Code</td></tr>
       </table>
       </div>
-      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ 上の3つも<b>いまは私がClaude Codeで回しています</b>。自分で精度を確かめて、<b>ベンダー側が上回った領域から順に渡す</b>。この見極めは、一度自分で作ってみた人にしかできません。</p>
+      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ 上の3つも<b>いまは私がClaude Codeで回しています</b>。自分で精度を確かめて、<b>会計ソフト側が上回った領域から順に渡す</b>。この見極めは、一度自分で作ってみた人にしかできません。</p>
 
       <div class="box howto" style="margin-top:18px">
         <div class="box-h">📊 ソフトの外は、結局Excelに集まります</div>
@@ -1097,7 +1116,7 @@ Q5. この課題ページで分かりづらかった所・直してほしい所�
 (function(){
   var w=document.querySelector('.wrap'), b=document.getElementById('sideToggle');
   if(!w||!b) return;
-  var K='hk_update01_side_off';
+  var K='hk_bc_side_off';
   function apply(off){
     w.classList.toggle('side-off',off);
     b.setAttribute('aria-pressed',off?'true':'false');
