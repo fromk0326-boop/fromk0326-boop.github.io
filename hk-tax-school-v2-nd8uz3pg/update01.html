@@ -69,6 +69,11 @@
   /* ===== サイドバー ===== */
   .side{position:sticky;top:64px;padding:24px 0}
   @media(max-width:880px){.side{display:none}}
+  .wrap.side-off{grid-template-columns:1fr}
+  .wrap.side-off .side{display:none}
+  .nav-toggle{font:inherit;font-size:13px;font-weight:700;cursor:pointer;background:var(--card);border:1px solid var(--line);color:var(--sub)}
+  .nav-toggle[aria-pressed="true"]{background:var(--brand-soft);border-color:transparent;color:var(--brand)}
+  @media(max-width:880px){.nav-toggle{display:none}}
   .side h4{font-size:12px;color:var(--sub);text-transform:uppercase;letter-spacing:.08em;margin:0 0 10px}
   .side nav a{display:block;padding:8px 12px;border-radius:10px;color:var(--ink);font-size:14px;font-weight:600;margin-bottom:2px}
   .side nav a:hover{background:var(--brand-soft);text-decoration:none}
@@ -157,9 +162,11 @@
   table.mx td:first-child{white-space:normal;min-width:220px}
   table.mx th:not(:first-child),table.mx td:not(:first-child){text-align:center;white-space:nowrap;width:74px}
   table.mx th.cc{color:var(--brand)}
-  table.mx td.o{color:var(--green);font-weight:800;font-size:16px}
-  table.mx td.t{color:var(--amber);font-weight:800;font-size:16px}
+  table.mx td.o,table.mx td.t{color:var(--green);font-weight:800;font-size:16px}
+  table.mx td.k{color:var(--brand);font-weight:800;font-size:16px}
   table.mx td.x{color:#c3ccd6;font-weight:700;font-size:16px}
+  .lg{color:var(--green)}
+  .lk{color:var(--brand)}
   table.mx td b{color:var(--ink)}
   .st{font-size:12px;font-weight:800;padding:2px 9px;border-radius:99px;white-space:nowrap;display:inline-block}
   .st.now{background:var(--green-soft);color:#0a7d54}
@@ -294,6 +301,7 @@
 <!-- コース全体ナビ -->
 <div class="course-nav">
   <div class="course-nav-inner">
+    <button type="button" class="course-pill nav-toggle" id="sideToggle" aria-pressed="false">☰ 目次を隠す</button>
     <a class="course-pill" href="map.html" style="background:var(--green-soft);border-color:transparent;color:var(--green);font-weight:800">🗺 コース全体</a>
     <a class="course-pill" href="index.html">第1回</a>
     <a class="course-pill" href="vol03.html">第3回</a>
@@ -386,42 +394,42 @@
           <div class="g-name" style="grid-row:2">freee<small>事務所向け</small></div>
           <div class="g-bar" style="grid-row:2;grid-column:4/10">8/28 チェック2つ（無償）　→　9/15 記帳・ルール整備（有償）</div>
 
-          <div class="g-name" style="grid-row:3">TKC<small>事務所向け</small></div>
-          <div class="g-bar soft" style="grid-row:3;grid-column:2/9">6/24 一部事務所へ先行　→　9月〜 対象を拡大</div>
-          <div class="g-bar" style="grid-row:3;grid-column:9/10">全会員へ</div>
+          <div class="g-name" style="grid-row:3">マネーフォワード<small>顧問先向け</small></div>
+          <div class="g-bar dash" style="grid-row:3;grid-column:3/10">4/7 発表　→　7月〜 提供開始予定（公式は現在も「近日提供」表記）</div>
 
-          <div class="g-name" style="grid-row:4">弥生<small>事務所向け</small></div>
-          <div class="g-bar soft" style="grid-row:4;grid-column:4/6">8/7 β版</div>
-          <div class="g-bar" style="grid-row:4;grid-column:6/10">10月ごろ 正式版</div>
+          <div class="g-name" style="grid-row:4">TKC<small>事務所向け</small></div>
+          <div class="g-bar soft" style="grid-row:4;grid-column:2/9">6/24 一部事務所へ先行　→　9月〜 対象を拡大</div>
+          <div class="g-bar" style="grid-row:4;grid-column:9/10">全会員へ</div>
 
-          <div class="g-name" style="grid-row:5">マネーフォワード<small>顧問先向け</small></div>
-          <div class="g-bar dash" style="grid-row:5;grid-column:5/10">AI Cowork ／ 近日提供予定（時期は未公表）</div>
+          <div class="g-name" style="grid-row:5">弥生<small>事務所向け</small></div>
+          <div class="g-bar soft" style="grid-row:5;grid-column:4/6">8/7 β版</div>
+          <div class="g-bar" style="grid-row:5;grid-column:6/10">10月ごろ 正式版</div>
 
           <div class="g-name" style="grid-row:6">Claude Code<small>このブートキャンプ</small></div>
           <div class="g-bar cc" style="grid-row:6;grid-column:2/10">最初からずっと使える（ソフトをまたぐ・事務所ごとの型を育てる）</div>
         </div>
       </div>
-      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ freeeは8/25のAdvisor Dayで <b>Agent Hub</b>（ノーコードで自分用エージェントを作れるデスクトップアプリ）もあわせて案内しています。TKCは<b>顧問先向けのFXエージェントも2026年9月〜</b>の予定です。</p>
+      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ freeeは8/25のAdvisor Dayで <b>Agent Hub</b>（ノーコードで自分用エージェントを作れるデスクトップアプリ）もあわせて案内しています。TKCは<b>顧問先向けのFXエージェントも2026年9月〜</b>の予定です。マネーフォワードの<b>AI Cowork</b>は経理だけでなく<b>労務・法務まで</b>カバーする顧問先向けサービスです。</p>
 
       <h3 style="margin:30px 0 6px;font-size:17px">⭕❌ どこが、何をやってくれるのか</h3>
-      <p style="margin:0 0 4px;font-size:13.5px;color:var(--sub)">業務ごとに並べました。<b>◯＝できる　△＝条件つき　✕＝対象外</b>です。</p>
+      <p style="margin:0 0 6px;font-size:13.5px;color:var(--sub)"><b>◯＝できる　△＝条件つき　✕＝対象外</b>／マークの色は誰の道具か。<b class="lg">緑＝事務所が使う</b>　<b class="lk">青＝顧問先が使う</b></p>
       <div class="scrollx">
       <table class="kanten mx">
         <tr>
           <th>業務</th>
           <th>freee</th>
+          <th>マネー<br>フォワード</th>
           <th>TKC</th>
           <th>弥生</th>
-          <th>マネー<br>フォワード</th>
           <th class="cc">Claude<br>Code</th>
         </tr>
         <tr>
           <td><b>記帳</b>（証憑・明細から仕訳を作る）</td>
-          <td class="o">◯</td><td class="t">△</td><td class="o">◯</td><td class="t">△</td><td class="o">◯</td>
+          <td class="o">◯</td><td class="k">◯</td><td class="k">△</td><td class="o">◯</td><td class="o">◯</td>
         </tr>
         <tr>
           <td><b>仕訳チェック・月次レビュー</b>（残高ずれ・消費税区分）</td>
-          <td class="o">◯</td><td class="t">△</td><td class="t">△</td><td class="x">✕</td><td class="o">◯</td>
+          <td class="o">◯</td><td class="x">✕</td><td class="k">△</td><td class="t">△</td><td class="o">◯</td>
         </tr>
         <tr>
           <td><b>申告書のチェック</b>（申告書とBS・PLの突合）</td>
@@ -433,11 +441,11 @@
         </tr>
         <tr>
           <td><b>議事録・応対履歴の要約</b></td>
-          <td class="x">✕</td><td class="o">◯</td><td class="x">✕</td><td class="x">✕</td><td class="o">◯</td>
+          <td class="x">✕</td><td class="x">✕</td><td class="o">◯</td><td class="x">✕</td><td class="o">◯</td>
         </tr>
         <tr>
           <td><b>所内データの検索・ナレッジ再利用</b></td>
-          <td class="t">△</td><td class="o">◯</td><td class="x">✕</td><td class="t">△</td><td class="o">◯</td>
+          <td class="t">△</td><td class="k">△</td><td class="o">◯</td><td class="x">✕</td><td class="o">◯</td>
         </tr>
         <tr>
           <td><b>顧問先向けレポート・ダッシュボードの作成と配信</b></td>
@@ -455,23 +463,18 @@
           <td><b>事務所独自のツール開発</b></td>
           <td class="t">△</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="o">◯</td>
         </tr>
-        <tr>
-          <td><b>税務判断・署名</b></td>
-          <td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td>
-        </tr>
       </table>
       </div>
       <div class="box howto" style="margin-top:10px">
-        <div class="box-h">この表の読み方（△と✕の中身）</div>
+        <div class="box-h">この表の読み方</div>
         <ul>
-          <li><b>freeeの△</b>　所内データの検索と独自ツール開発は<b>Agent Hub</b>でできますが、<b>顧問先をまたぐ実行とGoogle等の外部連携は「今後提供予定」</b>。freeeの中の話にとどまります</li>
-          <li><b>TKCの△</b>　記帳と要注意仕訳の抽出は<b>顧問先向けのFXエージェント</b>の機能です。事務所側のOMSエージェントは、あくまで<b>OMSに溜まったデータの検索・要約</b>（参照先をOMS内に限定する設計）</li>
-          <li><b>弥生の△</b>　チェックは<b>証憑の重複チェックまで</b>。残高や消費税区分のレビューには踏み込みません</li>
-          <li><b>マネーフォワードの△</b>　AI Coworkは<b>事業者（顧問先）が使う道具</b>で、中堅・大手企業向け。事務所側の記帳・チェックの道具ではありません</li>
-          <li><b>いちばん下の行だけ、全部✕です</b>　各社とも「専門家の判断に代わるものではない」と明記しています。<b>チェックと署名の責任は動いていません</b></li>
+          <li><b>freeeの△</b>　所内検索と独自ツールは<b>Agent Hub</b>で作れますが、顧問先をまたぐ実行と外部連携は「今後提供予定」です</li>
+          <li><b>マネーフォワードの青</b>　AI Coworkは<b>顧問先が自分で使う道具</b>。請求書・経費精算・給与計算・法務まで広いぶん、<b>事務所側の記帳・チェックの道具ではありません</b></li>
+          <li><b>TKCの△（青）</b>　記帳と要注意仕訳は<b>顧問先向けのFXエージェント</b>。事務所側は所内データの検索・要約だけです</li>
+          <li><b>弥生の△</b>　証憑の<b>重複チェックまで</b>。残高や消費税区分のレビューには踏み込みません</li>
+          <li><b>共通</b>　各社とも「専門家の判断に代わるものではない」と明記。<b>最終チェックと署名の責任は動いていません</b></li>
         </ul>
       </div>
-
       <div class="box tip">
         <div class="box-h">💡 畠山の読み解き（ここだけ覚えて帰ってもOK）</div>
         <ul>
@@ -1072,5 +1075,24 @@ Q5. この課題ページで分かりづらかった所・直してほしい所�
 </script>
 <script>window.BOOTCAMP_PAGE='update01';</script>
 <script src="progress-tracker.js"></script>
+<script>
+(function(){
+  var w=document.querySelector('.wrap'), b=document.getElementById('sideToggle');
+  if(!w||!b) return;
+  var K='hk_update01_side_off';
+  function apply(off){
+    w.classList.toggle('side-off',off);
+    b.setAttribute('aria-pressed',off?'true':'false');
+    b.textContent=off?'☰ 目次を出す':'☰ 目次を隠す';
+  }
+  var saved=false; try{saved=localStorage.getItem(K)==='1';}catch(e){}
+  apply(saved);
+  b.addEventListener('click',function(){
+    var off=!w.classList.contains('side-off');
+    apply(off);
+    try{localStorage.setItem(K,off?'1':'0');}catch(e){}
+  });
+})();
+</script>
 </body>
 </html>
