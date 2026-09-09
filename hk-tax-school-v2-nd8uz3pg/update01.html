@@ -150,6 +150,36 @@
   details .body{padding:14px 18px;font-size:14.5px}
   details .body ul,details .body ol{padding-left:22px;margin:8px 0}
   details .body li{margin:6px 0}
+  /* 各社トグル */
+  .vtogs details{margin:6px 0;border-radius:10px}
+  .vtogs details summary{font-size:14px;padding:10px 14px}
+  .vtogs details summary .m{margin-left:auto;font-size:12px;font-weight:700;color:var(--sub);white-space:nowrap}
+  .vtogs details .body{padding:11px 16px 13px;font-size:14px}
+  .vtogs .ln{margin:0 0 8px;line-height:1.75;display:flex;gap:9px}
+  .vtogs .ln:last-child{margin-bottom:0}
+  .vtogs .mk{flex:0 0 auto;font-weight:800;font-size:15px;min-width:1.3em}
+  .vtogs .mk.o,.vtogs .mk.t{color:var(--green)}
+  .vtogs .mk.k{color:var(--brand)}
+  .vtogs .mk.x{color:#9aa6b4}
+  .vtogs .mk.n{color:var(--sub);font-size:13px;font-weight:700}
+  .exts{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:12px;margin:12px 0 0}
+  .ext{border:1px solid var(--line);border-radius:8px;background:var(--card);padding:14px 16px;display:flex;flex-direction:column}
+  .ext .soft{font-size:11.5px;font-weight:700;letter-spacing:.06em;color:var(--sub)}
+  .ext h4{margin:3px 0 6px;font-size:15.5px;letter-spacing:-.01em}
+  .ext .d{margin:0 0 12px;font-size:13.5px;color:var(--sub);line-height:1.8;flex:1}
+  .ext .get{display:inline-block;align-self:flex-start;background:var(--brand);color:#fff;font-size:13px;font-weight:600;padding:7px 18px;border-radius:980px}
+  .ext .get:hover{opacity:.85;text-decoration:none}
+  .ext .ver{font-size:11.5px;color:var(--sub);margin-left:9px;align-self:center}
+  .ext .foot{display:flex;align-items:center}
+  .kanten a.src{color:var(--brand);text-decoration:none;font-weight:600;font-size:13px;line-height:1.6;display:inline-block}
+  .kanten a.src:hover{text-decoration:underline}
+  .kanten a.src::after{content:"↗";font-size:10px;margin-left:3px;opacity:.7}
+  /* 箱をそのままトグルにする */
+  details.box{border:0;padding:0;overflow:hidden}
+  details.box>summary{padding:14px 16px;background:transparent;font-weight:800;font-size:14.5px}
+  details.box>.body{padding:0 16px 14px;font-size:14.5px;line-height:1.85}
+  details.box>.body ul{margin:0;padding-left:22px}
+  details.box>.body li{margin:5px 0}
 
   /* ===== 観点テーブル ===== */
   table.kanten{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0}
@@ -161,6 +191,9 @@
   table.mx td:first-child{white-space:normal;min-width:220px}
   table.mx th:not(:first-child),table.mx td:not(:first-child){text-align:center;white-space:nowrap;width:74px}
   table.mx th:nth-child(2),table.mx td:nth-child(2){width:96px;border-right:2px solid var(--line)}
+  table.mx th:nth-child(7),table.mx td:nth-child(7){border-left:2px solid var(--line)}
+  table.mx th small{display:block;font-size:10.5px;font-weight:600;color:var(--faint,var(--sub));letter-spacing:0}
+  table.kanten tr.sec td{background:var(--bg);color:var(--sub);font-size:12px;font-weight:800;letter-spacing:.04em;padding:7px 12px;white-space:nowrap}
   table.mx a.ref{display:block;color:inherit;text-decoration:none}
   table.mx a.ref span,table.mx .nolink{display:block;font-size:12px;font-weight:700;line-height:1.4;margin-top:1px;color:var(--brand)}
   table.mx a.ref:hover span{text-decoration:underline}
@@ -338,6 +371,7 @@
       <a href="#t2">② ここまでの10回でやってきたこと</a>
       <a href="#t3">③ 自分の事務所の棚卸しをする</a>
       <a href="#map-now">🗺 立ち位置マップ（3層の使い分け）</a>
+      <a href="#ext">🧩 Chrome拡張を入手（任意）</a>
       <a href="#quiz">🧠 確認テスト（修了条件）</a>
       <a href="#post">✍️ 恩送りメモを投稿（修了条件）</a>
       <a href="#faq">❓ よくあるつまずき</a>
@@ -358,9 +392,9 @@
   <main>
     <!-- ヒーロー -->
     <section class="hero" id="hero">
-      <span class="badge">アプデ① / 全シリーズ　🆕 2026-09-08 更新</span>
+      <span class="badge">アプデ① / 全シリーズ　🆕 2026-09-09 更新</span>
       <h1>各社エージェントの現在地を確認して、<br><em>事務所の体制を決める。</em></h1>
-      <p class="lead">2026年の夏から秋にかけて、<b>freee・マネーフォワード・TKC・弥生</b>が相次いで会計事務所向けのAIエージェントを発表しました。機能を◯×で並べると、できることは<b>Claude Codeのほうが多い</b>です。それでも<b>会計ソフトのエージェント</b>には、表に出ない強みが2つあります。<b>①セキュリティ体制を各社が引き受けてくれること、②AIが分からない職員にもそのまま配れること</b>。だから今日は「どちらが優れているか」を決める回ではありません。<b>各社の現在地を確認したうえで、誰が何を使うかという事務所の体制を決める回</b>です。①各社の現在地を整理し、②ブートキャンプ10回の積み上げを棚卸しして、③その2つを重ねて<b>自分の事務所の次の一手</b>を決めます。<b>地図を配る回</b>です。</p>
+      <p class="lead">2026年の夏から秋にかけて、<b>freee・マネーフォワード・TKC・弥生</b>が相次いで会計事務所向けのAIエージェントを発表しました。そこに<b>会計ソフトを持たないベンダー（TaxSys・Zeimee）</b>も入ってきています。機能を◯×で並べると、できることは<b>Claude Codeのほうが多い</b>です。それでも<b>会計ソフトのエージェント</b>には、表に出ない強みが2つあります。<b>①セキュリティ体制を各社が引き受けてくれること、②AIが分からない職員にもそのまま配れること</b>。だから今日は「どちらが優れているか」を決める回ではありません。<b>各社の現在地を確認したうえで、誰が何を使うかという事務所の体制を決める回</b>です。①各社の現在地を整理し、②ブートキャンプ10回の積み上げを棚卸しして、③その2つを重ねて<b>自分の事務所の次の一手</b>を決めます。<b>地図を配る回</b>です。</p>
 
       <div class="goal">
         <h3>🎯 この回を終えると…</h3>
@@ -430,38 +464,56 @@
       <h3 style="margin:26px 0 6px;font-size:17px">💰 誰が使えて、いくらか</h3>
       <div class="scrollx">
       <table class="kanten">
-        <tr><th></th><th>使えるのは</th><th>料金</th></tr>
+        <tr><th></th><th>使えるのは</th><th>料金</th><th>一次情報</th></tr>
         <tr>
           <td><b>freee</b></td>
           <td><b>アドバイザー制度</b>加入の会計事務所<br><span style="color:var(--sub);font-size:12.5px">未加入の事務所は使えません</span></td>
           <td>月次チェック・申告書チェックは<b>無償</b>／記帳・ルール整備は9/15から<b>有償</b><br><span style="color:var(--sub);font-size:12.5px">初月50%オフあり（従量課金分は対象外）</span></td>
+          <td><a class="src" href="https://corp.freee.co.jp/news/20260807freee_AIagent&amp;fAH.html" target="_blank" rel="noopener">プレスリリース<br>2026/8/7</a></td>
         </tr>
         <tr>
           <td><b>マネーフォワード</b></td>
           <td>事業者＝顧問先<br><span style="color:var(--sub);font-size:12.5px">マネーフォワード クラウド利用者</span></td>
           <td><b>未公表</b><br><span style="color:var(--sub);font-size:12.5px">サービス資料は「近日提供開始予定・先行受付中」（9/8時点）</span></td>
+          <td><a class="src" href="https://biz.moneyforward.com/ai-cowork/" target="_blank" rel="noopener">AI Cowork<br>製品ページ</a></td>
         </tr>
         <tr>
           <td><b>TKC</b></td>
           <td>TKC会員事務所<br><span style="color:var(--sub);font-size:12.5px">FXエージェントは関与先企業</span></td>
           <td>システムの機能として提供<br><span style="color:var(--sub);font-size:12.5px">別料金の公表なし</span></td>
+          <td><a class="src" href="https://www.tkc.jp/news/2026/20260527/" target="_blank" rel="noopener">ニュースリリース<br>2026/5/27</a></td>
         </tr>
         <tr>
           <td><b>弥生</b></td>
           <td><b>PAP会員限定</b>の会計事務所<br><span style="color:var(--sub);font-size:12.5px">未加入の事務所は使えません</span></td>
           <td>β版は<b>無料</b>。申込は<b>9/14まで</b><br><span style="color:var(--sub);font-size:12.5px">正式版は2026年10月ごろ</span></td>
+          <td><a class="src" href="https://www.yayoi-kk.co.jp/company/pressrelease/detail.20260807/" target="_blank" rel="noopener">プレスリリース<br>2026/8/7</a></td>
+        </tr>
+        <tr class="sec"><td colspan="4">会計ソフト以外のベンダー（ソフトに紐づかない）</td></tr>
+        <tr>
+          <td><b>TaxSys</b><br><span style="color:var(--sub);font-size:12.5px">株式会社SoLabo</span></td>
+          <td><b>TAX GROUP加盟</b>の会計事務所<br><span style="color:var(--sub);font-size:12.5px">別途 Google Workspace の契約が必要</span></td>
+          <td>事務手数料<b>150,000円</b>＋月<b>20,000円〜</b><br><span style="color:var(--sub);font-size:12.5px">STARTER 月20,000円（年一括180,000円）／STANDARD 月39,800円／STANDARD＋ 月49,800円。税抜・月間クレジット上限3,000〜5,000</span></td>
+          <td><a class="src" href="https://tax-group.jp/taxsys/" target="_blank" rel="noopener">TaxSys<br>サービスサイト</a></td>
+        </tr>
+        <tr>
+          <td><b>Zeimee</b><br><span style="color:var(--sub);font-size:12.5px">株式会社Zeimee</span></td>
+          <td>会計事務所（<b>先行提供</b>）<br><span style="color:var(--sub);font-size:12.5px">顧問先側の利用は必須ではない</span></td>
+          <td><b>未公表</b><br><span style="color:var(--sub);font-size:12.5px">問い合わせ・デモ経由（9/9時点）</span></td>
+          <td><a class="src" href="https://zeimee.com/" target="_blank" rel="noopener">Zeimee<br>サービスサイト</a></td>
         </tr>
         <tr>
           <td><b>Claude Code</b></td>
           <td>誰でも<br><span style="color:var(--sub);font-size:12.5px">事務所が自分で契約する</span></td>
           <td>Claude Pro <b>月20ドル〜</b><br><span style="color:var(--sub);font-size:12.5px">会員資格・順番待ちなし</span></td>
+          <td><a class="src" href="https://www.claude.com/pricing" target="_blank" rel="noopener">料金ページ</a></td>
         </tr>
       </table>
       </div>
-      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ <b>会員資格で「使えるかどうか」が決まる</b>のが各社のエージェントです。freeeの無償2つも<b>アドバイザー制度加入が前提</b>、弥生は<b>PAP会員限定</b>。順番が回ってくるまで手が空くわけではないので、その間をどう埋めるかが今日の話です。</p>
+      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ <b>会員資格で「使えるかどうか」が決まる</b>のが各社のエージェントです。freeeの無償2つも<b>アドバイザー制度加入が前提</b>、弥生は<b>PAP会員限定</b>。順番が回ってくるまで手が空くわけではないので、その間をどう埋めるかが今日の話です。<br>※ <b>会計ソフト以外のベンダー</b>も入口は同じで、TaxSysは<b>TAX GROUPへの加盟</b>が条件。Zeimeeは先行提供中で、料金はまだ公表されていません。<br>※ <b>右端の列は各社の公表ページ</b>です（2026年9月9日確認）。仕様も料金も変わるので、検討するときは必ず一次情報を見てください。</p>
 
       <h3 style="margin:30px 0 6px;font-size:17px">⭕❌ どこが、何をやってくれるのか</h3>
-      <p style="margin:0 0 6px;font-size:13.5px;color:var(--sub)"><b>◯＝できる　△＝条件つき　✕＝対象外</b>／マークの色は誰の道具か。<b class="lg">緑＝事務所が使う</b>　<b class="lk">青＝顧問先が使う</b><br><b>上の4つが、会計ソフトのエージェントが取りに来ている「ソフトの中」の仕事</b>。その下は<b>ソフトの外に出るので、全社が✕</b>のままです。<br><b>Claude Code列の「第◯回」は、その業務を扱ったブートキャンプの回にリンクしています。</b>振り返るときはそこから戻ってください。</p>
+      <p style="margin:0 0 6px;font-size:13.5px;color:var(--sub)"><b>◯＝できる　△＝条件つき　✕＝対象外</b>／色は誰の道具か。<b class="lg">緑＝事務所</b>　<b class="lk">青＝顧問先</b><br><b>記帳は2行に分けました</b>。①未処理明細を仕訳にする と ②紙・PDFをデータ化する は別の仕事で、<b>ここを分けると各社の立ち位置が一気に見えます</b>。<br>右2列は<b>会計ソフトを持たないベンダー</b>。Claude Code列の「第◯回」は、その業務を扱った回へのリンクです。</p>
       <div class="scrollx">
       <table class="kanten mx">
         <tr>
@@ -471,87 +523,176 @@
           <th>マネー<br>フォワード</th>
           <th>TKC</th>
           <th>弥生</th>
+          <th>TaxSys<small>ソラボ</small></th>
+          <th>Zeimee<small>ゼイミー</small></th>
         </tr>
-        <tr class="sec"><td colspan="6">会計・税務の作業　― 会計ソフトの「中」で完結するもの</td></tr>
+        <tr class="sec"><td colspan="8">会計・税務の作業　― 会計ソフトの「中」で完結するもの</td></tr>
         <tr>
-          <td><b>記帳</b>（証憑・明細から仕訳を作る）</td>
-          <td class="o"><a class="ref" href="vol03.html">◯<span>第3回</span></a></td><td class="o">◯</td><td class="k">◯</td><td class="k">△</td><td class="o">◯</td>
+          <td><b>記帳①　未処理明細を仕訳にする</b>（口座連携で入ってきた明細をAIが分類）</td>
+          <td class="o"><a class="ref" href="vol03.html">◯<span>第3回</span></a></td><td class="o">◯</td><td class="k">◯</td><td class="k">△</td><td class="o">◯</td><td class="x">✕</td><td class="o">◯</td>
+        </tr>
+        <tr>
+          <td><b>記帳②　証憑・紙明細のOCR</b>（請求書・領収書・通帳コピーをデータ化）</td>
+          <td class="o"><a class="ref" href="vol03.html">◯<span>第3回</span></a></td><td class="o">◯</td><td class="k">◯</td><td class="k">△</td><td class="o">◯</td><td class="o">◯</td><td class="o">◯</td>
         </tr>
         <tr>
           <td><b>仕訳チェック・月次レビュー</b>（残高ずれ・消費税区分）</td>
-          <td class="o"><a class="ref" href="vol05.html">◯<span>第5回</span></a></td><td class="o">◯</td><td class="x">✕</td><td class="k">△</td><td class="t">△</td>
+          <td class="o"><a class="ref" href="vol05.html">◯<span>第5回</span></a></td><td class="o">◯</td><td class="x">✕</td><td class="k">△</td><td class="t">△</td><td class="t">△</td><td class="t">△</td>
         </tr>
         <tr>
           <td><b>申告書のチェック</b>（申告書とBS・PLの突合）</td>
-          <td class="o"><a class="ref" href="vol09.html">◯<span>第9回</span></a></td><td class="o">◯</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td>
+          <td class="o"><a class="ref" href="vol09.html">◯<span>第9回</span></a></td><td class="o">◯</td><td class="x">✕</td><td class="o">◯</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td>
         </tr>
         <tr>
           <td><b>記帳ルールの整備</b>（次回以降のルールを育てる）</td>
-          <td class="o"><a class="ref" href="vol03.html">◯<span>第3回</span></a></td><td class="o">◯</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td>
+          <td class="o"><a class="ref" href="vol03.html">◯<span>第3回</span></a></td><td class="o">◯</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="t">△</td><td class="t">△</td>
         </tr>
-        <tr class="sec"><td colspan="6">会計・税務の作業　― 会計ソフトの「外」に出るもの</td></tr>
+        <tr class="sec"><td colspan="8">会計・税務の作業　― 会計ソフトの「外」に出るもの</td></tr>
         <tr>
           <td><b>顧問先向けレポート・ダッシュボードの作成と配信</b></td>
-          <td class="o"><a class="ref" href="vol07.html">◯<span>第7回</span></a></td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td>
+          <td class="o"><a class="ref" href="vol07.html">◯<span>第7回</span></a></td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td>
         </tr>
         <tr>
           <td><b>e-Tax・eLTAXの巡回</b></td>
-          <td class="o"><a class="ref" href="vol09.html">◯<span>第9回</span></a></td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td>
+          <td class="o"><a class="ref" href="vol09.html">◯<span>第9回</span></a></td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td>
         </tr>
         <tr>
           <td><b>会計ソフトをまたぐ処理</b>（freee＋MF＋Excelを横断）</td>
-          <td class="o"><a class="ref" href="index.html">◯<span>第1回</span></a></td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td>
+          <td class="o"><a class="ref" href="index.html">◯<span>第1回</span></a></td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="o">◯</td><td class="o">◯</td>
         </tr>
-        <tr class="sec"><td colspan="6">事務所の運営・管理</td></tr>
+        <tr class="sec"><td colspan="8">事務所の運営・管理</td></tr>
+        <tr>
+          <td><b>期限・進捗の管理</b>（決算・予定納税・届出の期限を顧問先ごとに追う）</td>
+          <td class="o">◯<span class="nolink">&nbsp;</span></td><td class="x">✕</td><td class="x">✕</td><td class="o">◯</td><td class="x">✕</td><td class="o">◯</td><td class="x">✕</td>
+        </tr>
+        <tr>
+          <td><b>所内の稼働管理</b>（日報・原価・契約金額を集計する）</td>
+          <td class="o">◯<span class="nolink">&nbsp;</span></td><td class="x">✕</td><td class="x">✕</td><td class="t">△</td><td class="x">✕</td><td class="o">◯</td><td class="x">✕</td>
+        </tr>
         <tr>
           <td><b>議事録・応対履歴の要約</b></td>
-          <td class="o">◯<span class="nolink">&nbsp;</span></td><td class="x">✕</td><td class="x">✕</td><td class="o">◯</td><td class="x">✕</td>
+          <td class="o">◯<span class="nolink">&nbsp;</span></td><td class="x">✕</td><td class="x">✕</td><td class="o">◯</td><td class="x">✕</td><td class="t">△</td><td class="x">✕</td>
         </tr>
         <tr>
           <td><b>所内データの検索・ナレッジ再利用</b></td>
-          <td class="o">◯<span class="nolink">&nbsp;</span></td><td class="t">△</td><td class="k">△</td><td class="o">◯</td><td class="x">✕</td>
+          <td class="o">◯<span class="nolink">&nbsp;</span></td><td class="t">△</td><td class="k">△</td><td class="o">◯</td><td class="x">✕</td><td class="o">◯</td><td class="x">✕</td>
         </tr>
         <tr>
           <td><b>事務所独自のツール開発</b></td>
-          <td class="o"><a class="ref" href="vol07.html">◯<span>第7回</span></a></td><td class="t">△</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td>
+          <td class="o"><a class="ref" href="vol07.html">◯<span>第7回</span></a></td><td class="t">△</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td>
         </tr>
       </table>
       </div>
-      <details style="margin-top:10px">
-        <summary>表の「△」と色の中身をみる</summary>
+      <p style="margin:14px 0 6px;font-size:13.5px;color:var(--sub)"><b>なぜその◯・△・✕なのかは、各社のボタンを開いてください。</b></p>
+      <div class="vtogs">
+        <details>
+          <summary>Claude Code<span class="m">◯13</span></summary>
+          <div class="body">
+          <div class="ln"><span class="mk o">◯</span><span><b>全13行</b>　会計ソフトの外に出られるので、行を増やしても◯が減りません。</span></div>
+          <div class="ln"><span class="mk o">◯</span><span><b>他社が全滅の3つ</b>　レポート配信・e-Tax巡回・独自ツール開発。ここが差の出どころです。</span></div>
+          <div class="ln"><span class="mk n">※</span><span><b>弱点は表に出ません</b>　セキュリティの説明も、職員への配り方も、事務所側の仕事として残ります。</span></div>
+          </div>
+        </details>
+        <details>
+          <summary>freee<span class="m">◯5 △2 ✕6</span></summary>
+          <div class="body">
+          <div class="ln"><span class="mk o">◯</span><span><b>記帳①②・仕訳チェック・申告書チェック・記帳ルール</b>　ソフトの中は全部取りに来ています。申告書チェックまで取りに来ているのは、<b>会計ソフト4社ではfreeeとTKCだけ</b>です。</span></div>
+          <div class="ln"><span class="mk t">△</span><span><b>所内データ検索・独自ツール開発</b>　Agent Hubで作れますが、顧問先をまたぐ実行と外部連携は「今後提供予定」。</span></div>
+          <div class="ln"><span class="mk x">✕</span><span><b>ソフトの外と事務所の管理</b>　会計ソフトの中で完結する設計なので、外には出ません。</span></div>
+          </div>
+        </details>
+        <details>
+          <summary>マネーフォワード<span class="m">◯2 △1 ✕10</span></summary>
+          <div class="body">
+          <div class="ln"><span class="mk k">◯</span><span><b>マークが全部「青」</b>　AI Coworkは<b>顧問先が自分で使う道具</b>です。事務所側の記帳・チェックの道具ではありません。</span></div>
+          <div class="ln"><span class="mk x">✕</span><span><b>仕訳チェック</b>　事業者向けなので、<b>事務所がレビューする工程がそもそもありません</b>。</span></div>
+          <div class="ln"><span class="mk n">※</span><span>公式は9/8時点で「近日提供」。料金も未公表です。</span></div>
+          </div>
+        </details>
+        <details>
+          <summary>TKC<span class="m">◯4 △4 ✕5</span></summary>
+          <div class="body">
+          <div class="ln"><span class="mk k">△</span><span><b>記帳①②・仕訳チェック</b>　顧問先向けの<b>FXエージェント</b>です。事務所側の機能ではありません。</span></div>
+          <div class="ln"><span class="mk o">◯</span><span><b>申告書のチェック</b>　OMSエージェントが<b>国税庁のチェックリストとクロスチェック</b>します。税務と会計の一気通貫（デジタルシームレス）を掲げる、事務所側の機能です。</span></div>
+          <div class="ln"><span class="mk o">◯</span><span><b>期限・進捗の管理／議事録要約／所内データ検索</b>　事務所側は<b>「管理と検索」</b>に寄せています。巡回監査の支援、問合せ回答のドラフト生成、ワークストリームクラウド連携まで含みます。</span></div>
+          <div class="ln"><span class="mk t">△</span><span><b>所内の稼働管理</b>　進捗は追えますが、日報・原価の集計までは踏み込みません。</span></div>
+          <div class="ln"><span class="mk n">※</span><span>AIが参照するデータをOMS内に限定と明言。<b>データが溜まっている事務所ほど効きます</b>。</span></div>
+          </div>
+        </details>
+        <details>
+          <summary>弥生<span class="m">◯2 △1 ✕10</span></summary>
+          <div class="body">
+          <div class="ln"><span class="mk o">◯</span><span><b>記帳①②のみ</b>　4社でいちばん範囲が狭いです。</span></div>
+          <div class="ln"><span class="mk t">△</span><span><b>仕訳チェック</b>　証憑の重複チェックまで。<b>残高ずれや消費税区分には踏み込みません</b>。</span></div>
+          <div class="ln"><span class="mk n">※</span><span>β版は無料・PAP会員限定・申込は9/14まで。<b>触るコストは一番低い</b>。</span></div>
+          </div>
+        </details>
+        <details>
+          <summary>TaxSys<small style="font-weight:600;color:var(--sub)">（ソラボ）</small><span class="m">◯5 △3 ✕5</span></summary>
+          <div class="body">
+          <div class="ln"><span class="mk x">✕</span><span><b>記帳①</b>　明細を仕訳にする道具ではなく、<b>明細を会計ソフトに流し込む道具</b>です。仕訳化は会計ソフトの「自動登録ルール」の仕事。</span></div>
+          <div class="ln"><span class="mk o">◯</span><span><b>記帳②</b>　ここが本丸。領収書・請求書・通帳コピー・カード明細・<b>外貨建ての海外領収書</b>まで。AI-OCRはクレジット制です。</span></div>
+          <div class="ln"><span class="mk o">◯</span><span><b>ソフトまたぎ</b>　freee・MF・弥生・TKC・JDL・MJS・MA1・EPSON・勘定奉行の<b>9ソフト</b>に仕訳を渡せます。ただし<b>Excelなどソフト外のデータは扱いません</b>。</span></div>
+          <div class="ln"><span class="mk o">◯</span><span><b>期限・進捗／稼働管理</b>　<b>機能の半分がここ</b>。決算・消費税予定納税・事前確定届出給与・納特・期限後申告の期限管理、日報・原価・契約金額の集計。</span></div>
+          <div class="ln"><span class="mk o">◯</span><span><b>所内データ検索</b>　Google Workspaceを基盤にAI-OCRとCRMを統合。数字と面談の経緯を1つの顧客フォルダに揃えます。</span></div>
+          <div class="ln"><span class="mk t">△</span><span><b>月次レビュー</b>　突合・重複・インボイス番号検証まで。<b>残高ずれや消費税区分ではありません</b>。</span></div>
+          <div class="ln"><span class="mk t">△</span><span><b>記帳ルール</b>　狙いはOCR結果を会計ソフトに渡す形に整えること。事務所の判断を育てる設計ではありません。</span></div>
+          <div class="ln"><span class="mk t">△</span><span><b>議事録</b>　集約はしますが、要約まではしません。</span></div>
+          <div class="ln"><span class="mk n">※</span><span>実像は<b>「事務所の管理プラットフォーム＋OCR」</b>。記帳の行だけ見ると、この会社の正体を読み違えます。</span></div>
+          </div>
+        </details>
+        <details>
+          <summary>Zeimee<small style="font-weight:600;color:var(--sub)">（ゼイミー）</small><span class="m">◯3 △2 ✕8</span></summary>
+          <div class="body">
+          <div class="ln"><span class="mk o">◯</span><span><b>記帳①</b>　対応ソフトの明細を取得し、AIが勘定科目と税区分を提案。<b>担当者が承認するまで反映されない</b>と明記しています。</span></div>
+          <div class="ln"><span class="mk o">◯</span><span><b>記帳②</b>　証憑解析でデータ化。<b>ここまでは動いています</b>。</span></div>
+          <div class="ln"><span class="mk t">△</span><span><b>仕訳チェック・月次レビュー</b>　消込までは扱いますが、<b>残高ずれ・消費税区分のチェックはまだ</b>。「AIチェックルール管理」として提供予定です。</span></div>
+          <div class="ln"><span class="mk o">◯</span><span><b>ソフトまたぎ</b>　freee・マネーフォワード・ミロク会計・弥生会計・発展会計の<b>5ソフト</b>に対応。ただし<b>Excelなどソフト外のデータは扱いません</b>。</span></div>
+          <div class="ln"><span class="mk t">△</span><span><b>記帳ルール</b>　「AIチェックルール管理」は<b>提供予定</b>。月次レポート出力・顧問先ポータルも同じく提供予定です。</span></div>
+          <div class="ln"><span class="mk x">✕</span><span><b>事務所の管理系</b>　持っていません。<b>記帳まわりに絞っています</b>。</span></div>
+          <div class="ln"><span class="mk n">※</span><span><b>Zeimeeには畠山がアドバイザーとして関与しています</b>。評価は各社の公表情報だけを根拠にしていますが、伏せずにお伝えします。</span></div>
+          </div>
+        </details>
+        <details>
+          <summary>7社に共通すること<span class="m"></span></summary>
+          <div class="body">
+          <div class="ln"><span class="mk n">・</span><span>各社とも<b>「専門家の判断に代わるものではない」</b>と明記。<b>最終チェックと署名の責任は動いていません</b>。</span></div>
+          <div class="ln"><span class="mk n">・</span><span><b>下2行はAIの機能ではありません</b>。期限・進捗の管理と所内の稼働管理は普通の管理機能です。それでも並べたのは、<b>TaxSysの機能の半分がここにある</b>からです。</span></div>
+          </div>
+        </details>
+      </div>
+      <details class="box tip">
+        <summary>💡 畠山の読み解き（5つ）</summary>
         <div class="body">
-          <b>freeeの△</b>　所内検索と独自ツールは Agent Hub で作れますが、顧問先をまたぐ実行と外部連携は「今後提供予定」です。<br>
-          <b>マネーフォワードの青</b>　AI Cowork は<b>顧問先が自分で使う道具</b>。事務所側の記帳・チェックの道具ではありません。<br>
-          <b>TKCの△（青）</b>　記帳と要注意仕訳は顧問先向けのFXエージェント。事務所側は所内データの検索・要約だけです。<br>
-          <b>弥生の△</b>　証憑の重複チェックまで。残高や消費税区分のレビューには踏み込みません。<br>
-          <b>共通</b>　各社とも「専門家の判断に代わるものではない」と明記。<b>最終チェックと署名の責任は動いていません</b>。
+        <ul>
+          <li><b>今日ノーリスクで触れるのは、freeeの無償2つと弥生のβ版だけ</b>。ニュースの熱量と、明日の実務で使える量は違います</li>
+          <li><b>「記帳」は一語で語れません</b>。未処理明細の分類と、紙・PDFのデータ化は別の仕事。<b>TaxSysは後者の専門店</b>です</li>
+          <li><b>ソフトをまたげるのは、ソフトを持たない側の強み</b>。TaxSysは9ソフト、Zeimeeは5ソフトに対応。陣取り位置は、TaxSysが<b>会計ソフトの手前（明細の入口）</b>、Zeimeeが<b>上（レビューと承認）</b>です</li>
+          <li><b>全社が✕なのはレポート配信とe-Tax巡回</b>。会計税務のど真ん中なのに、どこも取りに来ていません</li>
+          <li><b>取りに来ているのは記帳とチェック＝第3回・第5回</b>。事務所ごとに形が違う仕事は、標準化されにくいままです</li>
+        </ul>
         </div>
       </details>
-      <div class="box tip">
-        <div class="box-h">💡 畠山の読み解き</div>
-        <ul>
-          <li><b>今日ノーリスクで触れるのは、freeeの無償2つと弥生のβ版だけ</b>です。ニュースの熱量と、明日の実務で使える量は違います</li>
-          <li><b>各社が押さえに来ているのは「ソフトの中で完結する作業」だけ</b>。レポート配信・e-Tax巡回・ソフトまたぎは<b>会計税務のど真ん中なのに全社が✕</b>です</li>
-          <li><b>「AIの前に、データ」</b>。TKCが対象を「データが溜まっている事務所から」にしているのは、そのまま自分の事務所にも当てはまります</li>
-          <li><b>取りに来ているのは記帳とチェック＝第3回・第5回</b>の領域。第7回・第9回のような<b>事務所ごとに形が違う仕事は標準化されにくい</b>ままです</li>
-        </ul>
-      </div>
 
 
       <h3 id="gap" style="margin:30px 0 6px;font-size:17px">⚖ 表に出ない、会計ソフトのエージェントの2つの強み</h3>
-      <p style="margin:0 0 10px;font-size:13.5px;color:var(--sub)">◯の数だけ見ると、Claude Codeがいちばん多く見えます。ただし<b>この表は「何ができるか」しか比べていません</b>。実務では、できること以外に2つ効いてきます。<b>ここが今日いちばん伝えたいところ</b>です。<br>※ Claude CodeもAnthropicという<b>ベンダーの製品</b>です。違いは会社ではなく、<b>会計ソフトの中に閉じているか、外にも出られるか</b>。このページでは freee・マネーフォワード・TKC・弥生のものをまとめて<b>「会計ソフトのエージェント」</b>と呼び、Claude Codeと対にして並べます。</p>
+      <p style="margin:0 0 10px;font-size:13.5px;color:var(--sub)"><b>この表は「何ができるか」しか比べていません</b>。実務では、できること以外に2つ効いてきます。<b>ここが今日いちばん伝えたいところ</b>です。<br>※ 以下、freee・マネーフォワード・TKC・弥生のものをまとめて<b>「会計ソフトのエージェント」</b>と呼びます。Claude CodeもAnthropicの製品なので、違いは会社ではなく<b>ソフトの中に閉じているか、外にも出られるか</b>です。</p>
 
-      <div class="box safe">
-        <div class="box-h">🛡 ① セキュリティ体制を、各社が引き受けてくれる</div>
-        各社とも、データの扱いと承認・記録の仕組みを自社で用意しています。マネーフォワードは<b>ガードレール・Draft &amp; Approve（AIは下書きまで、確定は必ず人）・AI監査ログ</b>を掲げ、freeeは顧問先ごとにログイン情報と作業履歴を分離、TKCはAIが参照するデータをOMS内に限定すると明言しています。<br>
-        つまり顧問先から「そのAI、どこで何を見ているんですか」と聞かれたとき、<b>各社の公表資料をそのまま示せます</b>。自作のコードだと、<b>説明も、何かあったときの責任も自分に残ります</b>。これは機能の差ではなく、<b>誰が引き受けるかの差</b>です。
-      </div>
+      <details class="box safe">
+        <summary>🛡 ① セキュリティ体制を、各社が引き受けてくれる</summary>
+        <div class="body">
+        顧問先から「そのAI、どこで何を見ているんですか」と聞かれたとき、<b>各社の公表資料をそのまま示せます</b>。マネーフォワードは<b>ガードレール・Draft &amp; Approve・AI監査ログ</b>、freeeは顧問先ごとのログイン情報と作業履歴の分離、TKCは参照先をOMS内に限定と明言しています。<br>
+        自作のコードだと、<b>説明も、何かあったときの責任も自分に残ります</b>。機能の差ではなく、<b>誰が引き受けるかの差</b>です。
+        </div>
+      </details>
 
-      <div class="box safe">
-        <div class="box-h">👥 ② AIが分からない職員にも、そのまま配れる</div>
-        会計ソフトのエージェントは<b>ボタンを押せば動く形</b>で届きます。AIの知識がない職員にも、明日から配れます。<br>
-        Claude Codeは何でもできる代わりに、<b>作った人が中身を分かっている前提</b>の道具です。所内に広げるには、手順書と、教える人が要ります。<b>「自分ひとりだと速い」と「事務所で回る」は別の話</b>です。
-      </div>
+      <details class="box safe">
+        <summary>👥 ② AIが分からない職員にも、そのまま配れる</summary>
+        <div class="body">
+        会計ソフトのエージェントは<b>ボタンを押せば動く形</b>で届くので、AIの知識がない職員にも明日から配れます。<br>
+        Claude Codeは何でもできる代わりに、<b>作った人が中身を分かっている前提</b>の道具です。所内に広げるには手順書と教える人が要ります。<b>「自分ひとりだと速い」と「事務所で回る」は別の話</b>です。
+        </div>
+      </details>
 
       <div class="box tip">
         <div class="box-h">💡 だから、事務所の中でこう分かれていくと見ています</div>
@@ -794,7 +935,7 @@
         <div class="box-h">🎯 原則：道具を3層に分ける</div>
         <ul>
           <li><b>会計ソフトのエージェント</b>　会計ソフトの<b>中</b>で完結する共通業務。<b>精度が高いものはそのまま使う</b></li>
-          <li><b>Chrome拡張</b>　画面を見ながら人が判断する場面に、情報を足して<b>補う</b>（第4回・第9回）</li>
+          <li><b>Chrome拡張</b>　画面を見ながら人が判断する場面に、情報を足して<b>補う</b>（第4回・第9回）。<a href="#ext">下で配っています</a></li>
           <li><b>Claude Code</b>　ソフトの<b>外</b>に出る仕事と、ログを残したい処理（第3回・第5回・第7回）</li>
         </ul>
         <div style="margin-top:10px">どちらが優れているかという話ではありません。<b>精度が出ているところは任せて、残りを自分で埋める</b>。この地図が自分の中にあると、新機能が出るたびに「これはどこに入るのか」で判断できます。<b>全部に飛びつく必要はありません</b>。</div>
@@ -805,8 +946,8 @@
       <div class="scrollx">
       <table class="kanten mx2">
         <tr><th>仕事</th><th>いま（2026年9月）</th><th>これから（予想）</th></tr>
-        <tr class="sec"><td colspan="3">▼ 会計ソフトのエージェントへ渡していく（精度が上回った順に）</td></tr>
-        <tr><td><b>記帳</b></td><td class="cc">Claude Code</td><td class="vd">会計ソフトのエージェント</td></tr>
+        <tr class="sec"><td colspan="3">▼ どちらでも回せるようになる（精度が上回った順に）</td></tr>
+        <tr><td><b>記帳</b></td><td class="cc">Claude Code</td><td class="vd" style="white-space:normal"><span style="color:var(--brand)">Claude Code</span> <span style="color:var(--sub);font-weight:400">or</span> 会計ソフトのエージェント</td></tr>
         <tr><td><b>仕訳チェック・月次レビュー</b></td><td class="dt">同上</td><td class="dt">同上</td></tr>
         <tr><td><b>申告書のチェック</b></td><td class="dt">同上</td><td class="dt">同上</td></tr>
         <tr class="sec"><td colspan="3">▼ 画面の上は拡張機能で補う（ここは変わらない）</td></tr>
@@ -819,7 +960,7 @@
         <tr><td><b>事務所独自のツール開発</b></td><td class="dt">同上</td><td class="dt">同上</td></tr>
       </table>
       </div>
-      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ 上の3つも<b>いまは私がClaude Codeで回しています</b>。自分で精度を確かめて、<b>会計ソフトのエージェントが上回った領域から順に渡す</b>。この見極めは、一度自分で作ってみた人にしかできません。なお<b>仕訳チェックは渡したあとも、自分の事務所の観点を足す形が残ります</b>。</p>
+      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ 上の3つも<b>いまは私がClaude Codeで回しています</b>。これからは<b>どちらでも回せる</b>ようになるので、<b>渡すか自分で持つかを選ぶ</b>ことになります。この見極めは、一度自分で作ってみた人にしかできません。なお<b>仕訳チェックは渡したあとも、自分の事務所の観点を足す形が残ります</b>。</p>
 
       <div class="box howto" style="margin-top:18px">
         <div class="box-h">📊 ソフトの外は、結局Excelに集まります</div>
@@ -828,6 +969,86 @@
       </div>
 
       <div class="hana">🌸 <b>今回の合言葉：</b>会計ソフトのエージェントは「標準装備」、Claude Codeは「自分の事務所の武器」。<b>下の段はソフトに寄せて、上の段を自分で育てる</b>。記帳が標準機能になる日が来ても、<b>あなたの事務所のチェックの観点と、顧問先への届け方</b>は、あなたにしか作れない。</div>
+    </section>
+
+    <!-- ===== Chrome拡張の配布 ===== -->
+    <section class="step" id="ext">
+      <div class="step-head">
+        <div class="step-num">🧩<small>任意</small></div>
+        <div class="step-title">
+          <h2>Chrome拡張：欲しいものだけ持っていってください</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 1つ約2分</span>
+            <span class="tag type">📦 入れたいものだけでOK</span>
+          </div>
+        </div>
+      </div>
+
+      <p>3層のまん中、<b>「画面を見ながら人が判断する場面を補う」</b>のがChrome拡張です。ここに現時点で配っているものを並べました。<b>全部入れる必要はありません</b>。使っているソフトのものだけ、しかも欲しいものだけで大丈夫です。</p>
+
+      <div class="exts">
+        <div class="ext">
+          <div class="soft">freee会計</div>
+          <h4>勘定科目ボタン</h4>
+          <div class="d">「自動で経理」「取引・口座振替」画面に<b>勘定科目のボタンパネル</b>を出します。クリックで科目を入力・確定。<b>第4回で配ったもの</b>と同じです。</div>
+          <div class="foot"><a class="get" href="https://github.com/fromk0326-boop/haifuyou/releases/download/chrome-ext-20260909/freee-kamoku-buttons-v1.10.1.zip" target="_blank" rel="noopener">ZIPを入手</a><span class="ver">v1.10.1</span></div>
+        </div>
+        <div class="ext">
+          <div class="soft">freee会計</div>
+          <h4>BSサイドドロワー</h4>
+          <div class="d">試算表・自動で経理の画面の右に、<b>BS残高（営業債権・営業債務・預り金）</b>を出します。科目行を開くと補助・品目別、取引行を開くと元の明細まで下りられます。</div>
+          <div class="foot"><a class="get" href="https://github.com/fromk0326-boop/haifuyou/releases/download/chrome-ext-20260909/freee-bs-drawer-v0.5.0.zip" target="_blank" rel="noopener">ZIPを入手</a><span class="ver">v0.5.0</span></div>
+        </div>
+        <div class="ext">
+          <div class="soft">freee会計</div>
+          <h4>freee帳簿拡張</h4>
+          <div class="d"><b>智原翔悟先生（ENJOINT）が公開</b>されている帳簿点検の拡張です。ウェブストア公開なので、<b>ボタンひとつで入ります</b>（デベロッパーモード不要）。</div>
+          <div class="foot"><a class="get" href="https://chromewebstore.google.com/detail/lcckhenfjalkkpdkopljocoibkpgejca" target="_blank" rel="noopener">ストアで入手</a><span class="ver">ウェブストア</span></div>
+        </div>
+        <div class="ext">
+          <div class="soft">マネーフォワード</div>
+          <h4>MF会計アシスト</h4>
+          <div class="d">ルール一致明細の<b>一括チェック</b>＋勘定科目ボタン＋<b>補助科目・取引先のワンクリック追加</b>。AI-OCRから入力の画面でも使えます。</div>
+          <div class="foot"><a class="get" href="https://github.com/fromk0326-boop/haifuyou/releases/download/chrome-ext-20260909/mf-bulk-select-extension-v1.4.5.zip" target="_blank" rel="noopener">ZIPを入手</a><span class="ver">v1.4.5</span></div>
+        </div>
+        <div class="ext">
+          <div class="soft">マネーフォワード</div>
+          <h4>BSサイドドロワー</h4>
+          <div class="d">「連携サービスから入力」画面の右に<b>BS残高</b>を出します。freee版のマネーフォワード対応版です。</div>
+          <div class="foot"><a class="get" href="https://github.com/fromk0326-boop/haifuyou/releases/download/chrome-ext-20260909/mf-bs-drawer-v0.1.0.zip" target="_blank" rel="noopener">ZIPを入手</a><span class="ver">v0.1.0</span></div>
+        </div>
+        <div class="ext">
+          <div class="soft">マネーフォワード</div>
+          <h4>帳簿点検ハイライト</h4>
+          <div class="d">総勘定元帳・補助元帳・残高試算表で、<b>マイナス金額・未選択の補助科目・怪しい税区分・仮払金の高額計上</b>などを自動で色づけします。確認済みの指摘は日付を付けて色を消せます。</div>
+          <div class="foot"><a class="get" href="https://github.com/fromk0326-boop/haifuyou/releases/download/chrome-ext-20260909/mf-chobo-extension-v0.1.0.zip" target="_blank" rel="noopener">ZIPを入手</a><span class="ver">v0.1.0</span></div>
+        </div>
+      </div>
+
+      <details class="box tip" style="margin-top:16px">
+        <summary>📥 入れ方（ZIPのもの・共通）</summary>
+        <div class="body">
+        <ol style="margin:0;padding-left:20px">
+          <li>ZIPをダウンロードして、<b>展開（解凍）</b>する</li>
+          <li>Chromeで <code>chrome://extensions</code> を開く（Braveは <code>brave://extensions</code>）</li>
+          <li>右上の<b>「デベロッパーモード」をオン</b>にする</li>
+          <li><b>「パッケージ化されていない拡張機能を読み込む」</b>を押して、展開したフォルダを選ぶ</li>
+        </ol>
+        <div style="margin-top:10px">フォルダは<b>消さずに置いたままにしてください</b>（Chromeはそのフォルダを直接読んでいます）。フォルダ名が英語なのはChromeが日本語名でつまずくことがあるためなので、変えないでください。<br>うまく入らないときは、画面のスクリーンショットをClaude Codeに貼って聞けば案内してくれます。</div>
+        </div>
+      </details>
+
+      <div class="box safe">
+        <div class="box-h">🔒 安全メモ</div>
+        <ul>
+          <li><b>BSサイドドロワーと帳簿点検ハイライトは読み取り専用</b>です。freee・MFへの書き込みは一切しません</li>
+          <li>科目ボタンは<b>入力を助けるだけ</b>で、科目を自動で判断するものではありません。何を選ぶかは今までどおりご自身で決めてください</li>
+          <li>ハイライトが付く＝誤り、ではありません。<b>「見るべき行の目印」</b>です</li>
+          <li>ソフト側の画面が変わると動かなくなることがあります。そのときは講義でお知らせします</li>
+        </ul>
+      </div>
+
+      <div class="hana">🌸 <b>拡張は「消耗品」です。</b>ソフトの画面が変われば壊れるし、標準機能に取り込まれれば要らなくなる。それでいいんです。<b>いま目の前の1時間を削る</b>ために置いておく道具。壊れたら直すか、捨てる。その気楽さで使ってください。</div>
     </section>
 
     <!-- ===== 確認テスト ===== -->
