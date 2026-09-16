@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>畠山式税理士AIコミュニティ｜アプデ② ソフトの中と、PCの中</title>
+<style>
+  :root{
+    --bg:#f5f7fa;
+    --card:#ffffff;
+    --ink:#1f2d3d;
+    --sub:#5b6b7e;
+    --line:#e6ebf1;
+    --brand:#2864f0;
+    --brand-soft:#eaf0ff;
+    --green:#00a86b;
+    --green-soft:#e6f7f0;
+    --amber:#f5a623;
+    --amber-soft:#fff6e6;
+    --red:#e5484d;
+    --red-soft:#fdeced;
+    --radius:16px;
+    --shadow:0 4px 20px rgba(31,45,61,.06);
+    --shadow-lg:0 10px 40px rgba(31,45,61,.10);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic UI","Meiryo",system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.8;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--brand);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* ===== 進捗バー（上部固定） ===== */
+  .progress-bar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:10px 20px;
+    display:flex;align-items:center;gap:14px;
+    flex-wrap:wrap;
+  }
+  .progress-bar .logo{font-weight:800;font-size:15px;letter-spacing:.02em}
+  .progress-bar .logo span{color:var(--brand)}
+  .progress-track{
+    flex:1;min-width:160px;height:10px;border-radius:99px;
+    background:var(--line);overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;width:0%;border-radius:99px;
+    background:linear-gradient(90deg,var(--brand),var(--green));
+    transition:width .5s cubic-bezier(.2,.8,.2,1);
+  }
+  .progress-count{font-weight:800;font-size:14px;white-space:nowrap}
+  .progress-count b{color:var(--brand);font-size:18px}
+
+  /* ===== レイアウト ===== */
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px;
+    display:grid;grid-template-columns:240px 1fr;gap:32px;align-items:start}
+  @media(max-width:880px){.wrap{grid-template-columns:1fr;gap:0}}
+
+  /* ===== サイドバー ===== */
+  .side{position:sticky;top:64px;padding:24px 0}
+  @media(max-width:880px){.side{display:none}}
+  .wrap.side-off{grid-template-columns:1fr}
+  .wrap.side-off .side{display:none}
+  .nav-toggle{font:inherit;font-size:13px;font-weight:700;cursor:pointer;background:var(--card);border:1px solid var(--line);color:var(--sub)}
+  .nav-toggle[aria-pressed="true"]{background:var(--brand-soft);border-color:transparent;color:var(--brand)}
+  .side h4{font-size:12px;color:var(--sub);text-transform:uppercase;letter-spacing:.08em;margin:0 0 10px}
+  .side nav a{display:block;padding:8px 12px;border-radius:10px;color:var(--ink);font-size:14px;font-weight:600;margin-bottom:2px}
+  .side nav a:hover{background:var(--brand-soft);text-decoration:none}
+  .side .note{margin-top:24px;font-size:12px;color:var(--sub);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+
+  /* ===== ヒーロー ===== */
+  .hero{padding:48px 0 24px}
+  .badge{display:inline-block;background:var(--brand-soft);color:var(--brand);font-weight:800;font-size:13px;padding:6px 14px;border-radius:99px;margin-bottom:16px}
+  .hero h1{font-size:34px;line-height:1.35;margin:0 0 14px;letter-spacing:-.01em}
+  .hero h1 em{font-style:normal;color:var(--brand)}
+  .hero p.lead{font-size:16px;color:var(--sub);margin:0 0 24px}
+  .goal{
+    background:linear-gradient(135deg,#eaf0ff,#e6f7f0);
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 24px;box-shadow:var(--shadow);
+  }
+  .goal h3{margin:0 0 10px;font-size:17px}
+  .goal ul{margin:0;padding-left:22px}
+  .goal li{margin:6px 0}
+  .goal .out{margin-top:14px;font-weight:800;color:var(--green);font-size:15px}
+
+  /* ===== ステップカード ===== */
+  .step{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:28px;margin:24px 0;scroll-margin-top:80px;
+    transition:box-shadow .3s, border-color .3s;
+  }
+  .step.done{border-color:var(--green);box-shadow:0 0 0 2px var(--green-soft),var(--shadow)}
+  .step-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:6px}
+  .step-num{
+    flex:none;width:48px;height:48px;border-radius:14px;
+    background:var(--brand);color:#fff;font-weight:800;font-size:18px;
+    display:flex;align-items:center;justify-content:center;flex-direction:column;line-height:1;
+  }
+  .step.done .step-num{background:var(--green)}
+  .step-num small{font-size:9px;font-weight:600;opacity:.85;margin-top:2px}
+  .step-title{flex:1}
+  .step-title h2{margin:0;font-size:22px}
+  .step-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  .tag{font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--bg);color:var(--sub);border:1px solid var(--line)}
+  .tag.time{background:var(--amber-soft);color:#a86c00;border-color:transparent}
+  .tag.type{background:var(--brand-soft);color:var(--brand);border-color:transparent}
+
+  /* ===== 情報ボックス ===== */
+  .box{border-radius:12px;padding:14px 16px;margin:16px 0;font-size:14.5px}
+  .box .box-h{font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+  .box.tip{background:var(--amber-soft)}
+  .box.safe{background:var(--red-soft)}
+  .box.howto{background:var(--brand-soft)}
+  .box ul,.box ol{margin:6px 0;padding-left:22px}
+  .box li{margin:4px 0}
+
+  /* ===== コピペボックス ===== */
+  .copy{position:relative;margin:16px 0}
+  .copy-label{font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .copy pre{
+    margin:0;background:#0f1b2d;color:#e7eefc;border-radius:12px;
+    padding:16px 16px;overflow:auto;max-height:240px;font-size:13.5px;line-height:1.7;
+    font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;white-space:pre-wrap;
+  }
+  .copy-btn{
+    position:absolute;top:30px;right:10px;
+    background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);
+    border-radius:8px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s;
+  }
+  .copy-btn:hover{background:rgba(255,255,255,.25)}
+  .copy-btn.copied{background:var(--green);border-color:var(--green)}
+
+  /* ===== details ===== */
+  details{border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden;background:var(--card)}
+  details summary{cursor:pointer;padding:12px 16px;font-weight:700;font-size:14.5px;list-style:none;display:flex;align-items:center;gap:8px;background:var(--bg)}
+  details summary::-webkit-details-marker{display:none}
+  details summary::before{content:"▶";font-size:10px;color:var(--sub);transition:transform .2s}
+  details[open] summary::before{transform:rotate(90deg)}
+  details .body{padding:14px 18px;font-size:14.5px}
+  details .body ul,details .body ol{padding-left:22px;margin:8px 0}
+  details .body li{margin:6px 0}
+  /* 各社トグル */
+  .vtogs details{margin:6px 0;border-radius:10px}
+  .vtogs details summary{font-size:14px;padding:10px 14px}
+  .vtogs details summary .m{margin-left:auto;font-size:12px;font-weight:700;color:var(--sub);white-space:nowrap}
+  .vtogs details .body{padding:11px 16px 13px;font-size:14px}
+  .vtogs .ln{margin:0 0 8px;line-height:1.75;display:flex;gap:9px}
+  .vtogs .ln:last-child{margin-bottom:0}
+  .vtogs .mk{flex:0 0 auto;font-weight:800;font-size:15px;min-width:1.3em}
+  .vtogs .mk.o,.vtogs .mk.t{color:var(--green)}
+  .vtogs .mk.k{color:var(--brand)}
+  .vtogs .mk.x{color:#9aa6b4}
+  .vtogs .mk.n{color:var(--sub);font-size:13px;font-weight:700}
+  .exts{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:12px;margin:12px 0 0}
+  .ext{border:1px solid var(--line);border-radius:8px;background:var(--card);padding:14px 16px;display:flex;flex-direction:column}
+  .ext .soft{font-size:11.5px;font-weight:700;letter-spacing:.06em;color:var(--sub)}
+  .ext h4{margin:3px 0 6px;font-size:15.5px;letter-spacing:-.01em}
+  .ext .d{margin:0 0 12px;font-size:13.5px;color:var(--sub);line-height:1.8;flex:1}
+  .ext .get{display:inline-block;align-self:flex-start;background:var(--brand);color:#fff;font-size:13px;font-weight:600;padding:7px 18px;border-radius:980px}
+  .ext .get:hover{opacity:.85;text-decoration:none}
+  .ext .ver{font-size:11.5px;color:var(--sub);margin-left:9px;align-self:center}
+  .ext .foot{display:flex;align-items:center}
+  .kanten a.src{color:var(--brand);text-decoration:none;font-weight:600;font-size:13px;line-height:1.6;display:inline-block}
+  .kanten a.src:hover{text-decoration:underline}
+  .kanten a.src::after{content:"↗";font-size:10px;margin-left:3px;opacity:.7}
+  /* 箱をそのままトグルにする */
+  details.box{border:0;padding:0;overflow:hidden}
+  details.box>summary{padding:14px 16px;background:transparent;font-weight:800;font-size:14.5px}
+  details.box>.body{padding:0 16px 14px;font-size:14.5px;line-height:1.85}
+  details.box>.body ul{margin:0;padding-left:22px}
+  details.box>.body li{margin:5px 0}
+
+  /* ===== 観点テーブル ===== */
+  table.kanten{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0}
+  table.kanten th,table.kanten td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.7}
+  table.kanten th{color:var(--sub);font-size:12.5px;white-space:nowrap;background:var(--bg)}
+  table.kanten td b{color:var(--brand)}
+  table.kanten td:first-child{white-space:nowrap}
+  .scrollx{overflow-x:auto}
+  table.mx td:first-child{white-space:normal;min-width:220px}
+  table.mx th:not(:first-child),table.mx td:not(:first-child){text-align:center;white-space:nowrap;width:74px}
+  table.mx th:nth-child(2),table.mx td:nth-child(2){width:96px;border-right:2px solid var(--line)}
+  table.mx th:nth-child(7),table.mx td:nth-child(7){border-left:2px solid var(--line)}
+  table.mx th small{display:block;font-size:10.5px;font-weight:600;color:var(--faint,var(--sub));letter-spacing:0}
+  table.kanten tr.sec td{background:var(--bg);color:var(--sub);font-size:12px;font-weight:800;letter-spacing:.04em;padding:7px 12px;white-space:nowrap}
+  table.mx a.ref{display:block;color:inherit;text-decoration:none}
+  table.mx a.ref span,table.mx .nolink{display:block;font-size:12px;font-weight:700;line-height:1.4;margin-top:1px;color:var(--brand)}
+  table.mx a.ref:hover span{text-decoration:underline}
+  table.mx .nolink{color:transparent}
+  table.mx th.cc{color:var(--brand)}
+  table.mx td.o,table.mx td.t{color:var(--green);font-weight:800;font-size:16px}
+  table.mx td.k{color:var(--brand);font-weight:800;font-size:16px}
+  table.mx td.x{color:#c3ccd6;font-weight:700;font-size:16px}
+  .lg{color:var(--green)}
+  .lk{color:var(--brand)}
+  table.mx td b{color:var(--ink)}
+  table.mx tr.sec td,table.mx2 tr.sec td{background:var(--bg);color:var(--sub);font-size:12px;font-weight:800;letter-spacing:.04em;padding:7px 12px;min-width:0;white-space:nowrap}
+  table.mx2 td:first-child{white-space:normal;min-width:190px}
+  table.mx2 td:not(:first-child){white-space:nowrap}
+  table.mx2 td.cc{color:var(--brand);font-weight:700}
+  table.mx2 td.vd{color:var(--ink);font-weight:700}
+  table.mx2 td.ex{color:var(--sub);font-weight:700}
+  table.mx2 td.dt{color:var(--sub);opacity:.55;font-weight:400}
+  table.role td:nth-child(2){white-space:nowrap;color:var(--brand);font-weight:700}
+  table.role td:last-child{white-space:normal;min-width:280px}
+  .st{font-size:12px;font-weight:800;padding:2px 9px;border-radius:99px;white-space:nowrap;display:inline-block}
+  .st.now{background:var(--green-soft);color:#0a7d54}
+  .st.soon{background:var(--amber-soft);color:#a86c00}
+  .st.dev{background:var(--bg);color:var(--sub);border:1px solid var(--line)}
+
+  /* ===== タイムライン（横軸＝時間 / 縦軸＝提供元） ===== */
+  .gantt{
+    display:grid;
+    grid-template-columns:112px repeat(8,minmax(84px,1fr));
+    gap:8px 4px;
+    align-items:center;
+    min-width:820px;
+    margin:14px 0 6px;
+  }
+  .g-h{
+    font-size:12px;font-weight:800;color:var(--sub);
+    text-align:center;line-height:1.35;align-self:end;
+    padding-bottom:6px;border-bottom:1px solid var(--line);
+  }
+  .g-h.g-name{text-align:left}
+  .g-h.now{color:var(--brand);border-bottom:2px solid var(--brand)}
+  .g-h.now span{display:block;font-size:11px}
+  .g-name{grid-column:1;font-size:13.5px;font-weight:800}
+  .g-name small{display:block;font-size:11.5px;font-weight:600;color:var(--sub)}
+  .g-bar{
+    font-size:12.5px;font-weight:700;line-height:1.5;
+    background:var(--brand);color:#fff;
+    border-radius:99px;padding:6px 10px;
+    text-align:center;white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis;
+  }
+  .g-bar.soft{background:var(--brand-soft);color:var(--brand)}
+  .g-bar.cc{background:var(--green)}
+  .g-bar.dash{background:transparent;color:var(--sub);border:1px dashed var(--line);font-weight:600}
+
+  /* ===== 完了チェック ===== */
+  .check{
+    display:flex;align-items:center;gap:12px;margin-top:18px;
+    background:var(--green-soft);border:1px dashed var(--green);
+    border-radius:12px;padding:14px 16px;cursor:pointer;user-select:none;
+  }
+  .check input{width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .check label{font-weight:800;color:#0a7d54;cursor:pointer;font-size:15px}
+
+  /* ===== 完了済みカードのグレーアウト ===== */
+  .step.done > *:not(.check):not(.done-banner){opacity:.45;filter:grayscale(.55);transition:opacity .25s,filter .25s}
+  .done-banner{display:none;align-items:center;gap:10px;background:var(--green-soft);border:1.5px solid var(--green);border-radius:12px;padding:10px 14px;margin-bottom:14px;font-size:13.5px;font-weight:700;color:#0a7d54}
+  .step.done .done-banner{display:flex}
+
+  /* ===== 修了 ===== */
+  .finish{
+    background:linear-gradient(135deg,var(--brand),#5b8cff);color:#fff;
+    border-radius:var(--radius);padding:36px 28px;text-align:center;margin:32px 0 64px;
+    box-shadow:var(--shadow-lg);
+  }
+  .finish h2{margin:0 0 10px;font-size:26px}
+  .finish p{margin:0 0 18px;opacity:.95}
+  .finish .cta{display:inline-block;background:#fff;color:var(--brand);font-weight:800;padding:12px 28px;border-radius:99px}
+  .finish.celebrate{animation:pop .6s}
+  @keyframes pop{0%{transform:scale(.96)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
+  .finish.locked{background:linear-gradient(135deg,#8a97ad,#a5b0c2);box-shadow:var(--shadow)}
+  .finish.locked .cta{color:#5b6b7e}
+
+  /* ===== 紙吹雪 ===== */
+  .confetti-piece{position:fixed;top:-16px;width:10px;height:14px;z-index:200;pointer-events:none;animation:confetti-fall linear forwards}
+  @keyframes confetti-fall{to{transform:translateY(105vh) rotate(720deg);opacity:.9}}
+
+  hr.soft{border:none;border-top:1px solid var(--line);margin:22px 0}
+  .hana{font-size:13.5px;color:var(--sub);background:var(--bg);border-radius:12px;padding:10px 14px;margin-top:14px;border-left:3px solid var(--brand)}
+  .hana b{color:var(--brand)}
+
+  /* ===== コース全体ナビ ===== */
+  .course-nav{
+    background:var(--card);border-bottom:1px solid var(--line);
+    padding:12px 20px;
+  }
+  .course-nav-inner{
+    max-width:1080px;margin:0 auto;
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  }
+  .course-nav-label{font-size:12px;font-weight:800;color:var(--sub);margin-right:4px;white-space:nowrap}
+  .course-pill{
+    display:inline-flex;align-items:center;gap:4px;
+    font-size:13px;font-weight:700;padding:6px 12px;border-radius:99px;
+    border:1px solid var(--line);background:var(--bg);color:var(--ink);
+    white-space:nowrap;
+  }
+  .course-pill:hover{background:var(--brand-soft);text-decoration:none}
+  .course-pill.current{background:var(--brand);border-color:var(--brand);color:#fff}
+  .course-pill.current:hover{background:var(--brand)}
+  .course-pill.soon{
+    background:var(--bg);color:#aab4c0;border-color:var(--line);
+    cursor:default;pointer-events:none;
+  }
+  .course-pill.soon::after{content:"準備中";font-size:10px;font-weight:800;margin-left:2px}
+
+  /* ===== 投稿フォーム ===== */
+  .post-field{margin:12px 0}
+  .post-field label{display:block;font-size:13px;font-weight:700;color:var(--sub);margin-bottom:6px}
+  .post-field input[type=text],.post-field textarea{
+    width:100%;border:1px solid var(--line);border-radius:10px;
+    padding:10px 12px;font-size:14.5px;font-family:inherit;color:var(--ink);
+    background:var(--bg);resize:vertical;
+  }
+  .post-field textarea{min-height:120px;line-height:1.7}
+  .post-submit{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--brand);color:#fff;font-weight:800;font-size:15px;
+    border:none;border-radius:99px;padding:12px 28px;cursor:pointer;transition:.2s;
+  }
+  .post-submit:hover{background:#1d4fd1}
+  .post-submit:disabled{background:var(--sub);cursor:wait}
+  .post-status{font-size:13.5px;font-weight:700;margin-top:10px}
+  .post-status.ok{color:var(--green)}
+  .post-status.err{color:var(--red)}
+  .board-link{
+    display:inline-flex;align-items:center;gap:6px;margin-top:14px;
+    font-size:13.5px;font-weight:700;color:var(--brand);
+  }
+  .illus{width:100%;height:auto;border-radius:14px;border:1px solid var(--line);margin:14px 0 6px;display:block;background:#fff}
+  .illus.hero-illus{margin:0 0 20px;box-shadow:var(--shadow)}
+  .illus-cap{font-size:12.5px;color:var(--sub);text-align:center;margin:2px 0 10px}
+</style>
+</head>
+<body>
+
+<!-- 進捗バー -->
+<div class="progress-bar">
+  <div class="logo">畠山式税理士AI<span>コミュニティ</span></div>
+  <div class="progress-track"><div class="progress-fill" id="fill"></div></div>
+  <div class="progress-count"><b id="cnt">0</b>/5 クリアで修了</div>
+</div>
+
+<!-- コース全体ナビ -->
+<div class="course-nav">
+  <div class="course-nav-inner">
+    <button type="button" class="course-pill nav-toggle" id="sideToggle" aria-pressed="false">☰ 目次を隠す</button>
+    <a class="course-pill" href="map.html" style="background:var(--green-soft);border-color:transparent;color:var(--green);font-weight:800">🗺 コース全体</a>
+    <a class="course-pill" href="index.html">第1回</a>
+    <a class="course-pill" href="vol03.html">第3回</a>
+    <a class="course-pill" href="vol05.html">第5回</a>
+    <a class="course-pill" href="vol07.html">第7回</a>
+    <a class="course-pill" href="vol09.html">第9回</a>
+    <a class="course-pill" href="update01.html">アプデ①</a>
+    <a class="course-pill current" href="update02.html">アプデ②</a>
+    <a class="course-pill" href="glossary.html" style="margin-left:auto;background:var(--amber-soft);border-color:transparent;color:#a86c00">📖 用語集</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <!-- サイドバー -->
+  <aside class="side">
+    <h4>このページ</h4>
+    <nav>
+      <a href="#hero">🎯 ゴール</a>
+      <a href="#t1">① この1ヶ月で動いたこと</a>
+      <a href="#t2" style="color:var(--brand);font-weight:700">② 実験報告：JDLと年末調整（本題）</a>
+      <a href="#t3">③ fAD2026東京で拾ってきたもの</a>
+      <a href="#t4">④ 全12回の棚卸しと卒業設計</a>
+      <a href="#map-now">🗺 立ち位置マップ（4層に増えました）</a>
+      <a href="#quiz">🧠 確認テスト（修了条件）</a>
+      <a href="#post">✍️ 恩送りメモを投稿（修了条件）</a>
+      <a href="#faq">❓ よくあるつまずき</a>
+      <a href="#finish">🎉 修了</a>
+    </nav>
+    <h4 style="margin-top:24px">こまったら</h4>
+    <nav>
+      <a href="glossary.html">📖 用語集（横文字はここ）</a>
+      <a href="update01.html">🗺 アプデ①（各社エージェントの現在地）</a>
+    </nav>
+    <div class="note">
+      <b>アプデ②の位置づけ</b><br>
+      シリーズの<b>最終回</b>です。新しい手順を覚える回ではなく、<b>この1ヶ月で動いたことを地図に足して、卒業後の90日を自分で決める回</b>。①外で動いたこと、②実際にやってみた実験報告、③fADで拾ってきたネタ、④全12回の棚卸しと卒業設計、の4本立てです。<br>
+      手を動かすのは<a href="#t4">ステップ④</a>だけです🌸
+    </div>
+  </aside>
+
+  <!-- メイン -->
+  <main>
+    <!-- ヒーロー -->
+    <section class="hero" id="hero">
+      <span class="badge">アプデ② / 最終回　🆕 2026-09-16 更新</span>
+      <h1>動いていたのは「ソフトの中」だけでは<br>ありませんでした。<em>「PCの中」も動きました。</em></h1>
+      <img class="illus hero-illus" src="img/update02/hero.webp" alt="左のクラウドの箱の中で働くロボットと、右でノートPCのマウスとキーボードを直接操作するロボットを見比べる税理士のイラスト" loading="lazy">
+      <p class="illus-cap">1ヶ月前に見ていたのは左の線だけでした。今回、右の線が動きました</p>
+      <p class="lead">アプデ①で見たのは<b>「ソフトの中」</b>の話でした。freee・マネーフォワード・TKC・弥生が、自社ソフトの中にAIエージェントを置きはじめた。あれから1ヶ月。<b>もう1本の線</b>が動きました。<b>AIがPCそのものを操作しはじめた</b>ことです。事務所で<b>年末調整の事前シート</b>と、<b>JDL（インストール型の申告ソフト）での届出書・申告書ドラフト</b>を作らせたら、どちらも動きました。第9回で「申告書はまだ任せられません」と引いた線が、<b>1ヶ月で動いた</b>ということです。</p>
+
+      <div class="goal">
+        <h3>🎯 この回を終えると…</h3>
+        <ul>
+          <li><b>「ソフトの中のAI」と「PCの中のAI」</b>という2本の線で、いまの状況を人に説明できる</li>
+          <li>インストール型ソフト（JDL等）にもAIの手が届きはじめたことと、<b>それでも動かない線</b>が分かる</li>
+          <li>fAD2026で見えた<b>「作業ログの可視化」</b>について、自分の事務所で<b>買うか・作るか・やらないか</b>を判断できる</li>
+          <li><b>全12回の到達度が棚卸しできて、卒業後90日でやることが3つに絞れている</b></li>
+        </ul>
+        <div class="out">🏁 この回のゴール：誰かが用意してくれるのを待たずに、自分の事務所の次を自分で決められる状態</div>
+      </div>
+    </section>
+
+    <!-- ===== ステップ1 ===== -->
+    <section class="step" id="t1">
+      <div class="done-banner">✅ このステップは完了済みです</div>
+      <div class="step-head">
+        <div class="step-num">①<small>読む</small></div>
+        <div class="step-title">
+          <h2>この1ヶ月で動いたこと（地図のアップデート）</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約15分</span>
+            <span class="tag type">📖 読むだけでOK</span>
+          </div>
+        </div>
+      </div>
+
+      <p>アプデ①から1ヶ月。地図に足すことが2つあります。<b>1つは予定どおり（ソフトの中）、もう1つは予定になかったもの（PCの中）</b>です。</p>
+
+      <h3 style="margin:24px 0 6px;font-size:17px">🧭 いま動いている2本の線</h3>
+
+      <div class="scrollx">
+      <table class="kanten">
+        <tr><th>線</th><th>誰が動かしているか</th><th>届く範囲</th><th>この1ヶ月の動き</th></tr>
+        <tr>
+          <td><b>ソフトの中</b><br><span style="font-size:12.5px;color:var(--sub)">アプデ①で見た線</span></td>
+          <td>freee・マネーフォワード・TKC・弥生</td>
+          <td><b>そのソフトの中の業務だけ</b><br><span style="font-size:12.5px;color:var(--sub)">記帳・ルール整備・月次チェック・申告書チェック</span></td>
+          <td><b>予定どおり前進。</b>freeeの顧問先管理向けAIエージェントが<b>9月15日に有償提供開始</b>（初月50%OFF）。TKCは<b>9月末</b>にFX／OMSエージェント。弥生は<b>10月に正式版</b>の予定</td>
+        </tr>
+        <tr>
+          <td><b>PCの中</b><br><span style="font-size:12.5px;color:var(--brand);font-weight:700">🆕 今回追加</span></td>
+          <td>OpenAI・Anthropic などのAIベンダー</td>
+          <td><b>その画面で人ができることは、だいたい届く</b><br><span style="font-size:12.5px;color:var(--sub)">クラウドでも、インストール型でも</span></td>
+          <td><b>ここが今回の本題。</b>OpenAIが<b>9月3日にGPT-6「Astra」</b>を公開。目玉は<b>PCの自動操作</b>。APIがないインストール型ソフトにも、AIの手が届くようになりました</td>
+        </tr>
+      </table>
+      </div>
+
+      <div class="box tip">
+        <div class="box-h">💡 なぜ「PCの中」が大きいのか</div>
+        <ul>
+          <li>AI化が遅れていたのは、<b>つなぎ口（API）がない業務</b>でした。申告ソフト・給与ソフト・役所のシステム・顧問先のExcel。中身は定型なのに、人がやるしかなかった場所です</li>
+          <li>画面操作は、その<b>つなぎ口がない問題を正面から迂回します</b>。人が画面でできることなら、原理的には届きます</li>
+          <li>ただし<b>遅いです</b>。だから<b>APIがある業務は、これからもAPIでやります</b>（ステップ②の原則②）</li>
+        </ul>
+      </div>
+
+      <h3 style="margin:26px 0 6px;font-size:17px">📌 つまり、アプデ①の地図はこう変わります</h3>
+      <div class="scrollx">
+      <table class="kanten">
+        <tr><th></th><th>アプデ①（1ヶ月前）</th><th>アプデ②（いま）</th></tr>
+        <tr><td><b>層の数</b></td><td>3層<br><span style="font-size:12.5px;color:var(--sub)">会計ソフトのエージェント／Chrome拡張／Claude Code</span></td><td><b>4層</b><br><span style="font-size:12.5px;color:var(--sub)">＋ PC操作エージェント</span></td></tr>
+        <tr><td><b>届かない場所</b></td><td>APIがないソフトの中<br><span style="font-size:12.5px;color:var(--sub)">申告ソフト・給与ソフトなど</span></td><td><b>ほぼなくなりました</b><br><span style="font-size:12.5px;color:var(--sub)">ただし遅い・不安定・確認は必須</span></td></tr>
+        <tr><td><b>最後に残る線</b></td><td>提出・承認・税務判断</td><td><b>変わりません</b><br><span style="font-size:12.5px;color:var(--sub)">誰が責任を持つかは1ミリも動いていません</span></td></tr>
+      </table>
+      </div>
+
+      <div class="box safe">
+        <div class="box-h">🔒 安全メモ</div>
+        PC操作型のAIは、<b>画面でできることは何でもできます</b>。消すこともできます。試すときは<b>①練習用のデータから始める、②実行前にバックアップを取る、③実行中は画面から離れない</b>の3つを守ってください。とくに<b>提出・送信ボタンのある画面では、最後まで触らせない</b>こと。ドラフトまでで止めて、押すのは人です。
+      </div>
+
+      <div class="hana">🌸 <b>ひとこと：</b>「また新しいのが出た、追いつけない」と思ったら、<b>2本の線のどちらの話かだけ</b>見分けてください。ソフトの中の話なら「自分が使っているソフトのものだけ」見れば十分です。PCの中の話なら「いま人がやっている作業のうち、APIがなくて諦めていたもの」を思い出せばOKです🌸</div>
+
+      <div class="check" onclick="toggle(this,event)">
+        <input type="checkbox" data-step="1">
+        <label>✅ 「ソフトの中」と「PCの中」の2本の線を、自分の言葉で説明できる</label>
+      </div>
+    </section>
+
+    <!-- ===== ステップ2 ===== -->
+    <section class="step" id="t2" style="border-color:var(--brand)">
+      <div class="done-banner">✅ このステップは完了済みです</div>
+      <div class="step-head">
+        <div class="step-num">②<small>読む</small></div>
+        <div class="step-title">
+          <h2>実験報告：AIに「年末調整」と「JDL」をやらせてみました</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約20分</span>
+            <span class="tag type">🔬 この回の本題</span>
+          </div>
+        </div>
+      </div>
+
+      <p>第9回では<b>「申告書そのものは、まだAIには任せられません」</b>と言いました。その線が<b>1ヶ月で動きました</b>。うちの事務所でやってみた2つの実験を、<b>詰まったところも含めて</b>そのまま共有します。</p>
+
+      <div class="box howto">
+        <div class="box-h">🔬 実験の前提</div>
+        <ul>
+          <li>使ったのは<b>codex（Astra）</b>（OpenAIの、PC操作ができるAI）。画面を見て、マウスとキーボードを動かすタイプです</li>
+          <li>対象は<b>自分の事務所のデータ・自分のPC</b>です。顧問先の本番環境でいきなり試してはいません</li>
+          <li>ゴールは<b>「提出」ではなく「ドラフトを作るところまで」</b>。確認して確定させるのは人です</li>
+        </ul>
+      </div>
+
+      <!-- 追記枠：当日の実演のディテール（何分かかった/どこで止まった/どう直したか） -->
+
+      <h3 style="margin:26px 0 8px;font-size:17px">🧪 実験1：年末調整の事前シートを作らせる → <span class="st now">できました</span></h3>
+      <img class="illus" src="img/update02/nencho.webp" alt="去年の年末調整の書類を見ながら、今年の事前シートをパソコンで作るロボットと、それを横で見ている税理士のイラスト" loading="lazy">
+      <p class="illus-cap">去年の完成品が、そのまま仕様書になりました</p>
+      <p style="margin:0 0 6px">毎年11月、全顧問先に同じ手を動かしています。<b>従業員ごとの前提を並べて、今年どの書類が必要かを整理した事前シート</b>を作る作業です。</p>
+      <div class="scrollx">
+      <table class="kanten">
+        <tr><th>観点</th><th>結果</th></tr>
+        <tr><td><b>渡したもの</b></td><td>前年の資料と今年の従業員の状況。指示は<b>「去年と同じ形式で、今年の分を作って」</b>だけ</td></tr>
+        <tr><td><b>出てきたもの</b></td><td><b>そのまま顧問先に送れる水準の事前シート</b>。前年の形式のまま、今年の変更点が反映された状態</td></tr>
+        <tr><td><b>人がやったこと</b></td><td><b>中身の確認だけ。</b>作る作業には手を動かしていません</td></tr>
+        <tr><td><b>効いた理由</b></td><td><b>前年の成果物があったこと。</b>毎年同じ形のものを作る仕事は、前年の完成品が仕様書になります</td></tr>
+      </table>
+      </div>
+
+      <h3 style="margin:26px 0 8px;font-size:17px">🧪 実験2：codex（Astra）にJDLを操作させて、届出書と申告書ドラフトを作らせる → <span class="st now">できました</span></h3>
+      <img class="illus" src="img/update02/jdl.webp" alt="申告ソフトが映ったデスクトップPCのマウスとキーボードをロボットが操作し、税理士は少し離れた椅子で待っているイラスト" loading="lazy">
+      <p class="illus-cap">APIがないソフトに、AIの手が物理的に届きました</p>
+      <p style="margin:0 0 6px">こちらが本丸です。<b>JDLはインストール型で、外から叩けるAPIがありません</b>。だからAI化の話ではいつも対象外でした。それを<b>画面操作でやらせました</b>。</p>
+      <div class="scrollx">
+      <table class="kanten">
+        <tr><th>観点</th><th>結果</th></tr>
+        <tr><td><b>やらせたこと</b></td><td>JDLの画面を<b>codex（Astra）</b>に操作させて、<b>①各種届出書の作成、②申告書のドラフト作成</b></td></tr>
+        <tr><td><b>結果</b></td><td><b>どちらも作れました。</b>「APIがないソフトだから無理」という前提が崩れました</td></tr>
+        <tr><td><b>速さ</b></td><td><b>速くはありません。</b>見て・押して・確認しての繰り返しなので、人と同じか、場面によっては人より遅いです</td></tr>
+        <tr><td><b>それでも意味がある理由</b></td><td>速さではなく<b>「手が空くこと」</b>に意味があります。人が張り付く時間がゼロになると、事務所の使える時間が変わります</td></tr>
+        <tr><td><b>人がやったこと</b></td><td><b>レビューと確定。</b>ここは動いていません（原則③）</td></tr>
+      </table>
+      </div>
+
+      <h3 style="margin:28px 0 8px;font-size:17px">📐 2つの実験から、はっきりしたこと</h3>
+
+      <details class="box howto" open>
+        <summary>原則① 「AIには触れない領域」の多くは、能力の問題ではなく“時期”の問題でした</summary>
+        <div class="body">
+          第9回の時点では<b>「申告ソフトはAPIがないから無理」</b>が正しい判断でした。それが1ヶ月で古くなりました。<br>
+          引き出すべきは「予測が外れた」ではなく、<b>できない理由が“つなぎ口がない”なら、それは時期の問題として扱う</b>ということです。逆に<b>「責任を負えないから無理」は、時期が来ても変わりません</b>。この2つを混ぜないでください。<br>
+          <b>やること：</b>いま諦めている作業を、<b>つなぎ口がなくて無理／責任があって無理</b>の2つに分けてください。前者はリストに載せておく価値があります。
+        </div>
+      </details>
+
+      <details class="box howto">
+        <summary>原則② APIがある業務は、これからもAPIでやります（画面操作は最後の手段）</summary>
+        <div class="body">
+          PC操作型は<b>遅い・不安定・画面のレイアウト変更で壊れる</b>という弱点があります。同じことがAPIでできるなら<b>APIの方が速くて安全</b>です。優先順位はこうなります。
+          <ol>
+            <li><b>APIがある</b>（freee・MF会計など）→ <b>API</b>で。ブートキャンプ第1回〜第7回でやってきたのがこれです</li>
+            <li><b>APIはないがブラウザで動く</b>（一部の管理画面など）→ <b>Chrome拡張</b>やブラウザ操作で</li>
+            <li><b>インストール型でつなぎ口がない</b>（JDL・給与ソフトなど）→ <b>ここで初めてPC操作型</b>を使う</li>
+          </ol>
+          <b>やること：</b>「新しいのが出たから全部これで」は事務所を不安定にします。<b>いま回っている自動化は、そのまま置いておいてください</b>。
+        </div>
+      </details>
+
+      <details class="box howto">
+        <summary>原則③ 責任の所在は、1ミリも動いていません</summary>
+        <div class="body">
+          AIが申告書のドラフトを作れても、<b>署名するのは税理士</b>です。ここは技術の進み方と関係がありません。<br>
+          むしろ<b>ドラフトが速く出るほど、レビューが重くなります</b>。今までは「作りながら考える」ことで自然にチェックが入っていました。作る工程が消えると、<b>チェックの工程を意識的に作らないと、何も見ないまま確定します</b>。<br>
+          <b>やること：</b>第5回・第9回でやった<b>レビュー観点のスキル化</b>がここで効きます。速く作れる人ほど、<b>チェックの型を先に持っている必要があります</b>。
+        </div>
+      </details>
+
+      <div class="box safe">
+        <div class="box-h">🔒 安全メモ：自分の事務所で試すときの順番</div>
+        <ol>
+          <li><b>自社（自分の事務所）のデータから</b>。顧問先データでの初回実行はしない</li>
+          <li><b>前年の完成品があるものから</b>。年末調整の事前シートが効いたのは、前年の成果物が仕様書になったからです</li>
+          <li><b>締切から遠い時期に</b>。申告期限の直前に新しいやり方を初投入しない</li>
+          <li><b>提出・送信ボタンには触らせない</b>。ドラフトまでで止めて、押すのは人</li>
+          <li><b>実行前にバックアップ</b>。画面操作型のAIは、消すこともできます</li>
+        </ol>
+      </div>
+
+      <div class="hana">🌸 <b>ひとこと：</b>この2つの実験で大事なのは「JDLが動いた」ことより、<b>無理だと思っていた線が1ヶ月で動くと体感できたこと</b>です。だから卒業後に必要なのは、新しいツールを追いかけ続けることではなく、<b>「いま諦めていること」をリストにしておくこと</b>。線が動いたとき、すぐ拾えるように🌸</div>
+
+      <div class="check" onclick="toggle(this,event)">
+        <input type="checkbox" data-step="2">
+        <label>✅ 実験報告を読んで、3つの原則（時期の問題／APIが先／責任は動かない）が分かった</label>
+      </div>
+    </section>
+
+    <!-- ===== ステップ3 ===== -->
+    <section class="step" id="t3">
+      <div class="done-banner">✅ このステップは完了済みです</div>
+      <div class="step-head">
+        <div class="step-num">③<small>読む</small></div>
+        <div class="step-title">
+          <h2>freee Advisor Day 2026 東京で拾ってきたもの</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約10分</span>
+            <span class="tag type">🎁 おみやげ</span>
+          </div>
+        </div>
+      </div>
+
+      <p>9月15日、<b>freee Advisor Day 2026（東京）</b>に行ってきました。会場で見て「これは自分の事務所でも使える」と思ったものを持って帰ってきたので、そのまま共有します。</p>
+
+      <h3 style="margin:26px 0 8px;font-size:17px">🎁 おみやげ①：作業ログの見える化（みえるクラウドログ）</h3>
+
+      <img class="illus" src="img/update02/log.webp" alt="顧問先名がついた4つのタブが並んだブラウザの前で、ロボットがストップウォッチで時間を計り、棒グラフに集計しているイラスト" loading="lazy">
+      <p class="illus-cap">タブのタイトルを顧問先名で揃えるだけで、時間が自動で集まります</p>
+      <p style="margin:0 0 10px">会場で見たのは、<b>スタッフがいま何の作業をしているかを、ブラウザの動きから自動で記録して見える化する</b>サービスです。仕組みはシンプルで、<b>自作できそうだと思いました</b>。</p>
+
+      <div class="box howto">
+        <div class="box-h">🧩 仕組みの骨格（自作するならこの3点）</div>
+        <ul>
+          <li><b>ブラウザベースで作業ログを取る</b>。どのページを、いつから、どれだけ開いていたかを記録する</li>
+          <li><b>ブラウザのタブに顧問先名を表示させて、それを手がかりに集計する</b>。ここが肝です。タブのタイトルさえ揃っていれば、<b>「どの顧問先に何時間かかったか」が自動で集まります</b></li>
+          <li><b>10分に1回、画面のスクリーンショットも撮る</b>。ログだけだと「開いていただけ」と区別がつかないので、実際の作業内容の裏取りに使う</li>
+        </ul>
+      </div>
+
+      <p>分かりやすい使い道は<b>スタッフの作業状況の把握</b>で、会場でも<b>さぼりの監視・抑制</b>という文脈で語られていました。ただ、<b>この道具の価値はそこではない</b>と思っています。</p>
+
+      <div class="box tip">
+        <div class="box-h">💡 監視より先に、こちらに効きます</div>
+        <ul>
+          <li><b>顧問料の根拠が数字で出ます。</b>感覚でやっていた「あそこは重い」が、月何時間という数字になります</li>
+          <li><b>自動化の効果を前後比較できます。</b>これが無いと、自動化は「なんとなく楽になった気がする」で終わります</li>
+          <li><b>ひとり事務所でも効きます。</b>自分の時間の使い方は、誰も教えてくれません</li>
+        </ul>
+      </div>
+
+      <h4 style="margin:24px 0 6px;font-size:15.5px">買うか、作るか、やらないか</h4>
+      <div class="scrollx">
+      <table class="kanten">
+        <tr><th>選択肢</th><th>向いている事務所</th><th>コスト</th></tr>
+        <tr><td><b>買う</b><br><span style="font-size:12.5px;color:var(--sub)">サービスを導入</span></td><td><b>スタッフが複数いる事務所。</b>運用を人に説明するので、作りかけだと現場が動きません。サポート窓口に価値が出ます</td><td>月額（人数課金が多い）</td></tr>
+        <tr><td><b>作る</b><br><span style="font-size:12.5px;color:var(--brand);font-weight:700">Claude Codeで</span></td><td><b>ひとり〜少人数の事務所。</b>まず<b>タブのタイトルを顧問先名で揃えるところだけ</b>作って、集計は後から足すのが現実的です</td><td>時間（数時間〜）</td></tr>
+        <tr><td><b>やらない</b></td><td><b>いま困っていないならやらなくていいです。</b>「何に使うか」が決まっていないログは、ただのデータになります</td><td>ゼロ</td></tr>
+      </table>
+      </div>
+
+      <div class="box safe">
+        <div class="box-h">🔒 安全メモ：作業ログと監視は、必ず「先に決めてから」始めてください</div>
+        <ul>
+          <li><b>従業員の作業を記録するなら、目的を明示し、就業規則等に定めて、本人に周知するのが前提</b>です。黙って始めるのは労務上も信頼関係の上でも避けてください。導入前に<b>社会保険労務士・弁護士に確認</b>を</li>
+          <li><b>スクリーンショットには顧問先の情報が写ります。</b>保存先・保存期間・閲覧できる人を先に決めてください。<b>守秘義務の問題</b>です。顧問先に勧めるときも同じで、目的・周知・保存ルールをセットで伝えます</li>
+          <li><b>「サボりを探す道具」として始めると、現場はログを避けるように動きます。</b>「どこに時間がかかっているかを一緒に見る道具」として始めた方が、正確なデータが集まります</li>
+        </ul>
+      </div>
+
+      <!-- 追記枠：おみやげ②（fAD東京）。ここに <h3>🎁 おみやげ② …</h3> ブロックを差し込む -->
+
+      <div class="hana">🌸 <b>ひとこと：</b>イベントの価値は、新製品を知ることより<b>「これ自分で作れそう」と思える瞬間</b>にあります。完成品を見ると仕組みが分かるので、自分の事務所サイズに縮めて作れます。<b>見る → 分解する → 自分サイズで作る</b>。12回やってきたことの応用編です🌸</div>
+
+      <div class="check" onclick="toggle(this,event)">
+        <input type="checkbox" data-step="3">
+        <label>✅ 作業ログの見える化について、自分の事務所で「買う／作る／やらない」を決めた</label>
+      </div>
+    </section>
+
+    <!-- ===== ステップ4 ===== -->
+    <section class="step" id="t4">
+      <div class="done-banner">✅ このステップは完了済みです</div>
+      <div class="step-head">
+        <div class="step-num">④<small>やる</small></div>
+        <div class="step-title">
+          <h2>全12回を棚卸しして、卒業後90日を設計する</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約30分</span>
+            <span class="tag type">✋ 手を動かします</span>
+          </div>
+        </div>
+      </div>
+
+      <p>最終回の手を動かすパートです。<b>全12回で何をやってきたかを1枚で見返して、自分の到達度を正直に確認し、卒業後90日でやることを3つに絞ります</b>。ここだけはClaude Codeを開いてください。</p>
+
+      <h3 style="margin:24px 0 6px;font-size:17px">🗂 全12回で、私たちが積み上げてきたもの</h3>
+      <p style="margin:0 0 8px"><b>奇数回が課題つきの本編、偶数回が質疑・アップデート回</b>という構成で進んできました。抜けている回があっても大丈夫です。<b>戻り先が分かるように、各回のページにリンクを張ってあります</b>。</p>
+      <div class="scrollx">
+      <table class="kanten">
+        <tr><th>回</th><th>この回で作った状態</th><th>配布物</th></tr>
+        <tr>
+          <td><b><a href="index.html">第1回</a></b><br><span style="font-size:12.5px;color:var(--sub)">🏅自動起票デビュー</span></td>
+          <td><b>「AIが会計ソフトを触れる」状態</b><br>口座・カードの連携、Claude Codeの導入、freee MCP接続、初めての自動起票</td>
+          <td>🎁 AI事務所テンプレート一式</td>
+        </tr>
+        <tr>
+          <td><b><a href="vol03.html">第3回</a></b><br><span style="font-size:12.5px;color:var(--sub)">🏅自動記帳デビュー</span></td>
+          <td><b>「毎月の作業をAIに渡せる」状態</b><br>勘定科目ルールの2段階設計、未処理明細の一括登録、請求書のOCR起票</td>
+          <td>🎁 ナンピ（配布キット）<br>🎁 MF一括選択Chrome拡張</td>
+        </tr>
+        <tr>
+          <td><b><a href="vol05.html">第5回</a></b><br><span style="font-size:12.5px;color:var(--sub)">🏅レビューまで任せる人</span></td>
+          <td><b>「AIの仕事をAIに見張らせる」状態</b><br>仕訳帳と消費税区分のAIレビュー、観点のスキル化</td>
+          <td>🎁 レビュー観点表<br>🎁 スキル化の指示文</td>
+        </tr>
+        <tr>
+          <td><b><a href="vol07.html">第7回</a></b><br><span style="font-size:12.5px;color:var(--sub)">🏅月次を届ける人</span></td>
+          <td><b>「顧問先に届ける」状態</b><br>月次データの取得、顧問先別ダッシュボードの量産、毎月の自動配信</td>
+          <td>🎁 ダッシュボード生成の型</td>
+        </tr>
+        <tr>
+          <td><b><a href="vol09.html">第9回</a></b><br><span style="font-size:12.5px;color:var(--sub)">🏅申告のまわりを固める人</span></td>
+          <td><b>「チェックする側の型」を固めた状態</b><br>申告書PDFの結合・内訳明細のドラフト・提出前レビュー・e-Tax棚卸し（第10回で前年比較つきレビューに更新）</td>
+          <td>🗺 税務AI自動化の現在地マップ</td>
+        </tr>
+        <tr>
+          <td><b><a href="update01.html">アプデ①</a></b><br><span style="font-size:12.5px;color:var(--sub)">🏅地図を持って走る人</span></td>
+          <td><b>「外の状況が読める」状態</b><br>各社AIエージェントの現在地を整理し、事務所の体制（誰が何を使うか）を決定</td>
+          <td>🗺 3層の立ち位置マップ<br>🧩 Chrome拡張5種</td>
+        </tr>
+        <tr style="background:var(--brand-soft)">
+          <td><b>アプデ②</b><br><span style="font-size:12.5px;color:var(--brand);font-weight:700">🏅自走する人</span></td>
+          <td><b>「自分で地図を更新できる」状態</b><br>PC操作型AIを地図に追加、全12回の棚卸し、卒業後90日の設計</td>
+          <td>🗺 4層の立ち位置マップ<br>📝 卒業設計プロンプト</td>
+        </tr>
+      </table>
+      </div>
+
+      <h3 style="margin:28px 0 6px;font-size:17px">🪜 6段の階段になりました</h3>
+      <p style="margin:0 0 8px">アプデ①では5段でした。最終回で<b>6段目</b>が増えます。ここが<b>卒業後に自分で登り続ける段</b>です。</p>
+      <img class="illus" src="img/update02/kaidan.webp" alt="6段の階段のイラスト。各段に「1 つなぐ」「2 任せる」「3 見張る」「4 届ける」「5 備える」「6 更新する」と書かれ、5段目までロボットが作業し、税理士が6段目へ登ろうとしている" loading="lazy">
+      <p class="illus-cap">5段目までは教えられます。6段目は自分で登る段です</p>
+      <table class="kanten">
+        <tr><th>段</th><th>動詞</th><th>中身</th><th>回</th></tr>
+        <tr><td>1段目</td><td><b>つなぐ</b></td><td>AIが会計ソフトを触れる状態を作る（MCP連携）</td><td>第1回</td></tr>
+        <tr><td>2段目</td><td><b>任せる</b></td><td>毎月の記帳・OCR起票をルール化して渡す</td><td>第3回</td></tr>
+        <tr><td>3段目</td><td><b>見張る</b></td><td>AIの仕事をAIにレビューさせ、観点をスキルとして貯める</td><td>第5回</td></tr>
+        <tr><td>4段目</td><td><b>届ける</b></td><td>成果物を顧問先向けに量産して自動配信する</td><td>第7回</td></tr>
+        <tr><td>5段目</td><td><b>備える</b></td><td>申告のまわりを固め、線が動いた日の受け皿を作る</td><td>第9回・第10回</td></tr>
+        <tr style="background:var(--brand-soft)"><td><b>6段目</b></td><td><b>更新する</b></td><td><b>できない理由を「つなぎ口」と「責任」に分けて、線が動いたら自分で拾いにいく</b></td><td><b>アプデ①・②</b></td></tr>
+      </table>
+
+      <div class="box tip">
+        <div class="box-h">💡 6段目がいちばん大事な理由</div>
+        1段目から5段目は<b>誰かが教えてくれる範囲</b>です。ブートキャンプがその役割でした。<b>6段目は教えられません</b>。何が動いたかは毎月変わるからです。<br>
+        今回の実験がまさにそれでした。<b>1ヶ月前に「無理」と判断したことが、動きました</b>。必要なのは新しいツールを全部追いかけることではなく、<b>「いま諦めていること」をリストにしておいて、線が動いたときに拾うこと</b>です。
+      </div>
+
+      <h3 style="margin:28px 0 8px;font-size:17px">✋ 卒業設計をする（Claude Codeに貼ってください）</h3>
+      <p style="margin:0 0 6px">下のプロンプトをそのままClaude Codeに貼ってください。<b>AIが質問しながら、到達度の棚卸しと卒業後90日の計画を一緒に作ります</b>。分からないところは「分からない」で大丈夫です。</p>
+
+      <div class="copy">
+        <div class="copy-label">📋 デスクトップアプリに貼るだけ：全12回の棚卸し＆卒業後90日の設計</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>畠山式税理士AIコミュニティ（全12回）の最終回です。
+卒業後90日の計画を一緒に作ってください。
+私の事務所の状況を聞きながら進めてください。
+
+【あなたの役割】
+私を評価しないでください。できていないことを責めないでください。
+「どこで止まったか」と「次の一手」を一緒に見つける役です。
+私が答えていないことを、想像で埋めないでください。
+
+【ステップ1：到達度の棚卸し（6段の階段）】
+次の6段について、1段ずつ順番に
+「この状態になっていますか？」と聞いてください。
+私の答えは ◎（毎月回っている）／◯（一度はできた）／
+△（途中で止まった）／✕（手をつけていない）の4段階で答えます。
+△と✕のときだけ「止まった理由は何でしたか？
+時間・エラー・必要性を感じない、のどれに近いですか？」と
+1回だけ追加で聞いてください。
+
+1段目 つなぐ：AIが会計ソフトを触れる（MCP連携・自動起票）
+2段目 任せる：毎月の記帳・OCR起票をルール化して渡している
+3段目 見張る：AIの仕事をAIにレビューさせ、観点をスキルに貯めている
+4段目 届ける：顧問先向けの成果物（ダッシュボード等）を自動で回している
+5段目 備える：申告まわりのチェックの型ができている
+6段目 更新する：新しくできるようになったことを、自分で拾いにいけている
+
+【ステップ2：現実の制約を聞く】
+次の3つを、1問ずつ聞いてください。
+・1週間のうち、この種の作業に使える時間はどれくらいですか？
+・スタッフは何人ですか？（ひとり事務所ならそう答えます）
+・これから3ヶ月で、いちばん重たい山は何ですか？（年末調整・確定申告など）
+
+【ステップ3：90日計画を作る】
+ここまでの答えだけを根拠に、90日の計画を作ってください。
+条件は次のとおりです。
+・やることは3つまで。4つ以上は出さないでください
+・3つのうち1つは必ず「止まっている段のうち、いちばん下の段」から選ぶ
+  （上の段から手をつけると、土台がないので必ず崩れるため）
+・1つは「今週中に30分で終わること」にする（最初の1歩を軽くするため）
+・私の使える時間を超える計画にしない。足りないなら3つではなく2つでいい
+・各項目に「なぜこれを選んだか」を1行で付ける
+・締切のある山（年末調整・確定申告など）の直前に、
+  新しいやり方を初投入する計画にしないでください
+
+【ステップ4：諦めリストを作る】
+最後に、こう聞いてください。
+「いま『AIには無理だろう』と思って諦めている作業を、3つ挙げてください」
+私が答えたら、その3つを次の2つに分類してください。
+・つなぎ口がないから無理（＝時期の問題。動く可能性がある）
+・責任を負えないから無理（＝時期が来ても変わらない）
+分類の理由も1行ずつ付けてください。
+これは「次に線が動いたときに拾うリスト」になります。
+
+【出力】
+最後に、次の3つを1つのコードブロックにまとめて出してください。
+・私の到達度（6段の評価と、止まっている理由）
+・90日でやること（3つまで・理由つき・最初の30分のタスクを明記）
+・諦めリスト（時期の問題／変わらない問題に分類済み）
+これを私は自分の事務所のメモに保存します。</pre>
+      </div>
+
+      <h3 style="margin:28px 0 8px;font-size:17px">🔁 卒業後に続けてほしい習慣は3つだけです</h3>
+      <div class="scrollx">
+      <table class="kanten">
+        <tr><th>習慣</th><th>やること</th><th>頻度</th></tr>
+        <tr><td><b>① 諦めリストを見返す</b></td><td>ステップ4のリストを開いて<b>まだ無理か</b>を確認する。1ヶ月で線が動くと、今回分かりました</td><td>月1回・15分</td></tr>
+        <tr><td><b>② 自分のソフトの更新情報だけ見る</b></td><td>全社を追いかけない。<b>自分がメインで使っているソフト1社のリリースノート</b>だけ見る</td><td>月1回・10分</td></tr>
+        <tr><td><b>③ 観点をスキルに貯め続ける</b></td><td>レビューで「今回もこれを見たな」と思ったら<b>その場でスキルに足す</b>。ここだけは事務所の資産になります</td><td>気づいたとき</td></tr>
+      </table>
+      </div>
+
+      <div class="hana">🌸 <b>ひとこと：</b>90日の計画は、<b>できなくても大丈夫な形</b>で作ってください。3つのうち1つでも回れば十分です。全部できる計画は、だいたい全部できません。1つ回ったら、その場で次の1つを足す。これが12回続けてきた人のやり方です🌸</div>
+
+      <div class="check" onclick="toggle(this,event)">
+        <input type="checkbox" data-step="4">
+        <label>✅ 全12回を棚卸しして、卒業後90日でやること（3つまで）と諦めリストを作った</label>
+      </div>
+    </section>
+
+    <!-- ===== 立ち位置マップ（4層） ===== -->
+    <section class="step" id="map-now" style="border-color:var(--brand)">
+      <div class="step-head">
+        <div class="step-num">🗺<small>読む</small></div>
+        <div class="step-title">
+          <h2>立ち位置マップ：3層から4層になりました</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約5分</span>
+            <span class="tag type">📖 読むだけでOK</span>
+          </div>
+        </div>
+      </div>
+
+      <p>アプデ①では、道具を<b>3層</b>に分けました。最終回で<b>4層目</b>が増えます。理由は、<b>アプデ①に自分で書いていた予想が1ヶ月で当たったから</b>です。</p>
+      <img class="illus" src="img/update02/4layer.webp" alt="「1 会計ソフト」「2 Chrome拡張」「3 Claude Code」「4 PC操作」と書かれた4枚のカードが並び、4枚目に新しいリボンがかかっているイラスト" loading="lazy">
+      <p class="illus-cap">4層目が増えました。③が要らなくなったわけではありません</p>
+
+      <div class="box tip">
+        <div class="box-h">📌 アプデ①のページに、こう書いてありました</div>
+        <p style="margin:0 0 6px;padding-left:12px;border-left:3px solid var(--brand);color:var(--sub);font-size:14px">「インポートまで自動化すると今は無理が出ます。ここは<b>Computer Use</b>（AIがPCの画面をそのまま操作する仕組み）が実用的になった時点で渡せると見ています。それまでは最後の一手だけ人がやる」</p>
+        <div style="margin-top:8px">その<b>「実用的になった時点」が、1ヶ月で来ました</b>。持ち帰ってほしいのは、予測が当たったことではなく<b>1ヶ月という速さの方</b>です。</div>
+      </div>
+
+      <div class="box howto">
+        <div class="box-h">🎯 原則：道具を4層に分ける</div>
+        <ul>
+          <li><b>① 会計ソフトのエージェント</b>　ソフトの<b>中</b>で完結する共通業務。精度が高いものはそのまま使う</li>
+          <li><b>② Chrome拡張</b>　人が画面を見て判断する場面に情報を足して<b>補う</b>（<a href="update01.html#ext">アプデ①で配布</a>）</li>
+          <li><b>③ Claude Code</b>　ソフトの<b>外</b>に出る仕事と<b>ログを残したい処理</b>。APIがあるものは、これからもここ</li>
+          <li><b>④ PC操作エージェント</b>　<span class="st now">🆕 追加</span>　<b>つなぎ口がない最後の場所</b>。インストール型の申告ソフト・給与ソフト・役所のシステム。遅いので<b>③で届かないときだけ</b></li>
+        </ul>
+      </div>
+
+      <h3 style="margin:30px 0 6px;font-size:17px">🧭 4層になると、担い手はこう変わります</h3>
+      <div class="scrollx">
+      <table class="kanten mx2">
+        <tr><th>仕事</th><th>アプデ①（1ヶ月前）</th><th>いま（2026年9月）</th></tr>
+        <tr class="sec"><td colspan="3">▼ ソフトに寄せていく（標準装備が追いついてくる）</td></tr>
+        <tr><td><b>記帳</b></td><td class="cc">Claude Code</td><td class="vd" style="white-space:normal"><span style="color:var(--brand)">Claude Code</span> <span style="color:var(--sub);font-weight:400">or</span> 会計ソフトのエージェント</td></tr>
+        <tr><td><b>仕訳チェック・月次レビュー</b></td><td class="dt">同上</td><td class="dt">同上（観点は自分で足す）</td></tr>
+        <tr class="sec"><td colspan="3">▼ 手元に残る（ソフトの外・APIでつなぐ）</td></tr>
+        <tr><td><b>顧問先向けレポートの作成と配信</b></td><td class="cc">Claude Code</td><td class="cc">Claude Code</td></tr>
+        <tr><td><b>会計ソフトをまたぐ処理</b></td><td class="dt">同上</td><td class="dt">同上</td></tr>
+        <tr class="sec"><td colspan="3">▼ 🆕 ここが今回動きました（つなぎ口がない場所）</td></tr>
+        <tr><td><b>申告ソフト（JDL等）の入力</b></td><td class="ex">手動</td><td class="vd" style="color:var(--brand)">PC操作エージェント<br><span style="font-size:12px;font-weight:600;color:var(--sub)">ドラフトまで。確定は人</span></td></tr>
+        <tr><td><b>各種届出書の作成</b></td><td class="ex">手動</td><td class="dt">同上</td></tr>
+        <tr><td><b>年末調整の事前シート作成</b></td><td class="ex">手動</td><td class="dt">同上</td></tr>
+        <tr><td><b>各種システムへのExcelインポート</b></td><td class="ex">手動</td><td class="dt">同上</td></tr>
+        <tr class="sec"><td colspan="3">▼ 動きません（技術の問題ではないため）</td></tr>
+        <tr><td><b>提出・送信の実行</b></td><td class="ex">人</td><td class="ex">人</td></tr>
+        <tr><td><b>税務判断・顧問先への説明</b></td><td class="ex">人</td><td class="ex">人</td></tr>
+        <tr><td><b>申告書への署名</b></td><td class="ex">人</td><td class="ex">人</td></tr>
+      </table>
+      </div>
+      <p style="margin:8px 0 0;font-size:13px;color:var(--sub)">※ APIで届く仕事を画面操作でやると、遅くなって壊れやすくなるだけです。<b>④は「③で届かないとき」の層</b>です。</p>
+
+      <div class="hana">🌸 <b>最終回の合言葉：</b>できない理由を<b>「つなぎ口がない」と「責任を負えない」に分ける</b>。前者は時期の問題なので、諦めリストに入れて待つ。後者は時期が来ても変わらないので、<b>そこに自分の時間を置く</b>。12回かけて作ってきたのは、自動化そのものではなく、<b>この線を自分で引ける状態</b>でした。</div>
+    </section>
+
+    <!-- ===== 確認テスト ===== -->
+    <section class="step" id="quiz" style="border-color:var(--brand)">
+      <div class="step-head">
+        <div class="step-num">🧠<small>必須</small></div>
+        <div class="step-title">
+          <h2>確認テストを受ける（合格すると恩送りメモが出ます）</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約10分</span>
+            <span class="tag type">🏅 修了条件 その1</span>
+          </div>
+        </div>
+      </div>
+
+      <p>ステップ①〜④が終わったら、<b>Claude Code に先生役をお願いして</b>、最終回の理解チェックを受けてください。<b>70点以上で合格</b>（何回でも再挑戦OK）。合格すると、Claudeが今回の気づきを<b>1問ずつインタビュー</b>してくれて、<b>その答えがそのまま「恩送りメモ」になります</b>。</p>
+
+      <div class="copy">
+        <div class="copy-label">📋 デスクトップアプリに貼るだけ：確認テスト＆恩送りメモ生成</div>
+        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+<pre>アプデ②（最終回）の課題の理解チェックをお願いします。
+内容は次の4つです。
+1. この1ヶ月で動いたこと（ソフトの中の線と、PCの中の線）
+2. 実験報告（年末調整の事前シート／JDLでの届出書・申告書ドラフト）と
+   そこから出た3つの原則
+3. freee Advisor Day 2026 東京のおみやげ（作業ログの見える化）
+4. 全12回の棚卸しと、卒業後90日の設計（6段の階段・諦めリスト）
+合格するまで、恩送りメモは出さないでください。
+
+【テストの進め方】
+1. この課題の内容から、選択式（A/B/C）のクイズを2問 → 自由記述
+   （自分の言葉で説明する問題）を1問、1問ずつ順番に出して。
+   「できない理由を、つなぎ口がないから無理／責任を負えないから無理に
+   分ける」ことに関する問題を必ず1問入れて。
+2. 全部答え終わったら100点満点で採点して、点数と理由を短く伝えて。
+3. 70点以上で合格 → インタビューへ。70点未満なら、間違えた所をやさしく
+   解説してから、別の問題でもう一度出して（何回でもOK・責めないで）。
+4. 選択肢に「お任せ」は付けないで（自分で考えて答えるテストのため）。
+
+【合格したら：インタビュー】
+恩送りメモの中身は、あなた（AI）が想像で書かないでください。
+私の体験を聞き出して、私が話した言葉だけで作ります。
+次の5問を、1問ずつ・自由入力で聞いてください
+（選択式にしない・まとめて聞かない）。
+
+Q1. 全12回を通して、自分の事務所でいちばん変わったことは何ですか？
+    （小さいことでOK。変わらなかったならそう答えます）
+Q2. 6段の階段（つなぐ／任せる／見張る／届ける／備える／更新する）で、
+    いま自分はどこにいますか？ 素直な実感で答えます
+Q3. 止まっている段があるとしたら、止まった理由は何でしたか？
+    （時間・エラー・必要性を感じない、など。責められないので正直に）
+Q4. 卒業後90日でやることは、何になりましたか？
+    なぜそれを最初に選びましたか？
+Q5. 全12回を通して、分かりづらかった所・こうしてほしかった所は
+    ありましたか？（1行でもOK・思いつかなければ『特になし』でOK）
+
+インタビューのルール：
+- 答えが短くても責めないで。ただし一言だけの答えには、1回だけ
+  「たとえばどんな場面ですか？」と具体化を促して。それでも出てこなければ、
+  そのまま次へ進んで。
+- 「思い出せない」「特にない」と言われたら、思い出す手がかりとして、
+  この12回で実際に起きがちな場面を3つほど挙げて「近いものはありますか？」と
+  聞いてOK。ただし当てはまらなければ「なし」のまま進めて。
+  私が言っていないことを、あなたが代わりに書かないで。
+- 私の答えを、立派な文章に書き換えないで。言い回しは私のまま、
+  誤字と重複だけ直す程度にして。
+
+【恩送りメモの出力】
+インタビューが終わったら、「恩送りメモ」という見出しで、チャットから
+そのままコピペできる1つのコードブロックとして出力して。
+・1行目は必ず「確認テスト：◯点（◯回目で合格）」にする
+・続けて、私がQ1〜Q4で話した内容を、話した順に体験談としてまとめる
+・最後に、Q5の答えを「💬 講座への改善案：」の行として原文のまま
+  入れる（『特になし』なら省略OK）
+・長さは私が話した分だけでいい。8行に届かなくてもOK。足りないからといって、
+  私が言っていない体験・感想を足さないで。盛るくらいなら短い方がいい
+※ 顧問先名・取引先名・具体的な金額・事業所名・利用者識別番号・
+暗証番号・個人情報・APIキーなどの秘密情報は、メモに絶対に入れないで
+（「◯◯な顧問先で」のように抽象化して）。
+
+最後に「このメモをコピーして、課題ページの『恩送りメモを投稿して修了』に
+貼れば、全12回の修了です🎉」と締めて。</pre>
+      </div>
+    </section>
+
+    <!-- ===== 恩送り掲示板 ===== -->
+    <section class="step" id="post" style="border-color:var(--green)">
+      <div class="done-banner">🏅 投稿ありがとうございました！全12回の修了です。下の修了バッジをご覧ください🎉</div>
+      <div class="step-head">
+        <div class="step-num" style="background:var(--green)">✍️<small>必須</small></div>
+        <div class="step-title">
+          <h2>恩送りメモを投稿して修了 🏅</h2>
+          <div class="step-meta">
+            <span class="tag time">⏱ 約3分</span>
+            <span class="tag type">🏅 修了条件 その2</span>
+          </div>
+        </div>
+      </div>
+
+      <p>確認テストの最後にClaudeが出してくれた「<b>恩送りメモ</b>」を、そのまま下に貼って投稿してください。<b>投稿すると修了バッジが解放されます</b>🎉 最終回のメモには<b>「12回で自分が何段目まで来たか」と「卒業後90日で何をやると決めたか」</b>が入ります。<b>止まった理由を書いてくれた人のメモが、次に同じ場所で止まる人を助けます</b>。それが恩送りです。</p>
+
+      <div class="post-field">
+        <label for="postName">お名前・ニックネーム（任意）</label>
+        <input type="text" id="postName" placeholder="例：たけだ">
+      </div>
+      <div class="post-field">
+        <label for="postMemo">恩送りメモ（確認テストで出たメモをそのまま貼ってOK）</label>
+        <textarea id="postMemo" placeholder="例：4段目で止まっていた／PC操作型が出たので諦めリストを作った／90日はまず◯◯から　など"></textarea>
+      </div>
+      <button class="post-submit" id="postBtn" onclick="submitPost()">🎁 恩送りメモを投稿して修了する</button>
+      <div class="post-status" id="postStatus"></div>
+
+      <div class="box safe">
+        <div class="box-h">🔒 安全メモ</div>
+        投稿内容は他の受講生・運営も閲覧できる公開掲示板に表示されます。<b>顧問先名・取引先名・具体的な金額・事業所名・利用者識別番号・APIトークンなどの秘密情報、個人情報は記載しない</b>ようお願いいたします（確認テストのプロンプトに抽象化の指示を入れてありますが、投稿前にもう一度ご自身の目で確認してください）。
+      </div>
+
+      <a class="board-link" href="board.html" target="_blank" rel="noopener">📋 みんなの投稿を見る（掲示板を開く）→</a>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <h2>❓ よくあるつまずき</h2>
+      <details>
+        <summary>PC操作型のAIが出たなら、これまでの自動化は作り直しですか？</summary>
+        <div class="body">いいえ、そのまま置いておいてください。<b>APIで届く仕事は、これからもAPIでやります</b>（原則②）。画面操作型は<b>遅い・不安定・レイアウト変更で壊れる</b>ので、PC操作型は<b>「APIがなくて諦めていた場所」専用の道具</b>だと考えてください。</div>
+      </details>
+      <details>
+        <summary>JDLを使っていません。実験報告は関係ない話ですか？</summary>
+        <div class="body">関係あります。JDLはあくまで例で、本質は<b>「つなぎ口がないソフトにAIの手が届いた」</b>という点です。給与ソフト、役所のシステム、顧問先から送られてくる独自のExcel。どれも同じ構造です。<b>いま「AIには無理だから人がやる」と決めている作業</b>を思い出してください。それが今回の対象です。ステップ④の<b>諦めリスト</b>で、その仕分けをします。</div>
+      </details>
+      <details>
+        <summary>AIが申告書のドラフトまで作れるなら、私たちの仕事はどうなりますか？</summary>
+        <div class="body">レビューの比重が上がります。<b>作る工程がなくなると、チェックの工程を意識して作らないかぎり、何も見ないまま確定します</b>。速く作れる人ほど<b>チェックの型を先に持っている必要があります</b>。第5回のレビュー観点のスキル化が、ここで効きます。</div>
+      </details>
+      <details>
+        <summary>作業ログを取りたいのですが、スタッフに嫌がられそうです</summary>
+        <div class="body">その感覚は正しいです。<b>「サボりを探す道具」として始めると、現場は必ずログを避けます</b>。<b>「どこに時間がかかっているかを一緒に見る道具」</b>として目的を先に共有してください。<b>目的の明示・就業規則等への定め・本人への周知が前提</b>で、導入前に社会保険労務士・弁護士に確認を。スクリーンショットには顧問先の情報が写るので、保存先・保存期間・閲覧できる人も先に決めてください。</div>
+      </details>
+      <details>
+        <summary>90日計画の3つが、どうしても多く感じます</summary>
+        <div class="body">2つでも1つでも大丈夫です。プロンプトにも<b>「使える時間を超える計画にしない。足りないなら3つではなく2つでいい」</b>と入れてあります。全部できる計画は、だいたい全部できません。<b>1つ回ったら、その場で次の1つを足す</b>。これでちゃんと進みます。ただし<b>「止まっている段のうち、いちばん下の段」から1つ選ぶ</b>のだけは守ってください。上の段から手をつけると、土台がないので崩れます。</div>
+      </details>
+      <details>
+        <summary>ここに書いてある提供時期・製品情報は、いつ時点のものですか？</summary>
+        <div class="body">2026年9月16日時点で確認した内容です。<b>この分野は動きが速いので、実際に導入を検討するときは必ず各社の公式情報を確認してください</b>。今回の内容そのものが、<b>1ヶ月前の判断が1ヶ月で変わった</b>という話です。だからこそ、ステップ④の習慣②<b>「自分がメインで使っているソフト1社のリリースノートだけ、月1回見る」</b>をおすすめしています。全社を追いかける必要はありません。</div>
+      </details>
+      <details>
+        <summary>全12回のうち、抜けている回があります。もう受けられませんか？</summary>
+        <div class="body">各回のページは残ります。<b>順番どおりに戻る必要もありません</b>。記帳が回っていないなら<a href="vol03.html">第3回</a>、レビューに不安があるなら<a href="vol05.html">第5回</a>、顧問先に何か届けたいなら<a href="vol07.html">第7回</a>、申告前の検算なら<a href="vol09.html">第9回</a>。ステップ④で出た<b>「止まっている段のうち、いちばん下の段」</b>に対応する回から戻るのがいちばん早いです。</div>
+      </details>
+      <details>
+        <summary>途中で「使用上限に達しました」と表示されました</summary>
+        <div class="body">故障ではありません。Claudeの有料プランには一定時間あたりの利用上限があります。<b>時間を置くと自動で復活します</b>ので、休憩を挟むか、続きは後日に進めてください（課題は当日中に終わらせる必要はありません）。</div>
+      </details>
+    </section>
+
+    <!-- 修了 -->
+    <section class="finish locked" id="finish">
+      <h2 id="finishMsg">🏅 修了バッジ：自走する人</h2>
+      <p id="finishSub">4つのチェック＋恩送りメモの投稿がそろうと、ここで修了バッジが解放されます。</p>
+      <a href="#hero" class="cta">↑ 上に戻って進める</a>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // 恩送り掲示板への投稿
+  const BOARD_API = 'https://script.google.com/macros/s/AKfycbzhsHqZgC4KO_i9fMNZDY2CBbJx-0YSVNJfrPpd5M35EcjAq1iSPY_rHOUkzEBPU6gUhg/exec';
+  function submitPost(){
+    const name = document.getElementById('postName').value.trim();
+    const memo = document.getElementById('postMemo').value.trim();
+    const btn = document.getElementById('postBtn');
+    const status = document.getElementById('postStatus');
+    if(!memo){
+      status.textContent = '恩送りメモを入力してください。';
+      status.className = 'post-status err';
+      return;
+    }
+    btn.disabled = true;
+    status.textContent = '送信中…';
+    status.className = 'post-status';
+    fetch(BOARD_API, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify({name: name || '匿名', memo: '【アプデ②】' + memo})
+    }).then(()=>{
+      status.textContent = '🎉 投稿しました！ありがとうございます。掲示板に反映されるまで少し時間がかかることがあります。';
+      status.className = 'post-status ok';
+      document.getElementById('postMemo').value = '';
+      btn.disabled = false;
+      localStorage.setItem(PKEY,'1');
+      render();
+    }).catch(()=>{
+      status.textContent = '送信に失敗しました。通信環境をご確認のうえ、もう一度お試しください。';
+      status.className = 'post-status err';
+      btn.disabled = false;
+    });
+  }
+
+  // コピーボタン
+  function copyCode(btn){
+    const pre = btn.parentElement.querySelector('pre');
+    navigator.clipboard.writeText(pre.innerText).then(()=>{
+      btn.textContent='コピー済み✓';btn.classList.add('copied');
+      setTimeout(()=>{btn.textContent='コピー';btn.classList.remove('copied')},1600);
+    });
+  }
+
+  // ページ内リンクでdetailsに飛んだら自動で開く
+  function openDetailsFromHash(){
+    if(!location.hash) return;
+    const el = document.getElementById(location.hash.slice(1));
+    if(el && el.tagName==='DETAILS') el.open = true;
+  }
+  window.addEventListener('hashchange', openDetailsFromHash);
+  openDetailsFromHash();
+
+  // チェックの進捗（4ステップ＋恩送り投稿＝5条件で修了）
+  const KEY='bootcampU2_progress';
+  const PKEY='bootcampU2_posted';
+  const STEP_TOTAL=4, TOTAL=5;
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
+  function save(s){localStorage.setItem(KEY,JSON.stringify(s))}
+  function isPosted(){return localStorage.getItem(PKEY)==='1'}
+
+  // 紙吹雪（修了の瞬間だけ）
+  function burst(){
+    const colors=['#2864f0','#00a86b','#f5a623','#e5484d','#7c3aed'];
+    for(let i=0;i<70;i++){
+      const p=document.createElement('div');
+      p.className='confetti-piece';
+      p.style.left=Math.random()*100+'vw';
+      p.style.background=colors[i%colors.length];
+      p.style.animationDuration=(2.2+Math.random()*1.8)+'s';
+      p.style.animationDelay=(Math.random()*.6)+'s';
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(),5000);
+    }
+  }
+
+  let prevAllDone=null;
+  function render(){
+    const s=load();
+    let done=0;
+    document.querySelectorAll('input[data-step]').forEach(cb=>{
+      const n=cb.dataset.step;
+      cb.checked=!!s[n];
+      cb.closest('.step').classList.toggle('done',!!s[n]);
+      if(s[n])done++;
+    });
+    const posted=isPosted();
+    document.getElementById('post').classList.toggle('done',posted);
+    const units=done+(posted?1:0);
+    document.getElementById('cnt').textContent=units;
+    document.getElementById('fill').style.width=(units/TOTAL*100)+'%';
+    const allDone=(done===STEP_TOTAL&&posted);
+    const fin=document.getElementById('finish');
+    const msg=document.getElementById('finishMsg');
+    const sub=document.getElementById('finishSub');
+    if(allDone){
+      fin.classList.remove('locked');
+      fin.classList.add('celebrate');
+      msg.textContent='🎉 全12回 修了おめでとうございます！「自走する人」になりました🌸';
+      sub.textContent='できない理由を「つなぎ口がない」と「責任を負えない」に分けて、前者は諦めリストに入れて待つ。ここから先は、ご自身で地図を更新していく番です。';
+    }else{
+      fin.classList.add('locked');
+      fin.classList.remove('celebrate');
+      msg.textContent='🏅 修了バッジ：自走する人';
+      sub.textContent = done===STEP_TOTAL
+        ? 'あとは確認テストに合格して、恩送りメモを投稿するだけです🎁'
+        : '4つのチェック＋恩送りメモの投稿がそろうと、ここで修了バッジが解放されます。';
+    }
+    if(prevAllDone===false && allDone) burst();
+    prevAllDone=allDone;
+  }
+
+  function toggle(el,e){
+    if(e.target.tagName!=='INPUT'){
+      const cb=el.querySelector('input');cb.checked=!cb.checked;
+    }
+    const s=load();
+    el.querySelectorAll('input[data-step]').forEach(cb=>{s[cb.dataset.step]=cb.checked});
+    save(s);render();
+  }
+  document.querySelectorAll('input[data-step]').forEach(cb=>{
+    cb.addEventListener('change',()=>{
+      const s=load();s[cb.dataset.step]=cb.checked;save(s);render();
+    });
+  });
+
+  render();
+</script>
+<script>window.BOOTCAMP_PAGE='update02';</script>
+<script src="progress-tracker.js"></script>
+<script>
+(function(){
+  var w=document.querySelector('.wrap'), b=document.getElementById('sideToggle');
+  if(!w||!b) return;
+  var K='hk_bc_side_off';
+  function apply(off){
+    w.classList.toggle('side-off',off);
+    b.setAttribute('aria-pressed',off?'true':'false');
+    b.textContent=off?'☰ 目次を出す':'☰ 目次を隠す';
+  }
+  var saved=false; try{saved=localStorage.getItem(K)==='1';}catch(e){}
+  apply(saved);
+  b.addEventListener('click',function(){
+    var off=!w.classList.contains('side-off');
+    apply(off);
+    try{localStorage.setItem(K,off?'1':'0');}catch(e){}
+  });
+})();
+</script>
+</body>
+</html>
